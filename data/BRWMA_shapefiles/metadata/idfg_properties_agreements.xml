@@ -1,0 +1,241 @@
+﻿<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <pubdate>20121205</pubdate>
+        <title>IDFG Properties and Agreements</title>
+        <edition>1</edition>
+        <geoform>vector digital data</geoform>
+        <othercit>If you discover any errors or have any questions regarding this dataset please contact Katey Jones, katey.jones@idfg.idaho.gov.</othercit>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>In this dataset each parcel represents one record in the database. This dataset provides information about each parcel such as: acquistion number (ACNO), who the parcel was acquired from, who owns the parcel, what kind of parcel is it (ie. access site, WMA, WHA, easement), and how many acres it encompasses.Various private, state, and federal entities have entered into agreements with or sold lands to IDFG for the management of the state's fish and wildlife. Each property agreement/lease/deed/easement/permit in Bob Martin's (IDFG) Lands database was mapped based on their legal descriptions. Various layers were used to help digitize each area: township range section, geographic names, ITD roads, FS roads, hydrography, land ownership, county boundaries, etc. This shapefile was created by combining the mapping efforts of Pamela Bond and Angie Schmidt of IDFG and the Idaho Department of Lands. Much of the lands owned by IDFG or leased from IDL can be searched for viewed on the IDL website.</abstract>
+      <purpose>This is the working dataset for the Idaho Fish and Game (IDFG) land ownership/management mapping project. It is a geospatial representation of all of the land records in the IDFG Lands Access Database.</purpose>
+    </descript>
+    <status>
+      <progress>In work</progress>
+      <update>As needed</update>
+    </status>
+    <spdom>
+      <bounding>
+        <westbc>-116.141196</westbc>
+        <eastbc>-115.710175</eastbc>
+        <northbc>43.658429</northbc>
+        <southbc>43.473236</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>None</themekt>
+        <themekey>fish</themekey>
+        <themekey>easement</themekey>
+        <themekey>lands</themekey>
+        <themekey>lease</themekey>
+        <themekey>IDFG</themekey>
+        <themekey>WMA</themekey>
+        <themekey>wildlife</themekey>
+        <themekey>management</themekey>
+        <themekey>fishing</themekey>
+        <themekey>hunting</themekey>
+        <themekey>recreation</themekey>
+        <themekey>ownership</themekey>
+        <themekey>Idaho</themekey>
+      </theme>
+    </keywords>
+    <accconst>Idaho Fish and Game does not assume liability. No warranty expressed or implied is made by Idaho Fish and Game regarding the utility of the data on any other system, nor shall the act of distribution constitute any such warranty.</accconst>
+    <useconst>In-house use only.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Idaho Fish and Game</cntorg>
+          <cntper>Katey Jones</cntper>
+        </cntorgp>
+        <cntpos>GIS analyst</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>600 South Walnut</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83707</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>(208) 287-2893</cntvoice>
+        <cntemail>katey.jones@idfg.idaho.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <ptcontac>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Idaho Fish and Game</cntorg>
+          <cntper>Katey Jones</cntper>
+        </cntorgp>
+        <cntpos>GIS analyst</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>600 South Walnut</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83707</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>(208) 287-2893</cntvoice>
+        <cntemail>katey.jones@idfg.idaho.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>This dataset was created by IDFG.</datacred>
+    <native> Version 6.2 (Build 9200) ; Esri ArcGIS 10.6.0.8321</native>
+  </idinfo>
+  <spdoinfo>
+    <direct>Vector</direct>
+    <ptvctinf>
+      <sdtsterm>
+        <sdtstype>GT-polygon composed of chains</sdtstype>
+        <ptvctcnt>72</ptvctcnt>
+      </sdtsterm>
+    </ptvctinf>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <planar>
+        <mapproj>
+          <mapprojn>NAD 1983 Idaho TM</mapprojn>
+          <transmer>
+            <sfctrmer>0.9996</sfctrmer>
+            <longcm>-114.0</longcm>
+            <latprjo>42.0</latprjo>
+            <feast>2500000.0</feast>
+            <fnorth>1200000.0</fnorth>
+          </transmer>
+        </mapproj>
+        <planci>
+          <plance>coordinate pair</plance>
+          <coordrep>
+            <absres>0.000000002220024164500956</absres>
+            <ordres>0.000000002220024164500956</ordres>
+          </coordrep>
+          <plandu>meter</plandu>
+        </planci>
+      </planar>
+      <geodetic>
+        <horizdn>D North American 1983</horizdn>
+        <ellips>GRS 1980</ellips>
+        <semiaxis>6378137.0</semiaxis>
+        <denflat>298.257222101</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>idfg_properties_agreements</enttypl>
+        <enttypd>Geospatial data representation of IDFG Lands Access Database</enttypd>
+        <enttypds>pbond</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>FID</attrlabl>
+        <attrdef>Internal feature number.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Sequential unique whole numbers that are automatically generated.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Shape</attrlabl>
+        <attrdef>Feature geometry.</attrdef>
+        <attrdefs>ESRI</attrdefs>
+        <attrdomv>
+          <udom>Coordinates defining the features.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Owner</attrlabl>
+        <attrdef>Who owns the land.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>Land_Type</attrlabl>
+        <attrdef>What IDFG uses the land for (ie. WMA, access site, hatchery, etc).</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>ADM</attrlabl>
+        <attrdef>Entitlement type.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>NAME</attrlabl>
+        <attrdef>Name of property.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>ACNO</attrlabl>
+        <attrdef>Each agreement/deed has an Acquistion Number - corrresponds to the IDFG Lands Database.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>ACQUIRE_FR</attrlabl>
+        <attrdef>Acquired property from.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>CONVEYANCE</attrlabl>
+        <attrdef>Land conveyance.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>FUND</attrlabl>
+        <attrdef>Fund info.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>DATE_ACQU</attrlabl>
+        <attrdef>Acquired date for the land agreement.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>DATE_END</attrlabl>
+        <attrdef>End date of land agreement.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>DB_ACRES</attrlabl>
+        <attrdef>How many acres are within the land parcel boundary from the legal description.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>GIS_ACRES</attrlabl>
+        <attrdef>How many acres are within the land parcel boundary - calculated in ArcGIS.</attrdef>
+        <attrdefs>IDFG</attrdefs>
+      </attr>
+    </detailed>
+  </eainfo>
+  <metainfo>
+    <metd>20201005</metd>
+    <metfrd>20140101</metfrd>
+    <metc>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Idaho Fish and Game</cntorg>
+          <cntper>Katey Jones</cntper>
+        </cntorgp>
+        <cntpos>GIS analyst</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>600 South Walnut</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83707</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>(208) 287-2893</cntvoice>
+        <cntemail>katey.jones@idfg.idaho.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+    <mettc>local time</mettc>
+    <metac>Idaho Fish and Game does not assume liability. No warranty expressed or implied is made by Idaho Fish and Game regarding the utility of the data on any other system, nor shall the act of distribution constitute any such warranty.</metac>
+    <metuc>In-house use only.</metuc>
+  </metainfo>
+</metadata>

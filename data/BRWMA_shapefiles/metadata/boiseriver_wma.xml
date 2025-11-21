@@ -1,0 +1,242 @@
+﻿<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Idaho Department of Fish and Game</origin>
+        <pubdate>20170711</pubdate>
+        <title>Wildlife Management Areas</title>
+        <geoform>vector digital data</geoform>
+        <pubinfo>
+          <pubplace>600 S. Walnut, Boise, ID, 83712</pubplace>
+          <publish>Idaho Department of Fish and Game</publish>
+        </pubinfo>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>Thirty-one Wildlife Management Areas located in seven Fish and Game regions have been established to protect wildlife habitat and are available for hunting, fishing and other public enjoyment of wildlife. Varying from 275 to 85,000 acres, each area is dedicated to primary purposes such as big game, waterfowl and upland game. The lands encompassed by the WMAs vary from backcountry forested habitats for big game animals to agricultural areas with important pheasant and waterfowl habitat. Thousands of big game animals winter on some WMAs and tens of thousands of waterfowl winter on others. Nongame wildlife use all the WMAs. These lands are diverse and critical habitats that provide great opportunities to enjoy both game and nongame wildlife. Various private, state, and federal entities have entered into agreements with or sold lands to IDFG for the management of the state's fish and wildlife. Each property agreement/lease/deed/easement/permit in the IDFG Lands database was digitized based on their legal descriptions. Various GIS datasets were used to help digitize each property: township range section, geographic names, ITD roads, FS roads, hydrography, land ownership, county boundaries, etc. Properties were combined (via dissolve) based on property name to create the polygons for each WMA.</abstract>
+      <purpose>This dataset was created as a continuation of the Idaho Fish and Game (IDFG) land ownership/management mapping project. It depicts all wildlife management areas (WMA) managed by IDFG.</purpose>
+      <supplinf>If you discover any errors or have questions regarding the dataset please email the Idaho Fish and Wildlife Information System (IFWIS) contact at ifwis@idfg.idaho.gov OR katey.jones@idfg.idaho.gov</supplinf>
+    </descript>
+    <status>
+      <progress>Complete</progress>
+      <update>As needed</update>
+    </status>
+    <spdom>
+      <bounding>
+        <westbc>-116.141196</westbc>
+        <eastbc>-115.710175</eastbc>
+        <northbc>43.658429</northbc>
+        <southbc>43.473236</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>ISO 19115 Topic Categories</themekt>
+        <themekey>biota</themekey>
+        <themekey>environment</themekey>
+      </theme>
+      <theme>
+        <themekt>None</themekt>
+        <themekey>bird watching</themekey>
+        <themekey>management</themekey>
+        <themekey>Idaho</themekey>
+        <themekey>hunting</themekey>
+        <themekey>lands</themekey>
+        <themekey>IDFG</themekey>
+        <themekey>Idaho Fish and Game</themekey>
+        <themekey>wildlife</themekey>
+        <themekey>recreation</themekey>
+        <themekey>fish</themekey>
+        <themekey>WMA</themekey>
+        <themekey>fishing</themekey>
+      </theme>
+    </keywords>
+    <accconst>IDFG offers free, unrestricted access and use of this data. Users must assume responsibility in determining the usability of this data for their purposes.</accconst>
+    <useconst>The data represented in this file is true and accurate to the best of our knowledge but is considered a best representation only. Users must assume responsibility in determining the usability of this data for their purposes. Idaho Fish and Game does not assume liability. No warranty expressed or implied is made by Idaho Fish and Game regarding the utility of the data on any other system, nor shall the act of distribution constitute such warranty.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Idaho Department of Fish and Game</cntorg>
+          <cntper>Katey Jones</cntper>
+        </cntorgp>
+        <cntpos>GIS analyst</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>600 S. Walnut</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83712</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>208-287-2893</cntvoice>
+        <cntemail>katey.jones@idfg.idaho.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>Created by Pamela Bond, IDFG, GIS Analyst.</datacred>
+    <native> Version 6.2 (Build 9200) ; Esri ArcGIS 10.6.0.8321</native>
+    <crossref>
+      <citeinfo>
+        <origin>Idaho Department of Fish and Game</origin>
+        <title>Wildlife Managmeent Areas Webpage</title>
+        <pubinfo>
+          <pubplace>Boise, ID, USA</pubplace>
+          <publish>Idaho Department of Fish and Game</publish>
+        </pubinfo>
+        <onlink>https://idfg.idaho.gov/visit/wildlife-management-areas</onlink>
+      </citeinfo>
+    </crossref>
+  </idinfo>
+  <spdoinfo>
+    <direct>Vector</direct>
+    <ptvctinf>
+      <sdtsterm>
+        <sdtstype>GT-polygon composed of chains</sdtstype>
+        <ptvctcnt>1</ptvctcnt>
+      </sdtsterm>
+    </ptvctinf>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <planar>
+        <mapproj>
+          <mapprojn>NAD 1983 Idaho TM</mapprojn>
+          <transmer>
+            <sfctrmer>0.9996</sfctrmer>
+            <longcm>-114.0</longcm>
+            <latprjo>42.0</latprjo>
+            <feast>2500000.0</feast>
+            <fnorth>1200000.0</fnorth>
+          </transmer>
+        </mapproj>
+        <planci>
+          <plance>coordinate pair</plance>
+          <coordrep>
+            <absres>0.000000002220024164500956</absres>
+            <ordres>0.000000002220024164500956</ordres>
+          </coordrep>
+          <plandu>meter</plandu>
+        </planci>
+      </planar>
+      <geodetic>
+        <horizdn>D North American 1983</horizdn>
+        <ellips>GRS 1980</ellips>
+        <semiaxis>6378137.0</semiaxis>
+        <denflat>298.257222101</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>boiseriver_wma</enttypl>
+        <enttypd>Boundaries of IDFG administered wildlife management areas in Idaho.</enttypd>
+        <enttypds>pbond, idfg</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>FID</attrlabl>
+        <attrdef>Internal feature number.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Sequential unique whole numbers that are automatically generated.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Acres</attrlabl>
+        <attrdef>Acres encompassed by the wma boundary.</attrdef>
+        <attrdefs>pbond, idfg</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>Shape</attrlabl>
+        <attrdef>Feature geometry.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Coordinates defining the features.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Name</attrlabl>
+        <attrdef>Name of the wildlife management area.</attrdef>
+        <attrdefs>pbond, idfg</attrdefs>
+      </attr>
+    </detailed>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Idaho Department of Fish and Game</cntorg>
+          <cntper>Katey Jones</cntper>
+        </cntorgp>
+        <cntpos>GIS Analyst</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>600 S. Walnut</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83712</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>208-287-2893</cntvoice>
+        <cntemail>katey.jones@idfg.idaho.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>See access and use constraints information.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>ESRI Hosted Feature Layer REST Endpoint (HTML)</formname>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://data-idfggis.opendata.arcgis.com/datasets/wildlife-management-areas</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://services.arcgis.com/FjJI5xHF2dUPVrgK/arcgis/rest/services/WildlifeManagementAreas/FeatureServer</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+    </stdorder>
+    <availabl>
+      <timeinfo>
+        <sngdate>
+          <caldate>20160804</caldate>
+        </sngdate>
+      </timeinfo>
+    </availabl>
+  </distinfo>
+  <metainfo>
+    <metd>20201005</metd>
+    <metc>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Idaho Department of Fish and Game</cntorg>
+          <cntper>Katey Jones</cntper>
+        </cntorgp>
+        <cntpos>GIS Analyst</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>600 S. Walnut</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83712</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>208-287-2893</cntvoice>
+        <cntemail>katey.jones@idfg.idaho.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+    <mettc>local time</mettc>
+    <metac>IDFG offers free, unrestricted access and use of this data. Users must assume responsibility in determining the usability of this data for their purposes.</metac>
+    <metuc>The data represented in this file is true and accurate to the best of our knowledge but is considered a best representation only. Users must assume responsibility in determining the usability of this data for their purposes. Idaho Fish and Game does not assume liability. No warranty expressed or implied is made by Idaho Fish and Game regarding the utility of the data on any other system, nor shall the act of distribution constitute such warranty.</metuc>
+  </metainfo>
+</metadata>

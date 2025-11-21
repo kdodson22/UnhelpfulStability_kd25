@@ -1,0 +1,317 @@
+﻿<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <pubdate>20200409</pubdate>
+        <title>BLM Idaho Surface Management Agency (Surface Ownership)</title>
+        <geoform>vector digital data</geoform>
+        <othercit>https://navigator.blm.gov/data?fs_publicRegion=Idaho</othercit>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>This spatial data contains Surface Management Agency (SMA, also sometimes called Land Status) information for Idaho from the Idaho Bureau of Land Management (BLM). For federal government lands, this data displays the managing agency of the surface of the land, which does not mean the agency "owns" the land. SMA is sometimes referred to as "ownership", although this term is inaccurate when describing public lands. This Surface Management Agency data should not be used to depict boundaries (for example National Forest, National Park, National Wildlife Refuge, or Indian Reservation boundaries among others). Attribute information for the federal and private lands are from the BLM Master Title Plats (MTPs), the BLM case files, the BLM Legacy Rehost 2000 (LR2000) database, and corresponding federal Orders and official documents. Please note that because these official sources are strictly used, OTHER NON-BLM FEDERAL AGENCY LANDS MAY NOT BE ATTRIBUTED CORRECTLY unless the proper documents have been filed with the BLM and the land actions have been noted on the MTPs and in LR2000. Starting in the spring of 2011 a field called AGNCY_NAME is present in the data. The AGNCY_NAME field is intended to indicate the managing agency for polygons coded as OTHER in the MGMT_AGNCY field. The AGNCY_NAME field will not be used for the 100K Map Series published by the BLM for use by the public as all agencies in this field are not included in H-1553 Publication Standards Manual Handbook and, therefore, have no BLM Cartographic Standard. Except for polygons coded as OTHER in the MGMT_AGNCY field, all managing agency information in the AGNCY_NAME field should be the same as that of the MGMT_AGNCY field. The only intended difference between the AGNCY_NAME field and the MGMT_AGNCY field is where the MGMT_AGNCY is OTHER. In this case, the AGNCY_NAME will contain an abbreviation for an agency that is not represented in the H-1553 Publication Standards Manual Handbook. Examples of the agencies there are BIA (Bureau of Indian Affairs), USGS (United States Geological Survey), and FAA (Federal Aviation Administration). Attribute information for the State lands is received primarily through cooperation with the Idaho Department of Lands. This information might not reflect all State agency lands completely. A detailed analysis of State owned lands has not been done since June 2011; therefore, recent changes in ownership of State lands may not be reflected. Inclusion of State land information into this dataset is supplemental and should not be viewed as the authoritative source of State lands; please contact State agencies for questions about State lands. This data does not depict land management arrangements between government agencies such as Memorandums of Understanding or other similar agreements. When this data was originally generated in the early 2000's, the primary source of the geometry was the BLM Geographic Coordinate Database (GCDB), if it was available. In areas where GCDB was/is unavailable, the spatial features are taken from a variety of sources including the BLM Idaho Resource Base Data collection, BLM Idaho Master Title Plat AutoCad files, US Geological Survey Digital Line Graphs (DLGs), and US Forest Service Cartographic Feature Files (CFFs), among others (see Process Steps). It should be stressed that the geometry of a feature may not be GCDB-based in the first place, the geometry may shift away from GCDB due to a variety of reasons (topology procedures, automated software processes such as projections, etc.), and the GCDB-based features are not necessarily currently being edited to match improved GCDB. Therefore this data should NOT be considered actual GCDB data. For the latest Idaho GCDB spatial data, please contact the BLM Idaho State Office Cadastral Department at 208-373-4000. The BLM in Idaho creates and maintains this spatial data. This dataset is derived by dissolving based on the "MGMT_AGNCY" field from the master SMA GIS dataset (which is edited often) kept by the BLM Idaho State Office. Please get a fresh copy of this data a couple times a year as the SMA data is continually changing. Official actions that affect the managing agency happen often and changes to correct errors are always being made. Nevada SMA data was acquired from the BLM Nevada web site and clipped to the area that is managed by Idaho BLM Boise District. The data steward approved this dataset in September 2018Online_Linkage: https://navigator.blm.gov/data?fs_publicRegion=IdahoOriginator: U.S. Department of the Interior, Bureau of Land Management (BLM) Publisher: Bureau of Land Management Publication Date: 20200409</abstract>
+      <purpose>The intended use of this data include spatial analysis, planning, maintenance, interpretation, and cartographic products.
+
+Online Linkage: https://navigator.blm.gov/data?fs_publicRegion=Idaho
+
+Originator: U.S. Department of the Interior, Bureau of Land Management (BLM) 
+
+Publisher: Bureau of Land Management 
+
+Publication Date: 20200409 </purpose>
+      <supplinf>Online Linkage: https://navigator.blm.gov/data?fs_publicRegion=Idaho</supplinf>
+    </descript>
+    <status>
+      <update>Quarterly</update>
+    </status>
+    <spdom>
+      <bounding>
+        <westbc>-116.107419</westbc>
+        <eastbc>-115.943808</eastbc>
+        <northbc>43.630462</northbc>
+        <southbc>43.499416</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>None</themekt>
+        <themekey>boundaries</themekey>
+        <themekey>planningCadastre</themekey>
+        <themekey>intelligenceMilitary</themekey>
+        <themekey>Management</themekey>
+        <themekey>PLSS</themekey>
+        <themekey>GCDB</themekey>
+        <themekey>Parks and Recreation</themekey>
+        <themekey>SMA</themekey>
+        <themekey>Land Status</themekey>
+        <themekey>boundaries</themekey>
+        <themekey>GCDB Ownership</themekey>
+        <themekey>State</themekey>
+        <themekey>Own</themekey>
+        <themekey>Military</themekey>
+        <themekey>Geographic Coordinate Data Base</themekey>
+        <themekey>Public Land Survey System</themekey>
+        <themekey>Fish and Game</themekey>
+        <themekey>National Wildlife Refuge</themekey>
+        <themekey>GCDB Land Status</themekey>
+        <themekey>Ownership</themekey>
+        <themekey>Indian Reservation</themekey>
+        <themekey>Surface Management Agency</themekey>
+        <themekey>Bureau of Reclamation</themekey>
+        <themekey>BIA</themekey>
+        <themekey>Department of the Interior</themekey>
+        <themekey>BOR</themekey>
+        <themekey>U.S. Forest Service</themekey>
+        <themekey>U.S. Geological Survey</themekey>
+        <themekey>BLM</themekey>
+        <themekey>National Park Service</themekey>
+        <themekey>Bureau of Indian Affairs</themekey>
+        <themekey>Bureau of Land Management</themekey>
+        <themekey>USFS</themekey>
+        <themekey>DOI</themekey>
+        <themekey>Forest Service</themekey>
+        <themekey>USGS</themekey>
+        <themekey>NPS</themekey>
+      </theme>
+    </keywords>
+    <accconst>None</accconst>
+    <useconst>This data should not be used as a replacement for the BLM Master Title Plats and other official records! This Surface Management Agency GIS dataset is not a legal document and should be used as a general guide only. Please note that the official and most current information about a specific tract of federal land is contained in the official BLM land records: the Master Title Plats (MTPs), Historical Indices (HIs), and serialized case files which are located at BLM offices and online at http://www.glorecords.blm.gov/LSRSearch.These data are provided by Bureau of Land Management (BLM) “as is” and might contain errors or omissions. The User assumes the entire risk associated with its use of these data and bears all responsibility in determining whether these data are fit for the User’s intended use. The information contained in these data is dynamic and may change over time. The data are not better than the sources from which they were derived, and both scale and accuracy may vary across the data set. These data might not have the accuracy, resolution, completeness, timeliness, or other characteristics appropriate for applications that potential users of the data may contemplate. The User is encouraged to carefully consider the content of the metadata file associated with these data. These data are neither legal documents nor land surveys, and must not be used as such. Official records may be referenced at most BLM offices. Please report any errors in the data to the BLM office from which it was obtained. When errors are found, please contact the BLM Idaho State Office Geographic Sciences department at 208-373-3973. The BLM should be cited as the data source in any products derived from these data. Any Users wishing to modify the data should describe the types of modifications they have performed. The User should not misrepresent the data, nor imply that changes made were approved or endorsed by BLM. This data may be updated by the BLM without notification.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Bureau of Land Management (BLM), Idaho State Office </cntorg>
+          <cntper>John Sullivan</cntper>
+        </cntorgp>
+        <cntpos>Realty Specialist (Data Steward) </cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>1387 S. Vinnell Way</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83709</postal>
+        </cntaddr>
+        <cntvoice>(208) 373-4000 </cntvoice>
+        <cntemail>id_so_information@blm.gov</cntemail>
+        <hours>7:45am - 4:15pm, Mountain Time, Monday - Friday</hours>
+      </cntinfo>
+    </ptcontac>
+    <ptcontac>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Bureau of Land Management (BLM), Idaho State Office </cntorg>
+          <cntper>John Sullivan</cntper>
+        </cntorgp>
+        <cntpos>Realty Specialist (Data Steward) </cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>1387 S. Vinnell Way</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83709</postal>
+        </cntaddr>
+        <cntvoice>(208) 373-4000 </cntvoice>
+        <cntemail>id_so_information@blm.gov</cntemail>
+        <hours>7:45am - 4:15pm, Mountain Time, Monday - Friday</hours>
+      </cntinfo>
+    </ptcontac>
+    <datacred>The Bureau of Land Management is given the authority and responsibility to maintain surface management agency data for Federal lands by the Office of Management and Budget (OMB) Circular A-16 Coordination of Geographic Information, and Related Spatial Data Activities (revised and dated August 19, 2002), which "provides direction for federal agencies that produce, maintain or use spatial data either directly or indirectly in the fulfillment of their mission." It further states in Appendix E: NSDI Data Themes, Definitions, and Lead Agencies that "Federal Land Ownership Status" geospatial data is the responsibility of the Bureau of Land Management, and that "Federal land ownership status includes the establishment and maintenance of a system for the storage and dissemination of information describing all title, estate or interest of the federal government in a parcel of real and mineral property. The ownership status system is the portrayal of title for all such federal estates or interests in land." Please note that acreages derived from this GIS dataset will not be the same as the official Public Lands Statistics (PLS) acreages reported annually by the Bureau of Land Management Idaho State Office Branch of Lands and Minerals. The data steward approved this dataset in September 2018</datacred>
+    <native> Version 6.2 (Build 9200) ; Esri ArcGIS 10.6.0.8321</native>
+  </idinfo>
+  <spdoinfo>
+    <direct>Vector</direct>
+    <ptvctinf>
+      <sdtsterm>
+        <sdtstype>GT-polygon composed of chains</sdtstype>
+        <ptvctcnt>14</ptvctcnt>
+      </sdtsterm>
+    </ptvctinf>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <planar>
+        <mapproj>
+          <mapprojn>NAD 1983 Idaho TM</mapprojn>
+          <transmer>
+            <sfctrmer>0.9996</sfctrmer>
+            <longcm>-114.0</longcm>
+            <latprjo>42.0</latprjo>
+            <feast>2500000.0</feast>
+            <fnorth>1200000.0</fnorth>
+          </transmer>
+        </mapproj>
+        <planci>
+          <plance>coordinate pair</plance>
+          <coordrep>
+            <absres>0.000000002220024164500956</absres>
+            <ordres>0.000000002220024164500956</ordres>
+          </coordrep>
+          <plandu>meter</plandu>
+        </planci>
+      </planar>
+      <geodetic>
+        <horizdn>D North American 1983</horizdn>
+        <ellips>GRS 1980</ellips>
+        <semiaxis>6378137.0</semiaxis>
+        <denflat>298.257222101</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <detailed>
+      <enttyp>
+        <enttypl>RLTY_SMA_PUB_24K_POLY</enttypl>
+        <enttypd>Realty Surface Management Agency</enttypd>
+        <enttypds>BLM</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>FID</attrlabl>
+        <attrdef>Internal feature number.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Sequential unique whole numbers that are automatically generated.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>MGMT_AGNCY</attrlabl>
+        <attrdef>The managing agency (federal, state, or private) of the parcel. See the Enumerated domains for the definition of each value and the corresponding standard colors. The standard cartographic color definitions come from H-1553 Publication Standards Manual Handbook and are intended for use on all government maps. The colors are in C-M-Y-K combinations.</attrdef>
+        <attrdefs>BLM</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>LU_DOI</edomv>
+            <edomvd>Lands that are Bankhead Jones lands, which are managed by the U.S. Bureau of Land Management. LU_DOI: 0-20-10-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>BLM</edomv>
+            <edomvd>Lands that are managed by the U.S. Bureau of Land Management. BLM: 0-10-50-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>NWR</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. National Wildlife Service. NWR: 50-0-30-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>STATEFG</edomv>
+            <edomvd>Lands that are owned or managed by the Idaho Department of Fish and Game. STATEFG: 30-0-0-20</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>USFS</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. Forest Service. USFS: 20-0-20-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>HSTRCWTR</edomv>
+            <edomvd>Areas that are the unsurveyed space or gap between two Cadastral Surveys and are shown as water on the BLM Master Title Plats (MTPs). These areas DO NOT represent modern hydrographic features and should NOT be used as water in cartographic products. HSTRCWTR: 100-56-0-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>IR</edomv>
+            <edomvd>Lands within an Indian Reservation boundary and are managed by a Tribe. IR: 0-30-50-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>STATEPR</edomv>
+            <edomvd>Lands that are owned or managed by the Idaho Department of Parks and Recreation. STATEPR: 30-0-0-20</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>DOE</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. Department of Energy. DOE: 10-20-30-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>MIL</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. Department of Defense. MIL: 0-30-5-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>COE</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. Corps of Engineers. COE: 0-30-5-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>STATEOTH</edomv>
+            <edomvd>Lands that owned or managed by other Idaho State agencies. STATEOTH: 30-0-0-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>NPS</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. National Park Service. NPS: 20-20-0-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>PRIVATE</edomv>
+            <edomvd>Land that is private or otherwise not federal nor state. PRIVATE: 0-0-0-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>OTHER</edomv>
+            <edomvd>Federal lands that are managed by or withdrawn to another federal agency, such as the U.S. Bureau of Indian Affairs. OTHER: 10-20-30-0 The only circumstance where MGMT_AGNCY and AGNCY_NAME should not have the same value is when the MGMT_AGNCY value is "OTHER". In that case, the value of AGNCY_NAME will be the name of the federal agency which manages or has withdrawn that land. There are no Cartographic Standard colors in the H-1553 Publication Standards Manual Handbook for some of the agencies listed in AGNCY_NAME; therefore, caution should be used by federal agencies when using AGNCY_NAME on maps that are not just for internal use, as this may cause confusion if the data is compared with the standard BLM 1:100,000 scale Surface Management Maps.</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>LU_USDA</edomv>
+            <edomvd>Lands that are National Grasslands, which are managed by the U.S. Forest Service. LU_USDA: 10-0-30-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>STATE</edomv>
+            <edomvd>Lands that are owned or managed by the Idaho Department of Lands. STATE: 30-0-0-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+          <edom>
+            <edomv>BOR</edomv>
+            <edomvd>Lands that are managed by or withdrawn to the U.S. Bureau of Reclamation. BOR: 0-0-30-0</edomvd>
+            <edomvds>BLM</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Shape</attrlabl>
+        <attrdef>Feature geometry.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Coordinates defining the features.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>AGNCY_NAME</attrlabl>
+        <attrdef>Values of this field should be the same as the value for MGMT_AGNCY except when MGMT_AGNCY is "OTHER". This field clarifies the agency when MGMT_AGNCY is OTHER. See the Enumerated Domains of MGMT_AGNCY for detailed descriptions abbreviation definitions and standard cartographic colors.</attrdef>
+        <attrdefs>BLM</attrdefs>
+      </attr>
+      <attr>
+        <attrlabl>GIS_ACRES</attrlabl>
+      </attr>
+    </detailed>
+    <overview>
+      <eaover>This spatial data contains Surface Management Agency (SMA, also sometimes called Land Status) information for Idaho from the Idaho Bureau of Land Management (BLM). For federal government lands, this data displays the managing agency of the surface of the land, which does not mean the agency "owns" the land. SMA is sometimes referred to as "ownership", although this term is inaccurate when describing public lands. This Surface Management Agency data should not be used to depict boundaries (for example National Forest, National Park, National Wildlife Refuge, or Indian Reservation boundaries among others). Attribute information for the federal and private lands are from the BLM Master Title Plats (MTPs), the BLM case files, the BLM Legacy Rehost 2000 (LR2000) database, and corresponding federal Orders and official documents. Please note that because these official sources are strictly used, OTHER NON-BLM FEDERAL AGENCY LANDS MAY NOT BE ATTRIBUTED CORRECTLY unless the proper documents have been filed with the BLM and the land actions have been noted on the MTPs and in LR2000. Starting in the spring of 2011 a field called AGNCY_NAME is present in the data. The AGNCY_NAME field is intended to indicate the managing agency for polygons coded as OTHER in the MGMT_AGNCY field. The AGNCY_NAME field will not be used for the 100K Map Series published by the BLM for use by the public as all agencies in this field are not included in H-1553 Publication Standards Manual Handbook and, therefore, have no BLM Cartographic Standard. Except for polygons coded as OTHER in the MGMT_AGNCY field, all managing agency information in the AGNCY_NAME field should be the same as that of the MGMT_AGNCY field. The only intended difference between the AGNCY_NAME field and the MGMT_AGNCY field is where the MGMT_AGNCY is OTHER. In this case, the AGNCY_NAME will contain an abbreviation for an agency that is not represented in the H-1553 Publication Standards Manual Handbook. Examples of the agencies there are BIA (Bureau of Indian Affairs), USGS (United States Geological Survey), and FAA (Federal Aviation Administration). Attribute information for the State lands is received primarily through cooperation with the Idaho Department of Lands. This information might not reflect all State agency lands completely. A detailed analysis of State owned lands has not been done since June 2011; therefore, recent changes in ownership of State lands may not be reflected. Inclusion of State land information into this dataset is supplemental and should not be viewed as the authoritative source of State lands; please contact State agencies for questions about State lands. This data does not depict land management arrangements between government agencies such as Memorandums of Understanding or other similar agreements. When this data was originally generated in the early 2000's, the primary source of the geometry was the BLM Geographic Coordinate Database (GCDB), if it was available. In areas where GCDB was/is unavailable, the spatial features are taken from a variety of sources including the BLM Idaho Resource Base Data collection, BLM Idaho Master Title Plat AutoCad files, US Geological Survey Digital Line Graphs (DLGs), and US Forest Service Cartographic Feature Files (CFFs), among others (see Process Steps). It should be stressed that the geometry of a feature may not be GCDB-based in the first place, the geometry may shift away from GCDB due to a variety of reasons (topology procedures, automated software processes such as projections, etc.), and the GCDB-based features are not necessarily currently being edited to match improved GCDB. Therefore this data should NOT be considered actual GCDB data. For the latest Idaho GCDB spatial data, please contact the BLM Idaho State Office Cadastral Department at 208-373-4000. The BLM in Idaho creates and maintains this spatial data. This dataset is derived by dissolving based on the "MGMT_AGNCY" field from the master SMA GIS dataset (which is edited often) kept by the BLM Idaho State Office. Please get a fresh copy of this data a couple times a year as the SMA data is continually changing. Official actions that affect the managing agency happen often and changes to correct errors are always being made. Nevada SMA data was acquired from the BLM Nevada web site and clipped to the area that is managed by Idaho BLM Boise District.</eaover>
+    </overview>
+  </eainfo>
+  <metainfo>
+    <metd>20201005</metd>
+    <metc>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Bureau of Land Management (BLM), Idaho State Office </cntorg>
+          <cntper>John Sullivan</cntper>
+        </cntorgp>
+        <cntpos>Realty Specialist (Data Steward) </cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>1387 S. Vinnell Way</address>
+          <city>Boise</city>
+          <state>Idaho</state>
+          <postal>83709</postal>
+        </cntaddr>
+        <cntvoice>(208) 373-4000 </cntvoice>
+        <cntemail>id_so_information@blm.gov</cntemail>
+        <hours>7:45am - 4:15pm, Mountain Time, Monday - Friday</hours>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+    <mettc>local time</mettc>
+  </metainfo>
+</metadata>
