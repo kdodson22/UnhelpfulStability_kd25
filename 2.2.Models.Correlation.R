@@ -1,3 +1,13 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 2.2 Models for correlation between RRR metrics
+
+## Purpose: This script fits Bayesian glmms for the deviance analysis, evaluating how diversity, dominant species, and plant-available nitrogen relate to the correlation structure/residuals between RRR metrics.
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
 library(tidyverse)
 library(marginaleffects)
 library(here)
@@ -40,7 +50,7 @@ cor_df <- full_join(cor_df, cover_df2, by = c("Site", "Plot", "Sprayed"))
 cor_df_yes <- cor_df %>% filter(Sprayed == "Yes")
 
 
-## Inter-Correlation Models #####
+## Estimate correlations between RRR metrics: #######
 
 ## Invasive x Composition ##
 #recovery
@@ -74,7 +84,7 @@ in_recov_df <- cor_df_yes %>% filter(!is.na(nfunc_recovery)) %>% cbind(as.data.f
 ########################################
 
 
-## Deviance Models - Invasive x Composition  #####
+## Deviance Analysis - Invasive x Composition  #####
 #create df with recovery residuals 
 ic_recov_resids <- residuals(ic_recov_model, summary = T)
 

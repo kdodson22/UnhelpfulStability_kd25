@@ -1,7 +1,20 @@
-library(ecotraj)
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 1.2 RRR Composition:
+
+## Purpose: This script calculates several summary variables needed to analyze trends in the resistance, resilience, and recovery of disturbed plant communities, based on community composition, using the vegan and ecotraj packages.
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+library(remotes)
+
+## This analysis requires use of Ecotraj 0.1.1
+# remotes::install_version("ecotraj", version = "0.1.1")
+
 library(tidyverse)
 library(vegan)
 library(here)
+library(ecotraj)
 
 #data
 # source(here("1.0.Data.Set-up.R"))
@@ -13,18 +26,22 @@ meta1 <- spp.comp %>%
   mutate(ObsID = paste(Site, Plot, Year, sep = "-")) 
 
 treat1 <- sitedata %>%
-  filter(Plot <= 13) %>%
+  filter(Plot <= 13) %>% ## remove 4x4 N-treatment plots, not used in this analysis.
   dplyr::select(Site, Plot, Sprayed)
 
 meta <- left_join(meta1, treat1, by = c("Site", "Plot"))
 meta <- meta %>% mutate(Year = as.numeric(Year))
 
-## 2021 -> 2022 Distance ###### 
+
+
+## Calculate distances in community composition between time points using ecotraj functions:####
+
+## 2021 -> 2022 Distance, representing Compositional Resistance ###### 
 #create metadata df
 plots1 <- meta %>% 
   filter(Year == 2021 | Year == 2022)
 
-#filter correct years from spp.comp.rel
+#filter to 2021 and 2022 years from spp.comp.rel
 spp.comp.rel$Obs.ID <- row.names(spp.comp.rel)
 scr.1 <- spp.comp.rel %>% 
   separate(Obs.ID, into = c("Site", "Plot", "Year")) %>% 
@@ -35,7 +52,7 @@ scr.1 <- spp.comp.rel %>%
   filter(Year == 2021 | Year == 2022)
 
 
-#bray-curtis dissimilarity
+#Calculate bray-curtis dissimilarity using vegan:
 bray1 <- vegdist(scr.1[,-c(1:3)], method = "bray")
 
 #as matrix
@@ -46,12 +63,14 @@ braydf1 <- as.data.frame(braymat1)
 #combine
 distmatrix1 <- cbind(plots1, braydf1)
 
-#group by site-plot combo
+#group by site-plot IDs
 distmat1 <- distmatrix1 %>%
   mutate("Site-Plot" = paste(Site, Plot, Sprayed, sep = "-")) %>%
   relocate("Site-Plot", .after = Year)
 
-#LENGTHS (segments between points & sum; within year/site/plot combo)
+
+
+#Calculate trajectory lengths across years for each plot ID.
 tr_lengths1 <- trajectoryLengths(braymat1,
                                  distmat1$`Site-Plot`,
                                  distmat1$Year)
@@ -66,12 +85,14 @@ tr_lengths_df1 <- tr_lengths_df1 %>%
 
 tr_lengths_df1$S1 <- replace(tr_lengths_df1$S1,tr_lengths_df1$S1==1, 0.99)
 
-## 2021 -> 2024 Distance ##### 
+
+
+## 2021 -> 2024 Distance representing Compositional Recovery ##### 
 #create metadata df
 plots2 <- meta %>% 
   filter(Year == 2021 | Year == 2024)
 
-#filter correct years from spp.comp.rel
+#filter to 2021 and 2024 from spp.comp.rel
 scr.2 <- spp.comp.rel %>%
   separate(Obs.ID, into = c("Site", "Plot", "Year")) %>%
   relocate(c("Site", "Plot", "Year"), .before = "AMSIN") %>%
@@ -96,7 +117,7 @@ distmat2 <- distmatrix2 %>%
   mutate("Site-Plot" = paste(Site, Plot, Sprayed, sep = "-")) %>%
   relocate("Site-Plot", .after = Year)
 
-#LENGTHS (segments between points & sum; within year/site/plot combo)
+#Calculate trajectory lengths across years for each plot ID.
 tr_lengths2 <- trajectoryLengths(braymat2,
                                  distmat2$`Site-Plot`,
                                  distmat2$Year)
@@ -109,24 +130,11 @@ tr_lengths_df2 <- tr_lengths_df2 %>%
          Plot = as.factor(Plot))%>%
   relocate(c("Site", "Plot", "Sprayed"), .before = "S1") 
 
+
+
 ## Create dataframe #####
-pretreat$Site <- factor(pretreat$Site, 
-                        levels = c("1","2","3","4","5",
-                                   "6","7","8","9","10"))
-pretreat$Plot <- factor(pretreat$Plot, 
-                        levels = c("1","2","3","4","5",
-                                   "6","7","8","9","10",
-                                   "11","12","13"))
 
-df_divcov$Site <- factor(df_divcov$Site, 
-                         levels = c("1","2","3","4","5",
-                                    "6","7","8","9","10"))
-df_divcov$Plot <- factor(df_divcov$Plot, 
-                         levels = c("1","2","3","4","5",
-                                    "6","7","8","9","10",
-                                    "11","12","13"))
-
-#calculate means of control lengths for two interest year pairings
+#calculate means distances for control plots for 2021-2022 and 2021-2024:
 controlmeanlengths <- tr_lengths_df1 %>%
   select(-Trajectory) %>%
   rename("Y21_Y22" = S1) %>% 
@@ -142,7 +150,7 @@ controlmeanlengths <- tr_lengths_df2 %>%
   summarise("Y21_Y24_conmean" = mean(Y21_Y24)) %>%
   left_join(controlmeanlengths)
 
-#create dataframe with all lengths 
+# Create dataframe with all lengths 
 RRR_df <- tr_lengths_df1 %>%
   select(-Trajectory) %>%
   rename("Y21_Y22" = S1) %>% 
@@ -151,7 +159,7 @@ RRR_df <- tr_lengths_df1 %>%
   rename("Y21_Y24" = S1) %>% 
   left_join(controlmeanlengths)
 
-#join with pretreatment & calculate LRRs
+#join with pretreatment & calculate log response ratios based on composition:
 RRR_df <- df_divcov %>% filter(Year == 2021) %>% 
   left_join(RRR_df) %>% 
   mutate(LRR.resistance = log((1-Y21_Y22) / (1-Y21_Y22_conmean)),
@@ -161,10 +169,10 @@ RRR_df <- df_divcov %>% filter(Year == 2021) %>%
          
          LRR.recovery = log((1-Y21_Y24) / (1-Y21_Y24_conmean)))
 
-#add soil data
+# Add soil data
 RRR_df <- RRR_df %>% left_join(soildata, by = c("Site", "Plot")) 
 
-#munlacks
+#Calculate site-level means (mundlak variables):
 RRR_df <- RRR_df %>% 
   group_by(Site) %>%
   rename("pre_natcover_abs" = natcover_abs,
@@ -195,7 +203,7 @@ RRR_df <- RRR_df %>%
          slm.whc.f21 = mean(WHC_g.g.instant_2021Fall),
          slm.whc.s22 = mean(WHC_g.g.instant_2022Spring))
 
-#dominants 
+# Add percent cover of dominant species:
 RRR_df <- RRR_df %>% 
   mutate(Site = as.integer(Site),
          Plot = as.integer(Plot), 
@@ -204,7 +212,7 @@ RRR_df <- RRR_df %>%
   select(-Year.x, -Year.y, -Depth, -Size) %>%
   relocate("Season", .after = "Plot")
 
-#Mineralization & Delta N
+# Calculate mineralization & Delta N:
 RRR_df <- RRR_df %>%
   mutate(Fall21_mineralN = N_ug.g.incubated_2021Fall - N_ug.g.instant_2021Fall,
          Spr22_mineralN = N_ug.g.incubated_2022Spring - N_ug.g.instant_2022Spring, 
@@ -229,3 +237,4 @@ RRR_df2 <- RRR_df %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                                                 slm.epbr = mean(EPBR3),
                                                 slm.br = mean(Bromus),
                                                 slm.pobu = mean(POBU)) %>% ungroup()
+

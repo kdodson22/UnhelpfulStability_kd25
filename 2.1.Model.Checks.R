@@ -1,3 +1,12 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 2.1 Model checks
+
+## Purpose: This script completes model diagnostics for the model fits in 2.0, including probability of direction for posterior parameter estimates, model fit statistics, and description of priors.
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(here)
 library(performance)
@@ -7,7 +16,7 @@ library(modelbased)
 #data
 # source(here("2.0.Models.RRR.R"))
 
-## Priors #####
+## Extract Priors for supplementary information #####
 get_prior(inv_resistmodr)
 get_prior(inv_resilience24_modr)
 get_prior(inv_recovermodr)
@@ -20,8 +29,8 @@ get_prior(resist_modr)
 get_prior(resil_modr)
 get_prior(recov_modr)
 
-## Model Fit #####
-#mae
+## Evaluate Model Fit #####
+# Mean absolute error:
 performance::mae(inv_resistmodr)
 performance::mae(inv_resilience24_modr)
 performance::mae(inv_recovermodr)
@@ -34,7 +43,7 @@ performance::mae(resist_modr)
 performance::mae(resil_modr)
 performance::mae(recov_modr)
 
-#r2
+# Bayesian r2
 bayes_R2(inv_resistmodr)
 bayes_R2(inv_resilience24_modr)
 bayes_R2(inv_recovermodr)
@@ -47,14 +56,17 @@ bayes_R2(resist_modr)
 bayes_R2(resil_modr)
 bayes_R2(recov_modr)
 
-## Directional Statistics #####
+
+
+## Probability of direction and predicted effects on scale of response (marginal effects) #####
+
 #invasive cover resilience and recovery x invasive richness
-estimate_prediction(inv_resilience24_modr, by = "pre_invrichness")
+estimate_prediction(inv_resilience24_modr, by = "pre_invrichness") #marginal effect
 estimate_prediction(inv_recovermodr, by = "pre_invrichness")
+
 posterior <- data.frame(inv_recovermodr)
 pd.invrich <- length(posterior$b_scalepre_invrichness[posterior$b_scalepre_invrichness>0])/length(posterior$b_scalepre_invrichness)
 pd.invrich
-
 
 #invasive cover resistance, resilience, and recovery x CHJU
 estimate_prediction(inv_resistmodr, by = "CHJU")

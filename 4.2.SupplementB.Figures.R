@@ -1,11 +1,22 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.2. Supplement B Figures:
+
+## Purpose:  This script generates Supplementary Figure 4: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
 library(tidyverse)
 library(here)
 library(ggeffects)
 library(cowplot)
 
-#data
 
-## SupFig 4. Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
+
+## Extract posterior parameter estimates from each model fit and combine for plotting:
+
 # resistance 
 ints.inv.resist.wat <- inv_resistmodr_wat %>%
   gather_draws(b_scalepre_invrichness,
@@ -260,7 +271,7 @@ Post-treatment")) +
                      legend.text = element_text(size = 16),
                      axis.title =  element_text(size = 16))
 
-# ggsave(plot = supfig5,
-#        file = "figures/supfig5.png",
-#        width = 6, height = 6, unit = c("in"), dpi = 450)
+ ggsave(plot = supfig5,
+       file = "figures/supfig5.png",
+       width = 6, height = 6, unit = c("in"), dpi = 450)
 

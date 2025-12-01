@@ -1,3 +1,13 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 3.3 Figure 5.
+
+## Purpose: This script generates Figure 5, showing marginal effects of diversity, dominant species, and soil resources on RRR metrics.
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
 library(tidyverse)
 library(marginaleffects)
 library(here)
@@ -12,6 +22,10 @@ library(cowplot)
 
 #data
 # source(here("2.0.Models.RRR.R"))
+
+
+
+## Each of the panels below illustrates the marginal effect of a variable of interest on a particular RRR metric, using the predictions function from marginaleffects. This function calculates the effect of variation in the variable of interest on the response, while holding other variables at their means.
 
 ## Pre-treatment Invasive Richness ~ Resilience #####
 #Invasive Cover Model: 
@@ -514,7 +528,7 @@ me_legend <- get_legend(me_5a +
                                 legend.title = element_blank(),
                                 legend.text = element_text(size = 12)))
 
-#altogether
+# Combine panels:
 figure5me <- plot_grid(me_5a, me_5b, me_5c, 
                        me_5d, me_5e, me_5f, 
                        me_legend, me_5g, me_5h,  

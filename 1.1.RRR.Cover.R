@@ -1,11 +1,17 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 1.1 RRR Cover
+
+## Purpose: This script calculates several summary variables needed to analyze trends in the resistance, resilience, and recovery of disturbed plant communities, based on plant cover
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(vegan)
 library(here)
 
-#data
-# source(here("1.0.Data.Set-up.R"))
 
-#prep
+# Format site and plot variables as factors:
 df_divcov$Site <- factor(df_divcov$Site, 
                          levels = c("1","2","3","4","5",
                                     "6","7","8","9","10"))
@@ -23,7 +29,7 @@ pretreat$Plot <- factor(pretreat$Plot,
 
 ####### DATA CLEANING - INVASIVE ########
 
-### ABSOLUTE - INVASIVE ###
+### ABSOLUTE COVER for INVASIVE SPECIES ###
 #absolute cover data frame
 invabsdf <- df_divcov %>%
   select(Site, Plot, Year, invcover_abs) %>%
@@ -32,10 +38,10 @@ invabsdf <- df_divcov %>%
               names_prefix = "invcover_abs_") %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
-# some plots have 0% cover -- add the equivalent of ~1/2 of a 'hit'
+# some plots have 0% cover for plant categories that are present-- add the equivalent of ~1/2 of a 'hit'
 invabsdf[,3:6] <- replace(invabsdf[,3:6], invabsdf[,3:6] < 0.019, 0.010)
 
-#add more soil data
+# Add additional soil variables to dataframe:
 soildata$Site <- factor(soildata$Site, 
                         levels = c("1","2","3","4","5",
                                    "6","7","8","9","10"))
@@ -46,6 +52,7 @@ soildata$Plot <- factor(soildata$Plot,
 
 invabsdf_soil <- invabsdf  %>% 
   left_join(soildata, by = c("Site","Plot")) %>%
+  # Calculate change in N variables between 2021-2022:
   mutate(Fall21_mineralN = N_ug.g.incubated_2021Fall - N_ug.g.instant_2021Fall,
          Spr22_mineralN = N_ug.g.incubated_2022Spring - N_ug.g.instant_2022Spring, 
          DeltaN_21_22 = (N_ug.g.instant_2021Fall - N_ug.g.instant_2022Spring)/
@@ -55,7 +62,7 @@ invabsdf_soil <- invabsdf  %>%
          DeltaNO3_21_22 = (NO3.instant_2021Fall - NO3.instant_2022Spring)) 
 
 
-#calculate mundlaks variables 
+#calculate site-mean variables (Mundlak device) for statistical controls:
 mundlaks <- invabsdf_soil %>%
   group_by(Site) %>%
   filter(Sprayed=="Yes") %>%
@@ -81,8 +88,12 @@ mundlaks <- invabsdf_soil %>%
             slm.whc.f21 = mean(WHC_g.g.instant_2021Fall),
             slm.whc.s22 = mean(WHC_g.g.instant_2022Spring))
 
-#combine
+## Add to data frame:
 invabsdf_soil <- invabsdf_soil %>% left_join(mundlaks)
+
+
+
+## Calulate RRR Metrics: ###
 
 #calculate means of control plots for each year
 controlmeans <- invabsdf_soil %>%
@@ -115,7 +126,7 @@ invabsdf_soil <- invabsdf_soil %>%
          LRR.resilience23 = log(invcover_abs_2023/invcover_abs_2023.control) - 
            log(invcover_abs_2022/invcover_abs_2022.control) )
 
-#starting BRTE, CHJU, etc
+# Calculate pre-treatment % cover for focal dominant species:
 invabsdf_soil <- invabsdf_soil %>% 
   mutate(Site = as.integer(Site),
          Plot = as.integer(Plot), 
@@ -139,6 +150,8 @@ invabsdf_soil$Site <- factor(invabsdf_soil$Site,
                              levels = c("1","2","3","4","5",
                                         "6","7","8","9","10"))
 
+
+## Calculate site-level means (mundlak device) for these variables:
 invabsdf_soil2 <- invabsdf_soil %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                                                               slm.chju = mean(CHJU), 
                                                               slm.epbr = mean(EPBR3),
@@ -146,12 +159,14 @@ invabsdf_soil2 <- invabsdf_soil %>% group_by(Site) %>% mutate(slm.brte = mean(BR
                                                               slm.pobu = mean(POBU)) %>% ungroup()
 
 
-###################
+
 
 
 
 
 ####### DATA CLEANING - NATIVE ########
+
+## repeats same steps as above, but for native species only:
 
 ### ABSOLUTE ###
 #absolute cover dataframe
@@ -162,12 +177,13 @@ natabsdf <- df_divcov %>%
               names_prefix = "natcover_abs_") %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
-# some plots have 0% cover -- add the equivalent of ~1/2 of a 'hit'
+# some plots have 0% cover for plant categories that are present -- add the equivalent of ~1/2 of a 'hit'
 natabsdf[,3:6] <- replace(natabsdf[,3:6], natabsdf[,3:6] < 0.019, 0.010)
 
-#add more soil data
+#add more soil variables:
 natabsdf_soil <- natabsdf  %>% 
   left_join(soildata, by = c("Site","Plot")) %>%
+  ## Calculate changes in soil N:
   mutate(Fall21_mineralN = N_ug.g.incubated_2021Fall - N_ug.g.instant_2021Fall,
          Spr22_mineralN = N_ug.g.incubated_2022Spring - N_ug.g.instant_2022Spring, 
          DeltaN_21_22 = (N_ug.g.instant_2021Fall - N_ug.g.instant_2022Spring)/N_ug.g.instant_2021Fall,
@@ -175,7 +191,7 @@ natabsdf_soil <- natabsdf  %>%
          DeltaNO3_21_22 = (NO3.instant_2021Fall - NO3.instant_2022Spring)) 
 
 
-#calculate mundlaks variables 
+#calculate mundlak/site-level means for variables 
 mundlaks <- natabsdf_soil %>%
   group_by(Site) %>%
   filter(Sprayed=="Yes") %>%
@@ -203,6 +219,8 @@ mundlaks <- natabsdf_soil %>%
 #combine
 natabsdf_soil <- natabsdf_soil %>% left_join(mundlaks)
 
+
+## Calculate RRR metrics:
 #calculate means of control plots for each year
 controlmeans <- natabsdf_soil %>%
   group_by(Site) %>%
@@ -231,7 +249,7 @@ natabsdf_soil <- natabsdf_soil %>%
          LRR.resilience23 = log(natcover_abs_2023 / natcover_abs_2023.control) - 
            log(natcover_abs_2022 / natcover_abs_2022.control) )
 
-#starting BRTE, CHJU
+# Calculate pre-treatment % cover for focal dominant species:
 natabsdf_soil <- natabsdf_soil %>% 
   mutate(Site = as.integer(Site),
          Plot = as.integer(Plot), 
@@ -248,7 +266,8 @@ natabsdf_soil <- invabsdf_soil %>% select(Site, Plot, Sprayed, invcover_abs_2022
 natabsdf_soil$Site <- factor(natabsdf_soil$Site, 
                              levels = c("1","2","3","4","5",
                                         "6","7","8","9","10"))
-#remove those without native richness & add extra Mundlaks 
+
+#remove those without native richness & add site-level mean variables for focal dominants:
 natabsdf_soil2 <- natabsdf_soil %>% filter(pre_natrichness != 0) %>%
   group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                             slm.chju = mean(CHJU), 

@@ -1,3 +1,15 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.2.1. Supplement B Models:
+
+## Purpose:  This script fits an alternate model specification and Supplementary Figure 4: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
+
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
+
 library(tidyverse)
 library(here)
 library(brms)
