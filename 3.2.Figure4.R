@@ -1,3 +1,12 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 3.2 Figure 4
+
+## Purpose: This script generates Figure 4, showing posterior parameter estimates for each model
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(marginaleffects)
 library(here)
@@ -12,7 +21,7 @@ library(ggtext)
 #data
 # source(here("2.0.Models.RRR.R"))
 
-## Posterior Predictions #####
+## Extract posterior parameter estimates from each model fit and combine for plotting: ####
 #Resistance 
 ints.inv.resist <- inv_resistmodr %>%
   gather_draws(b_scalepre_invrichness,
@@ -212,6 +221,6 @@ figure4 <- ggplot(posteriors, aes(y =.variable,
         legend.justification.inside = c(0.025,0.025)) 
 
 
-# ggsave(plot = figure4,
-#        file = "figures/Figure4.png",
-#        width = 8.25, height = 7.5, unit = c("in"), dpi = 400)
+ # ggsave(plot = figure4,
+ #       file = "figures/Figure4.png",
+ #        width = 8.25, height = 7.5, unit = c("in"), dpi = 400)

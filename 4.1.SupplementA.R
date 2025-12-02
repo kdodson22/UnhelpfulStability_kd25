@@ -1,3 +1,12 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.1 Supplement A:
+
+## Purpose: This script generates material for supplement A, including: Site climate description, trends in relative cover of dominant species across the study period, and a rank abundance plot for plant species observed
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(here)
 library(ggeffects)
@@ -6,7 +15,7 @@ library(cowplot)
 #data
 # source(here("1.0.Data.Set-up.R"))
 
-## Prism data #####
+## Calculate precipitation data from PRISM for sites: #####
 #get year and month from 'ID'
 prism <- prism %>%
   mutate(Year = substr(ID, 4, 7),
@@ -28,6 +37,9 @@ prismannuals <- prism %>%
   summarise(Sitemean_annual_ppt_mm = mean(Annual_ppt_mm)) %>%
   group_by(WaterYear) %>%
   summarise(Mean_annual_ppt_mm = mean(Sitemean_annual_ppt_mm))
+
+
+
 
 ## SupFig 1. B. tectorum and C. juncea relative cover pre- and post-treatment.  #####
 brte_cov <- spp.comp.rel %>%
@@ -99,8 +111,8 @@ treatment",
 
 supfig1
 
-# ggsave(supfig1, file = "figures/supfig1.png",
-#        width = 5.5, height = 5, unit = c("in"), dpi = 450)
+ # ggsave(supfig1, file = "figures/supfig1.png",
+ #       width = 5.5, height = 5, unit = c("in"), dpi = 450)
 
 
 ## SupFig 3. Ranked species rareness based on relative abundance. #####
@@ -116,7 +128,7 @@ spp.comp.rel2 <- spp.comp.rel[rowstokeep, ]
 spp.comp.rel2$Obs.ID = NULL
 
 # Calculate mean and SE of rel abundance for each species
-species_total_abundance <- colMeans(spp.comp.rel2) ## is this the right matrix to use?
+species_total_abundance <- colMeans(spp.comp.rel2) 
 se_values <- sapply(spp.comp.rel2, se)
 
 ranks <- data.frame(species_total_abundance, se_values)

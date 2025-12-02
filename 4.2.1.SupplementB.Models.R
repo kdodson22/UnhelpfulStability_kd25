@@ -1,3 +1,15 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.2.1. Supplement B Models:
+
+## Purpose:  This script fits an alternate model specification and Supplementary Figure 4: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
+
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
+
 library(tidyverse)
 library(here)
 library(brms)
@@ -26,7 +38,7 @@ inv_resistmodr_wat <- brm(LRR.resistance ~
                             (1 | Site), 
                           data = subset(invabsdf_soil,
                                         Sprayed=="Yes"), 
-                          warmup = 1000, iter = 2000, chains = 4, 
+                          warmup = 1000, iter = 2000, chains = 4, seed = 123,
                           control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 
@@ -47,7 +59,7 @@ inv_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                    (1 | Site), 
                                  data = subset(invabsdf_soil,
                                                Sprayed=="Yes"),
-                                 warmup = 1000, iter = 2000, chains = 4, 
+                                 warmup = 1000, iter = 2000, chains = 4, seed = 123,
                                  control = list(adapt_delta = 0.999))
 
 
@@ -67,7 +79,7 @@ inv_recovermodr_wat <- brm(LRR.recovery ~
                              (1 | Site), 
                            data = subset(invabsdf_soil,
                                          Sprayed=="Yes"),
-                           warmup = 1000, iter = 2000, chains = 4, 
+                           warmup = 1000, iter = 2000, chains = 4, seed = 123,
                            control = list(adapt_delta = 0.999))
 
 
@@ -88,7 +100,7 @@ nat_resistmodr_wat <- brm(LRR.resistance ~
                             (1 | Site), 
                           data = subset(natabsdf_soil2,
                                         Sprayed=="Yes"), 
-                          warmup = 1000, iter = 2000, chains = 4, 
+                          warmup = 1000, iter = 2000, chains = 4, seed = 123,
                           control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 
@@ -109,7 +121,7 @@ nat_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                    (1 | Site), 
                                  data = subset(natabsdf_soil2,
                                                Sprayed=="Yes"),
-                                 warmup = 1000, iter = 2000, chains = 4, 
+                                 warmup = 1000, iter = 2000, chains = 4, seed = 123,
                                  control = list(adapt_delta = 0.999, 
                                                 max_treedepth = 12))
 
@@ -129,7 +141,7 @@ nat_recovermodr_wat <- brm(LRR.recovery ~
                              (1 | Site), 
                            data = subset(natabsdf_soil2,
                                          Sprayed=="Yes"),
-                           warmup = 1000, iter = 2000, chains = 4, 
+                           warmup = 1000, iter = 2000, chains = 4, seed = 123,
                            control = list(adapt_delta = 0.999, 
                                           max_treedepth = 12))
 
@@ -150,7 +162,7 @@ resist_modr_wat <- brm(LRR.resistance ~
                          (1 | Site),
                        data = subset(RRR_df,
                                      Sprayed=="Yes"),
-                       warmup = 1000, iter = 2000, chains = 4, 
+                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999,
                                       max_treedepth = 12))
 
@@ -172,7 +184,7 @@ resil_modr_wat <- brm(LRR.resilience ~
                         (1 | Site),
                       data = subset(RRR_df,
                                     Sprayed=="Yes"),
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, 
                                      max_treedepth = 12))
 
@@ -192,6 +204,6 @@ recov_modr_wat <- brm(LRR.recovery ~
                         (1 | Site), 
                       data = subset(RRR_df,
                                     Sprayed=="Yes"),
-                      warmup = 1000, iter = 2000, chains = 4,
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 

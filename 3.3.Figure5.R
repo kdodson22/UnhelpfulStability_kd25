@@ -1,3 +1,13 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 3.3 Figure 5.
+
+## Purpose: This script generates Figure 5, showing marginal effects of diversity, dominant species, and soil resources on RRR metrics.
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
 library(tidyverse)
 library(marginaleffects)
 library(here)
@@ -12,6 +22,8 @@ library(cowplot)
 
 #data
 # source(here("2.0.Models.RRR.R"))
+
+## Each of the panels below illustrates the marginal effect of a variable of interest on a particular RRR metric, using the predictions function from marginaleffects. This function calculates the effect of variation in the variable of interest on the response, while holding other variables at their means.
 
 ## Pre-treatment Invasive Richness ~ Resilience #####
 #Invasive Cover Model: 
@@ -242,9 +254,7 @@ cc_recov_chju_pred <- cc_recov_chju_pred %>%
 #combine 
 recov_chju_preds <- rbind(if_recov_chju_pred, nf_recov_chju_pred, cc_recov_chju_pred)
 
-#####
-
-### POST-PAN ~ RESILIENCE #####
+## POST-PAN ~ Resilience #####
 #INVFUN ~ recovery
 if_resil_postN_df <- datagrid(model = inv_resilience24_modr,
                               N_ug.g.instant_2022Spring = seq_range(invabsdf_soil$N_ug.g.instant_2022Spring, 100))
@@ -283,7 +293,7 @@ cc_resil_postN_pred <- cc_resil_postN_pred %>%
 resil_postN_preds <- rbind(if_resil_postN_pred, nf_resil_postN_pred, cc_resil_postN_pred)
 
 
-### POST-PAN ~ RECOVERY #####
+## POST-PAN ~ Recovery #####
 #INVFUN ~ recovery
 if_recov_postN_df <- datagrid(model = inv_recovermodr,
                               N_ug.g.instant_2022Spring = seq_range(invabsdf_soil$N_ug.g.instant_2022Spring, 100))
@@ -514,7 +524,7 @@ me_legend <- get_legend(me_5a +
                                 legend.title = element_blank(),
                                 legend.text = element_text(size = 12)))
 
-#altogether
+# Combine panels:
 figure5me <- plot_grid(me_5a, me_5b, me_5c, 
                        me_5d, me_5e, me_5f, 
                        me_legend, me_5g, me_5h,  
@@ -523,5 +533,5 @@ figure5me <- plot_grid(me_5a, me_5b, me_5c,
 figure5me
 
 
-ggsave(figure5me, file = "figures/figure5.png",
-       width = 9, height = 7.9, dpi = 450)
+# ggsave(figure5me, file = "figures/figure5.png",
+#        width = 9, height = 7.9, dpi = 450)

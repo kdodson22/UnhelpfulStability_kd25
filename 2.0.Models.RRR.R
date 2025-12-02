@@ -1,3 +1,13 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 2.0 Models for RRR
+
+## Purpose: This script fits Bayesian glmms evaluating the effects of diversity, dominant species, and plant-available nitrogen on the stability of disturbed plant communities. Variable selection and directed acyclic graphs are described in the text.
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
 library(tidyverse)
 library(here)
 library(brms)
@@ -9,7 +19,7 @@ library(bayesplot)
 # source(here("1.2.RRR.Composition.R"))
 
 ## MODELS - Invasive Cover #####
-#RESISTANCE
+#RESISTANCE based on invasive cover
 inv_resistmodr <- brm(LRR.resistance ~ 
                         scale(pre_invrichness) +
                         scale(pre_natrichness) +
@@ -23,7 +33,7 @@ inv_resistmodr <- brm(LRR.resistance ~
                         (1 | Site), 
                       data = subset(invabsdf_soil,
                                     Sprayed=="Yes"), 
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(inv_resistmodr)
@@ -32,7 +42,7 @@ inv_resistmodr <- brm(LRR.resistance ~
 #                prob_outer = 0.9,
 #                regex = "^b") 
 
-#RESILIENCE (2024) 
+#RESILIENCE (2024)  based on invasive cover
 inv_resilience24_modr <- brm(LRR.resilience24 ~ 
                                scale(pre_invrichness) +
                                scale(pre_natrichness) +
@@ -47,7 +57,7 @@ inv_resilience24_modr <- brm(LRR.resilience24 ~
                                (1 | Site), 
                              data = subset(invabsdf_soil,
                                            Sprayed=="Yes"),
-                             warmup = 1000, iter = 2000, chains = 4, 
+                             warmup = 1000, iter = 2000, chains = 4, seed = 123,
                              control = list(adapt_delta = 0.999))
 
 # summary(inv_resilience24_modr)
@@ -56,7 +66,7 @@ inv_resilience24_modr <- brm(LRR.resilience24 ~
 #                prob_outer = 0.9,
 #                regex = "^b")
 
-#RECOVERY
+#RECOVERY based on invasive cover
 inv_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
                          scale(pre_natrichness) +
@@ -70,7 +80,7 @@ inv_recovermodr <- brm(LRR.recovery ~
                          (1 | Site), 
                        data = subset(invabsdf_soil,
                                      Sprayed=="Yes"),
-                       warmup = 1000, iter = 2000, chains = 4, 
+                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999))
 
 # summary(inv_recovermodr)
@@ -80,7 +90,7 @@ inv_recovermodr <- brm(LRR.recovery ~
 #                regex = "^b")
 
 ## MODELS - Native Cover #####
-# RESISTANCE
+# RESISTANCE based on native cover
 nat_resistmodr <- brm(LRR.resistance ~ 
                         scale(pre_invrichness) +
                         scale(pre_natrichness) +
@@ -94,7 +104,7 @@ nat_resistmodr <- brm(LRR.resistance ~
                         (1 | Site), 
                       data = subset(natabsdf_soil2,
                                     Sprayed=="Yes"), 
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(nat_resistmodr)
@@ -103,7 +113,7 @@ nat_resistmodr <- brm(LRR.resistance ~
 #                prob_outer = 0.9,
 #                regex = "^b")
 
-#RESILIENCE (2024) 
+#RESILIENCE (2024)  based on native cover
 nat_resilience24_modr <- brm(LRR.resilience24 ~ 
                                scale(pre_invrichness) +
                                scale(pre_natrichness) +
@@ -118,7 +128,7 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                                (1 | Site), 
                              data = subset(natabsdf_soil2,
                                            Sprayed=="Yes"),
-                             warmup = 1000, iter = 2000, chains = 4, 
+                             warmup = 1000, iter = 2000, chains = 4, seed = 123, 
                              control = list(adapt_delta = 0.999, 
                                             max_treedepth = 12))
 
@@ -128,7 +138,7 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
 #                prob_outer = 0.9,
 #                regex = "^b")
 
-#RECOVERY
+#RECOVERY based on native cover
 nat_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
                          scale(pre_natrichness) +
@@ -142,7 +152,7 @@ nat_recovermodr <- brm(LRR.recovery ~
                          (1 | Site), 
                        data = subset(natabsdf_soil2,
                                      Sprayed=="Yes"),
-                       warmup = 1000, iter = 2000, chains = 4, 
+                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999, 
                                       max_treedepth = 12))
 
@@ -153,7 +163,7 @@ nat_recovermodr <- brm(LRR.recovery ~
 #                regex = "^b")
 
 ## MODELS - Composition #####
-#RESISTANCE
+#RESISTANCE based on composition
 resist_modr <- brm(LRR.resistance ~ 
                      scale(pre_invrichness) +
                      scale(pre_natrichness) +
@@ -167,7 +177,7 @@ resist_modr <- brm(LRR.resistance ~
                      (1 | Site),
                    data = subset(RRR_df,
                                  Sprayed=="Yes"),
-                   warmup = 1000, iter = 2000, chains = 4, 
+                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999))
 
 # summary(resist_modr)
@@ -176,7 +186,7 @@ resist_modr <- brm(LRR.resistance ~
 #                prob_outer = 0.9,
 #                regex = "^b")
 
-#RESILIENCE
+#RESILIENCE based on composition
 resil_modr <- brm(LRR.resilience ~
                     scale(pre_invrichness) +
                     scale(pre_natrichness) +
@@ -191,7 +201,7 @@ resil_modr <- brm(LRR.resilience ~
                     (1 | Site),
                   data = subset(RRR_df,
                                 Sprayed=="Yes"),
-                  warmup = 1000, iter = 2000, chains = 4, 
+                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(resil_modr)
@@ -200,7 +210,7 @@ resil_modr <- brm(LRR.resilience ~
 #                prob_outer = 0.9,
 #                regex = "^b")
 
-#RECOVERY
+#RECOVERY based on composition
 recov_modr <- brm(LRR.recovery ~ 
                     scale(pre_invrichness) +
                     scale(pre_natrichness) +
@@ -214,7 +224,7 @@ recov_modr <- brm(LRR.recovery ~
                     (1 | Site), 
                   data = subset(RRR_df,
                                 Sprayed=="Yes"),
-                  warmup = 1000, iter = 2000, chains = 4,
+                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(recov_modr)

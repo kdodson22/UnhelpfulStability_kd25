@@ -1,3 +1,12 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.3. Supplement C
+
+## Purpose:  This script completes posterior predictive checks for Bayesian glmms and plots the effect sizes for statistical control variables (not for causal interpretation) from models examining drivers of RRR:
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(here)
 library(ggeffects)
@@ -9,7 +18,7 @@ library(ggdist)
 #data
 # source(here("2.0.Models.RRR.R"))
 
-## SupFig 6. Estimated effect on response of site-level mean control variables and heat load #####
+## SupFig 6. Posterior parameter estimtates for site-level mean control variables and heat load #####
 ## posterior draws 
 #invasive
 invresist.intercept <- as.data.frame(inv_resistmodr) %>%
@@ -246,6 +255,9 @@ supfig7
 #        width = 8, height = 6.5, unit = c("in"), dpi = 450)
 
 ## SupFig 8.  Relationship between stability metrics within invasive plant cover stability framework. #####
+
+
+## you need to run 4.4.1. Supplement D Models for this to work.
 ## Invasive cover
 iresist_df <- datagrid(model = i_resistxresil_model,
                        ifunc_resistance = seq_range(cor_df_yes$ifunc_resistance, 
@@ -321,5 +333,5 @@ c_resistxresil_plot <- ggplot(cresist_pred, aes(x = comp_resistance)) +
 supfig8 <- plot_grid(i_resistxresil_plot, n_resistxresil_plot, c_resistxresil_plot,
                      labels = c("a", "b", "c"), nrow = 1, align = "hv")
 
-ggsave(supfig8, file = "figures/supfig8.png",
-       width = 8, height = 4, unit = c("in"), dpi = 450)
+# ggsave(supfig8, file = "figures/supfig8.png",
+#        width = 8, height = 4, unit = c("in"), dpi = 450)

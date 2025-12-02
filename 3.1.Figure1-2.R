@@ -1,3 +1,13 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 3.1 Figures 1-2
+
+## Purpose: This script generates Figures 1 and 2, showing study location and descriptive statistics for variables used in this study
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
+
 library(tidyverse)
 library(here)
 library(cowplot)
@@ -13,6 +23,8 @@ library(biscale)
 # source(here("1.0.Data.Set-up.R"))
 # source(here("1.1.RRR.Cover.R"))
 # source(here("1.2.RRR.Composition.R"))
+
+## Figure 1 ######
 
 ## BRWMA Map - Figure 1a #####
 # Idaho inset
@@ -65,7 +77,7 @@ brwma_poly <- st_read("data/BRWMA_shapefiles", layer="boiseriver_wma")
 brwma_poly <- st_transform(brwma_poly["Name"], "+proj=longlat", CRS=4979) 
 head(st_coordinates(brwma_poly))
 
-#download stadia maps 
+#download stadia maps -- need to insert key for script to work from here:
 ggmap::register_stadiamaps(key = "insert-key-here")
 region_map <- get_stadiamap(box, zoom = 14, maptype="stamen_terrain")
 
@@ -128,7 +140,10 @@ fig1a <- plot_grid(finalmap, labels = c("a"))
 # ggsave(fig1a, file = "figures/fig1a.png", dpi = 500,
 #        width = 11, height = 8.5)
 
-## Site Information - Figure 1b-c #####
+
+
+
+## Descriptive statistics - Figure 1b-c #####
 # DOMINANCE #
 dominance_pplot <- 
   RRR_df %>% 
@@ -176,11 +191,14 @@ nitrogen_pplot <-
         axis.text = element_text(size = 17.5)) 
 
 
-figure2bc <- plot_grid(dominance_pplot, nitrogen_pplot,
+figure1bc <- plot_grid(dominance_pplot, nitrogen_pplot,
                        ncol=1, align = "hv")
 
-# ggsave(figure2bc, file = "figures/figure2bc.png",
-#        width = 3.75, height = 7, units = c("in"), dpi = 400)
+ # ggsave(figure1bc, file = "figures/figure1bc.png",
+ #        width = 3.75, height = 7, units = c("in"), dpi = 400)
+
+
+## Figure 2 ##########
 
 ## RRR Summary Statistics - Figure 2 #####
 sumtheme <- theme(axis.text.x = element_text(size = 14, angle = 45, vjust = 0.6),
@@ -259,8 +277,8 @@ p3 <- RRR_df %>%
   ylim(-5,5)
 
 
-figure3ac <- plot_grid(p1, p2, p3, 
+figure2ac <- plot_grid(p1, p2, p3, 
           nrow = 1, align = "hv")
 
-# ggsave(figure3ac, file = "figures/figure3ac.png",
-#        width = 9.87, height = 4, units = c("in"), dpi = 300)
+ # ggsave(figure2ac, file = "figures/figure2ac.png",
+ #        width = 9.87, height = 4, units = c("in"), dpi = 300)
