@@ -57,7 +57,7 @@ cor_df_yes <- cor_df %>% filter(Sprayed == "Yes")
 ic_recov_model <- brm(ifunc_recovery ~ comp_recovery 
                       + (1 | Site), 
                       data = cor_df_yes, 
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999))
 
 ic_recov_coef <- as.data.frame(fixef(ic_recov_model))
@@ -68,7 +68,7 @@ ic_recov_r2 <- as.data.frame(bayes_R2(ic_recov_model))
 in_recov_model <- brm(ifunc_recovery ~ nfunc_recovery 
                       + (1 | Site), 
                       data = cor_df_yes, 
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999))
 
 in_recov_coef <- as.data.frame(fixef(in_recov_model))
@@ -113,7 +113,7 @@ recovdiff_mod <-brm(residual ~
                       scale(slm.N.22sp) +
                       (1 | Site), 
                     data = ic_resids_df,
-                    warmup = 1000, iter = 2000, chains = 4, 
+                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                     control = list(adapt_delta = 0.999, 
                                    max_treedepth = 12))
 
