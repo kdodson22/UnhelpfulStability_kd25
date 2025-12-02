@@ -128,14 +128,12 @@ invabsdf_soil <- invabsdf_soil %>%
 
 # Calculate pre-treatment % cover for focal dominant species:
 invabsdf_soil <- invabsdf_soil %>% 
-  mutate(Site = as.integer(Site),
-         Plot = as.integer(Plot), 
-         Year = as.integer(Year)) %>%
+  mutate(Year = as.integer(Year)) %>%
   left_join(brch21, by = c("Site", "Plot", "Year"))
 
 invabsdf_soil <- spp.rel.inv %>% filter(Year == 2021) %>%
-  mutate(Site = as.integer(Site),
-         Plot = as.integer(Plot), 
+  mutate(Site = as.factor(Site),
+         Plot = as.factor(Plot), 
          Year = as.integer(Year)) %>%
   select(Site, Plot, Year, BRAR5, BRBR5, CHJU, BRTE, POBU) %>%
   rename("BRTE_invrel" = BRTE,
@@ -251,15 +249,13 @@ natabsdf_soil <- natabsdf_soil %>%
 
 # Calculate pre-treatment % cover for focal dominant species:
 natabsdf_soil <- natabsdf_soil %>% 
-  mutate(Site = as.integer(Site),
-         Plot = as.integer(Plot), 
-         Year = as.integer(Year)) %>%
+  mutate(Year = as.integer(Year)) %>%
   left_join(brch21, by = c("Site", "Plot", "Year"))
 
 
 natabsdf_soil <- invabsdf_soil %>% select(Site, Plot, Sprayed, invcover_abs_2022) %>%
-  mutate(Site = as.integer(Site),
-         Plot = as.integer(Plot)) %>%
+  mutate(Site = as.factor(Site),
+         Plot = as.factor(Plot)) %>%
   left_join(natabsdf_soil, by = c("Site", "Plot", "Sprayed")) %>% 
   relocate("invcover_abs_2022", .after = natcover_abs_2024)
 
@@ -274,3 +270,4 @@ natabsdf_soil2 <- natabsdf_soil %>% filter(pre_natrichness != 0) %>%
                             slm.epbr = mean(EPBR3),
                             slm.br = mean(Bromus),
                             slm.pobu = mean(POBU)) %>% ungroup()
+

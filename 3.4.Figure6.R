@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.3 Figure 6.
+## 3.4 Figure 6.
 
 ## Purpose: This script generates Figure 6, showing marginal effects of diversity, dominant species, and soil resources in the deviance analysis, as well as correlations between RRR metrics.
 
@@ -293,5 +293,5 @@ figure6 <- plot_grid(in_recov_color, ic_recov_color,
           label_size = 18)
 figure6
 
-ggsave(figure6, file = "figures/figure6.png",
-       width = 11, height = 9.5, unit = c("in"), dpi = 450, bg="transparent")
+# ggsave(figure6, file = "figures/figure6.png",
+#        width = 11, height = 9.5, unit = c("in"), dpi = 450, bg="transparent")

@@ -33,7 +33,7 @@ inv_resistmodr <- brm(LRR.resistance ~
                         (1 | Site), 
                       data = subset(invabsdf_soil,
                                     Sprayed=="Yes"), 
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(inv_resistmodr)
@@ -57,7 +57,7 @@ inv_resilience24_modr <- brm(LRR.resilience24 ~
                                (1 | Site), 
                              data = subset(invabsdf_soil,
                                            Sprayed=="Yes"),
-                             warmup = 1000, iter = 2000, chains = 4, 
+                             warmup = 1000, iter = 2000, chains = 4, seed = 123,
                              control = list(adapt_delta = 0.999))
 
 # summary(inv_resilience24_modr)
@@ -80,7 +80,7 @@ inv_recovermodr <- brm(LRR.recovery ~
                          (1 | Site), 
                        data = subset(invabsdf_soil,
                                      Sprayed=="Yes"),
-                       warmup = 1000, iter = 2000, chains = 4, 
+                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999))
 
 # summary(inv_recovermodr)
@@ -104,7 +104,7 @@ nat_resistmodr <- brm(LRR.resistance ~
                         (1 | Site), 
                       data = subset(natabsdf_soil2,
                                     Sprayed=="Yes"), 
-                      warmup = 1000, iter = 2000, chains = 4, 
+                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(nat_resistmodr)
@@ -128,7 +128,7 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                                (1 | Site), 
                              data = subset(natabsdf_soil2,
                                            Sprayed=="Yes"),
-                             warmup = 1000, iter = 2000, chains = 4, 
+                             warmup = 1000, iter = 2000, chains = 4, seed = 123, 
                              control = list(adapt_delta = 0.999, 
                                             max_treedepth = 12))
 
@@ -152,7 +152,7 @@ nat_recovermodr <- brm(LRR.recovery ~
                          (1 | Site), 
                        data = subset(natabsdf_soil2,
                                      Sprayed=="Yes"),
-                       warmup = 1000, iter = 2000, chains = 4, 
+                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999, 
                                       max_treedepth = 12))
 
@@ -177,7 +177,7 @@ resist_modr <- brm(LRR.resistance ~
                      (1 | Site),
                    data = subset(RRR_df,
                                  Sprayed=="Yes"),
-                   warmup = 1000, iter = 2000, chains = 4, 
+                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999))
 
 # summary(resist_modr)
@@ -224,7 +224,7 @@ recov_modr <- brm(LRR.recovery ~
                     (1 | Site), 
                   data = subset(RRR_df,
                                 Sprayed=="Yes"),
-                  warmup = 1000, iter = 2000, chains = 4, 
+                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 # summary(recov_modr)

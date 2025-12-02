@@ -25,7 +25,10 @@ meta1 <- spp.comp %>%
   dplyr::select(Site, Plot, Year) %>%
   mutate(ObsID = paste(Site, Plot, Year, sep = "-")) 
 
-treat1 <- sitedata %>%
+treat1 <- df_divcov %>%
+  filter(Year == 2021) %>%
+  mutate(Site = as.integer(Site),
+         Plot = as.integer(Plot)) %>%
   filter(Plot <= 13) %>% ## remove 4x4 N-treatment plots, not used in this analysis.
   dplyr::select(Site, Plot, Sprayed)
 
@@ -205,8 +208,8 @@ RRR_df <- RRR_df %>%
 
 # Add percent cover of dominant species:
 RRR_df <- RRR_df %>% 
-  mutate(Site = as.integer(Site),
-         Plot = as.integer(Plot), 
+  mutate(Site = as.factor(Site),
+         Plot = as.factor(Plot), 
          Year = as.integer(Year)) %>%
   left_join(brch21, by = c("Site", "Plot")) %>%
   select(-Year.x, -Year.y, -Depth, -Size) %>%

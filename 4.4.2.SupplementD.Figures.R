@@ -1,3 +1,12 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.4.2. Supplement D Figures:
+
+## Purpose:  This script generates Supplementary Figure 9: Estimated effect on response of site-level mean control variables and heat load; and Supplementary Figure 10: Correlations across frameworks for resistance and resilience. #####
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(here)
 library(ggeffects)

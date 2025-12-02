@@ -8,7 +8,6 @@
 ## Date: Updated 12/1/2025
 
 
-
 library(tidyverse)
 library(here)
 library(cowplot)
@@ -195,8 +194,8 @@ nitrogen_pplot <-
 figure1bc <- plot_grid(dominance_pplot, nitrogen_pplot,
                        ncol=1, align = "hv")
 
- ggsave(figure1bc, file = "figures/figure1bc.png",
-        width = 3.75, height = 7, units = c("in"), dpi = 400)
+ # ggsave(figure1bc, file = "figures/figure1bc.png",
+ #        width = 3.75, height = 7, units = c("in"), dpi = 400)
 
 
 ## Figure 2 ##########
@@ -281,5 +280,5 @@ p3 <- RRR_df %>%
 figure2ac <- plot_grid(p1, p2, p3, 
           nrow = 1, align = "hv")
 
- ggsave(figure2ac, file = "figures/figure2ac.png",
-        width = 9.87, height = 4, units = c("in"), dpi = 300)
+ # ggsave(figure2ac, file = "figures/figure2ac.png",
+ #        width = 9.87, height = 4, units = c("in"), dpi = 300)

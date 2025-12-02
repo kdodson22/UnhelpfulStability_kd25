@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 4.3. Supplement C
+## 4.4.1 Supplement D Models:
 
 ## Purpose:  This script completes plots the effect sizes for statistical control variables (not for causal interpretation) from the deviance analysis and plots additional correlations between RRR metrics:
 

@@ -111,8 +111,8 @@ treatment",
 
 supfig1
 
- ggsave(supfig1, file = "figures/supfig1.png",
-       width = 5.5, height = 5, unit = c("in"), dpi = 450)
+ # ggsave(supfig1, file = "figures/supfig1.png",
+ #       width = 5.5, height = 5, unit = c("in"), dpi = 450)
 
 
 ## SupFig 3. Ranked species rareness based on relative abundance. #####

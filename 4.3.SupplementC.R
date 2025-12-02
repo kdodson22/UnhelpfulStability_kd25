@@ -250,9 +250,9 @@ supfig7 <- plot_grid(pp1, pp2, pp3,
           hjust=-2)
 supfig7
 
-ggsave(plot = supfig7,
-       file = "figures/supfig7.png",
-       width = 8, height = 6.5, unit = c("in"), dpi = 450)
+# ggsave(plot = supfig7,
+#        file = "figures/supfig7.png",
+#        width = 8, height = 6.5, unit = c("in"), dpi = 450)
 
 ## SupFig 8.  Relationship between stability metrics within invasive plant cover stability framework. #####
 
@@ -333,5 +333,5 @@ c_resistxresil_plot <- ggplot(cresist_pred, aes(x = comp_resistance)) +
 supfig8 <- plot_grid(i_resistxresil_plot, n_resistxresil_plot, c_resistxresil_plot,
                      labels = c("a", "b", "c"), nrow = 1, align = "hv")
 
-ggsave(supfig8, file = "figures/supfig8.png",
-       width = 8, height = 4, unit = c("in"), dpi = 450)
+# ggsave(supfig8, file = "figures/supfig8.png",
+#        width = 8, height = 4, unit = c("in"), dpi = 450)
