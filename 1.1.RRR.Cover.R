@@ -39,7 +39,11 @@ invabsdf <- df_divcov %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
 # some plots have 0% cover for plant categories that are present-- add the equivalent of ~1/2 of a 'hit'
-invabsdf[,3:6] <- replace(invabsdf[,3:6], invabsdf[,3:6] < 0.019, 0.010)
+invabsdf <- invabsdf %>% filter(invcover_abs_2021 != 0 & 
+                      invcover_abs_2022 != 0 &
+                      invcover_abs_2023 != 0 &
+                      invcover_abs_2024 != 0  )
+# invabsdf[,3:6] <- replace(invabsdf[,3:6], invabsdf[,3:6] < 0.019, 0.010)
 
 # Add additional soil variables to dataframe:
 soildata$Site <- factor(soildata$Site, 
@@ -176,7 +180,11 @@ natabsdf <- df_divcov %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
 # some plots have 0% cover for plant categories that are present -- add the equivalent of ~1/2 of a 'hit'
-natabsdf[,3:6] <- replace(natabsdf[,3:6], natabsdf[,3:6] < 0.019, 0.010)
+natabsdf <- natabsdf %>% filter(natcover_abs_2021 != 0 & 
+                                  natcover_abs_2022 != 0 &
+                                  natcover_abs_2023 != 0 &
+                                  natcover_abs_2024 != 0  )
+# natabsdf[,3:6] <- replace(natabsdf[,3:6], natabsdf[,3:6] < 0.019, 0.010)
 
 #add more soil variables:
 natabsdf_soil <- natabsdf  %>% 

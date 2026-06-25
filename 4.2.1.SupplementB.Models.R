@@ -13,11 +13,12 @@
 library(tidyverse)
 library(here)
 library(brms)
+library(cmdstanr)
 
 #data
-# source(here("1.0.Data.Set-up.R"))
-# source(here("1.1.RRR.Cover.R"))
-# source(here("1.2.RRR.Composition.R"))
+source(here("1.0.Data.Set-up.R"))
+source(here("1.1.RRR.Cover.R"))
+source(here("1.2.RRR.Composition.R"))
 
 
 ### MODEL TESTING/COMPARISON FOR INCLUSION OF PRE- AND POST-TREATMENT WATER CONTENT ###
@@ -28,8 +29,7 @@ inv_resistmodr_wat <- brm(LRR.resistance ~
                             scale(pre_natrichness) +
                             scale(CHJU) + 
                             scale(BRTE) +
-                            scale(N_ug.g.instant_2021Fall) +
-                            scale(watercontent_g.g.instant_2021Fall) +  
+                            scale(N_ug.g.instant_2021Fall) * scale(watercontent_g.g.instant_2021Fall) +  
                             scale(slmr.inv) +
                             scale(slmr.nat) +
                             scale(Heatload) +
@@ -39,8 +39,11 @@ inv_resistmodr_wat <- brm(LRR.resistance ~
                           data = subset(invabsdf_soil,
                                         Sprayed=="Yes"), 
                           warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                          control = list(adapt_delta = 0.999, max_treedepth = 12))
+                          control = list(adapt_delta = 0.999, max_treedepth = 12),
+                          cores = 4, backend = "cmdstanr")
 
+summary(inv_resistmodr_wat)
+mcmc_plot(inv_resistmodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 #RESILIENCE 2024 
 inv_resilience24_modr_wat <- brm(LRR.resilience24 ~ 
@@ -48,8 +51,7 @@ inv_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                    scale(pre_natrichness) +
                                    scale(CHJU) +
                                    scale(BRTE) +
-                                   scale(N_ug.g.instant_2022Spring) +
-                                   scale(watercontent_g.g.instant_2022Spring) +
+                                   scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
                                    scale(LRR.resistance) +
                                    scale(slmr.inv) +
                                    scale(slmr.nat) +
@@ -60,7 +62,10 @@ inv_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                  data = subset(invabsdf_soil,
                                                Sprayed=="Yes"),
                                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                                 control = list(adapt_delta = 0.999))
+                                 control = list(adapt_delta = 0.999),
+                                 cores = 4, backend = "cmdstanr")
+summary(inv_resilience24_modr_wat)
+mcmc_plot(inv_resilience24_modr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 
 #RECOVERY
@@ -69,8 +74,7 @@ inv_recovermodr_wat <- brm(LRR.recovery ~
                              scale(pre_natrichness) +
                              scale(CHJU) +
                              scale(BRTE) +
-                             scale(N_ug.g.instant_2022Spring) +
-                             scale(watercontent_g.g.instant_2022Spring) +
+                             scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
                              scale(slmr.inv) +
                              scale(slmr.nat) +
                              scale(Heatload) +
@@ -80,7 +84,11 @@ inv_recovermodr_wat <- brm(LRR.recovery ~
                            data = subset(invabsdf_soil,
                                          Sprayed=="Yes"),
                            warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                           control = list(adapt_delta = 0.999))
+                           control = list(adapt_delta = 0.999),
+                           cores = 4, backend = "cmdstanr")
+summary(inv_recovermodr_wat)
+mcmc_plot(inv_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+
 
 
 ## MODELS - Native Cover #####
@@ -90,8 +98,7 @@ nat_resistmodr_wat <- brm(LRR.resistance ~
                             scale(pre_natrichness) +
                             scale(CHJU) + 
                             scale(BRTE) +
-                            scale(N_ug.g.instant_2021Fall) +
-                            scale(watercontent_g.g.instant_2021Fall) +  
+                            scale(N_ug.g.instant_2021Fall) * scale(watercontent_g.g.instant_2021Fall) +  
                             scale(slmr.inv) +
                             scale(slmr.nat) +
                             scale(Heatload) +
@@ -101,8 +108,13 @@ nat_resistmodr_wat <- brm(LRR.resistance ~
                           data = subset(natabsdf_soil2,
                                         Sprayed=="Yes"), 
                           warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                          control = list(adapt_delta = 0.999, max_treedepth = 12))
+                          control = list(adapt_delta = 0.999, max_treedepth = 12),
+                          cores = 4, backend = "cmdstanr")
 
+summary(nat_resistmodr_wat)
+mcmc_plot(nat_resistmodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+
+conditional_effects(nat_resistmodr_wat)
 
 #RESILIENCE 2024 
 nat_resilience24_modr_wat <- brm(LRR.resilience24 ~ 
@@ -110,8 +122,7 @@ nat_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                    scale(pre_natrichness) +
                                    scale(CHJU) +
                                    scale(BRTE) +
-                                   scale(N_ug.g.instant_2022Spring) +
-                                   scale(watercontent_g.g.instant_2022Spring) +
+                                   scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
                                    scale(LRR.resistance) +
                                    scale(slmr.inv) +
                                    scale(slmr.nat) +
@@ -123,7 +134,11 @@ nat_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                                Sprayed=="Yes"),
                                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                                  control = list(adapt_delta = 0.999, 
-                                                max_treedepth = 12))
+                                                max_treedepth = 12),
+                                 cores = 4, backend = "cmdstanr")
+
+summary(nat_resilience24_modr_wat)
+mcmc_plot(nat_resilience24_modr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 #RECOVERY
 nat_recovermodr_wat <- brm(LRR.recovery ~ 
@@ -131,8 +146,7 @@ nat_recovermodr_wat <- brm(LRR.recovery ~
                              scale(pre_natrichness) +
                              scale(CHJU) +
                              scale(BRTE) +
-                             scale(N_ug.g.instant_2022Spring) +
-                             scale(watercontent_g.g.instant_2022Spring) +
+                             scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
                              scale(slmr.inv) +
                              scale(slmr.nat) +
                              scale(Heatload) +
@@ -143,7 +157,10 @@ nat_recovermodr_wat <- brm(LRR.recovery ~
                                          Sprayed=="Yes"),
                            warmup = 1000, iter = 2000, chains = 4, seed = 123,
                            control = list(adapt_delta = 0.999, 
-                                          max_treedepth = 12))
+                                          max_treedepth = 12),
+                           cores = 4, backend = "cmdstanr")
+summary(nat_recovermodr_wat)
+mcmc_plot(nat_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 ## MODELS - Composition #####
 #RESISTANCE
@@ -152,8 +169,7 @@ resist_modr_wat <- brm(LRR.resistance ~
                          scale(pre_natrichness) +
                          scale(BRTE) +
                          scale(CHJU) +
-                         scale(N_ug.g.instant_2021Fall) +
-                         scale(watercontent_g.g.instant_2021Fall) + 
+                         scale(N_ug.g.instant_2021Fall) * scale(watercontent_g.g.instant_2021Fall) + 
                          scale(Heatload) +
                          scale(slmr.nat) +
                          scale(slmr.inv) +
@@ -164,7 +180,8 @@ resist_modr_wat <- brm(LRR.resistance ~
                                      Sprayed=="Yes"),
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999,
-                                      max_treedepth = 12))
+                                      max_treedepth = 12),
+                       cores = 4, backend = "cmdstanr")
 
 #RESILIENCE
 resil_modr_wat <- brm(LRR.resilience ~
@@ -172,8 +189,7 @@ resil_modr_wat <- brm(LRR.resilience ~
                         scale(pre_natrichness) +
                         scale(BRTE) +
                         scale(CHJU) +
-                        scale(N_ug.g.instant_2022Spring) +
-                        scale(watercontent_g.g.instant_2022Spring) +
+                        scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
                         scale(LRR.resistance) +
                         scale(Heatload) +
                         scale(slmr.nat) +
@@ -186,7 +202,8 @@ resil_modr_wat <- brm(LRR.resilience ~
                                     Sprayed=="Yes"),
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, 
-                                     max_treedepth = 12))
+                                     max_treedepth = 12),
+                      cores = 4, backend = "cmdstanr")
 
 # RECOVERY
 recov_modr_wat <- brm(LRR.recovery ~ 
@@ -194,8 +211,7 @@ recov_modr_wat <- brm(LRR.recovery ~
                         scale(pre_natrichness) +
                         scale(CHJU) +
                         scale(BRTE) +
-                        scale(N_ug.g.instant_2022Spring) +
-                        scale(watercontent_g.g.instant_2022Spring) +
+                        scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
                         scale(Heatload) +
                         scale(slmr.nat) +
                         scale(slmr.inv) +
@@ -205,5 +221,6 @@ recov_modr_wat <- brm(LRR.recovery ~
                       data = subset(RRR_df,
                                     Sprayed=="Yes"),
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                      control = list(adapt_delta = 0.999, max_treedepth = 12))
+                      control = list(adapt_delta = 0.999, max_treedepth = 12),
+                      cores = 4, backend = "cmdstanr")
 

@@ -20,7 +20,8 @@ mypoints <- read.csv("data/BRWMA_plotcoords.csv")
 df_divcov <- read.csv("data/df_divcov.csv")
 
 #species attribute data 
-plantattribs <- read.csv("data/plantattribs.csv")
+plantattribs <- read.csv("data/plantattribs.csv") %>% column_to_rownames(var = "X") %>% 
+  mutate(Species = ifelse(Species == "GAILU", "GALIU", Species))
 
 #plot-level pretreatment features:
 pretreat <- read.csv("data/pretreat.csv")
@@ -40,6 +41,7 @@ spp.comp2 <- read.csv("data/spp.comp2.csv") %>% column_to_rownames(var = "X")
 spp.rel.all <- read.csv("data/spp.rel.all.csv") #all species
 spp.comp.rel <- read.csv("data/spp.comp.rel.csv") %>% column_to_rownames(var = "X")
 spp.rel.inv <- read.csv("data/spp.rel.inv.csv") #invasive species
+fun.comp.rel <- read.csv("data/fun.comp.rel.csv") %>% column_to_rownames(var = "X")
 
 #relative cover of most abundant species
 brch21 <- spp.comp.rel %>%
