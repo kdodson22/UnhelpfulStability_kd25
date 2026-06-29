@@ -16,10 +16,9 @@ library(ggtext)
 source(here("1.0.Data.Set-up.R"))
 source(here("1.1.RRR.Cover.R"))
 source(here("1.2.RRR.Composition.R"))
-mediation <- read.csv("data/mediation_analysis.csv")
 #
 
-#### Functional Richness ####
+#### Functional Richness Data frame ####
 
 #generate functional richness data 
 fun.comp.inv <- fun.comp.rel %>% dplyr::select(Site, Plot, Year, EAF, EAG, EPF, EPG, EBF)
@@ -84,23 +83,7 @@ RRR_df3 <- RRR_df %>%
          slm.nfun = mean(pre_natfuncrichness),
          slm.nspre = mean(pre_NS),
          slm.nspos = mean(post_NS))
-
-
-#### Correlation ####
-corrich <- RRR_df3 %>% ungroup() %>%
-  dplyr::select(pre_invrichness, pre_totalrichness, pre_natrichness,
-                pre_functionalrichness, pre_invfuncrichness, pre_natfuncrichness,
-                pre_NS, pre_NAF, pre_PG, pre_NPF, 
-                post_NS, post_NAF, post_PG, post_NPF) %>%
-  cor()
-
-corrplot(corrich)
-
-#### Modelling
-
-
 #####
-
 
 
 ## MODELS - Mediation (a path) ####
@@ -109,13 +92,9 @@ invrich_apath <- brm(pre_invfuncrichness ~ pre_invrichness + (1 | Site),
                      family = "lognormal",
                      data = subset(invabsdf_soil3,
                                    Sprayed=="Yes"), 
-                     warmup = 1000, iter = 2000, chains = 3, seed = 123,
+                     warmup = 1000, iter = 2000, chains = 4, seed = 123,
                      control = list(adapt_delta = 0.999, max_treedepth = 15),
                      cores = 3, backend = "cmdstanr")
-# plot(invrich_apath, ask=F)
-pp_check(invrich_apath)
-summary(invrich_apath)
-
 
 #nat fun richness ~ nat spp richness
 natrich_apath <- brm(pre_natfuncrichness ~ pre_natrichness + (1 | Site),
@@ -125,15 +104,11 @@ natrich_apath <- brm(pre_natfuncrichness ~ pre_natrichness + (1 | Site),
                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
                      control = list(adapt_delta = 0.999, max_treedepth = 15),
                      cores = 4, backend = "cmdstanr")
-pp_check(natrich_apath)
-summary(natrich_apath)
 #####
 
 
-
-
-## MODELS - Average Treatment Effect ###
-#invasive####
+## MODELS - Average Treatment Effect ####
+#invasive
 #resistance
 ate_iresist <- brm(LRR.resistance ~ 
                      scale(pre_invrichness) +
@@ -149,8 +124,7 @@ ate_iresist <- brm(LRR.resistance ~
                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999, max_treedepth = 15),
                    cores = 4, backend = "cmdstanr")
-pp_check(ate_iresist)
-summary(ate_iresist)
+
 
 #resilience 
 ate_iresil <- brm(LRR.resilience24 ~ 
@@ -167,8 +141,6 @@ ate_iresil <- brm(LRR.resilience24 ~
                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999, max_treedepth = 15),
                    cores = 4, backend = "cmdstanr")
-pp_check(ate_iresil)
-summary(ate_iresil)
 
 #recovery
 ate_ireco <- brm(LRR.recovery ~ 
@@ -185,11 +157,8 @@ ate_ireco <- brm(LRR.recovery ~
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 15),
                   cores = 4, backend = "cmdstanr")
-pp_check(ate_ireco)
-summary(ate_ireco)
 
-
-#native####
+#native
 #resistance
 ate_nresist <- brm(LRR.resistance ~ 
                      scale(pre_invrichness) +
@@ -205,8 +174,6 @@ ate_nresist <- brm(LRR.resistance ~
                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999, max_treedepth = 15),
                    cores = 4, backend = "cmdstanr")
-pp_check(ate_nresist)
-summary(ate_nresist)
 
 #resilience 
 ate_nresil <- brm(LRR.resilience24 ~ 
@@ -223,8 +190,6 @@ ate_nresil <- brm(LRR.resilience24 ~
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 15),
                   cores = 4, backend = "cmdstanr")
-pp_check(ate_nresil)
-summary(ate_nresil)
 
 #recovery
 ate_nreco <- brm(LRR.recovery ~ 
@@ -241,9 +206,8 @@ ate_nreco <- brm(LRR.recovery ~
                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                  control = list(adapt_delta = 0.999, max_treedepth = 15),
                  cores = 4, backend = "cmdstanr")
-pp_check(ate_nreco)
-summary(ate_nreco)
-#composition####
+
+#composition
 #resistance
 ate_cresist <- brm(LRR.resistance ~ 
                      scale(pre_invrichness) +
@@ -259,8 +223,6 @@ ate_cresist <- brm(LRR.resistance ~
                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999, max_treedepth = 15),
                    cores = 4, backend = "cmdstanr")
-pp_check(ate_cresist)
-summary(ate_cresist)
 
 #resilience 
 ate_cresil <- brm(LRR.resilience ~ 
@@ -277,8 +239,6 @@ ate_cresil <- brm(LRR.resilience ~
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 15),
                   cores = 4, backend = "cmdstanr")
-pp_check(ate_cresil)
-summary(ate_cresil)
 
 #recovery
 ate_creco <- brm(LRR.recovery ~ 
@@ -295,12 +255,8 @@ ate_creco <- brm(LRR.recovery ~
                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                  control = list(adapt_delta = 0.999, max_treedepth = 15),
                  cores = 4, backend = "cmdstanr")
-pp_check(ate_creco)
-summary(ate_creco)
+
 #####
-
-
-
 
 
 ## MODELS - Invasive Cover #####
@@ -372,6 +328,7 @@ inv_recovermodr_fr <- brm(LRR.recovery ~
                        control = list(adapt_delta = 0.999, max_treedepth = 15),
                        cores = 4, backend = "cmdstanr")
 
+
 ## MODELS - Native Cover #####
 # RESISTANCE based on native cover
 nat_resistmodr_fr <- brm(LRR.resistance ~ 
@@ -439,6 +396,7 @@ nat_recovermodr_fr <- brm(LRR.recovery ~
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999, max_treedepth = 15),
                        cores = 4, backend = "cmdstanr")
+
 ## MODELS - Composition #####
 #RESISTANCE based on composition
 resist_modr_fr <- brm(LRR.resistance ~ 
@@ -510,9 +468,8 @@ recov_modr_fr <- brm(LRR.recovery ~
 #####
 
 
-
-## Coefficient plot
-## Extract posterior parameter estimates from each model fit and combine for plotting: ####
+## Main Coefficient plot #####
+## Extract posterior parameter estimates from each model fit and combine for plotting: 
 #Resistance 
 ints.inv.resist <- inv_resistmodr_fr %>%
   gather_draws(b_scalepre_invrichness,
@@ -665,7 +622,7 @@ ints.comp.reco <- recov_modr_fr %>%
 reco.posteriors <- rbind(ints.inv.reco, ints.nat.reco, ints.comp.reco)
 
 
-## Organization and Renaming #####
+## Organization and Renaming 
 resist.posteriors$Metric <- "Resistance"
 resil.posteriors$Metric <- "Resilience"
 reco.posteriors$Metric <- "Recovery"
@@ -699,33 +656,23 @@ posteriors$Metric <- factor(posteriors$Metric,
 posteriors$.variable <- factor(posteriors$.variable,
                                levels = c("Post-treatment PAN", "Pre-treatment PAN",
                                           "Pre-treatment C. juncea Cover", "Pre-treatment B. tectorum Cover",
-                                          # "Post-treatment Native Native Shrub Cover","Pre-treatment Native Native Shrub Cover",
                                           "Pre-treatment Native Functional Richness", 
-                                          "Pre-treatment Invasive Functional Richness", 
                                           "Pre-treatment Native Species Richness", 
+                                          "Pre-treatment Invasive Functional Richness", 
                                           "Pre-treatment Invasive Species Richness"
-                                          )
                                )
+)
 
-## Plot #####
-ggplot(posteriors, aes(y =.variable,
-                                  color=response,
-                                  alpha = nonzero,
-                                  shape=response)) +
+## Plot 
+supfig11 <- ggplot(posteriors, aes(y =.variable,
+                       color=response,
+                       shape = nonzero)) +
   geom_vline(xintercept=0, linetype="dashed", color="grey60") +
   geom_linerange(aes(xmin = .lower, xmax = .upper), lwd = 0.7,
                  position=position_dodge(width = 0.4)) +
-  geom_point(aes(x=.value, fill = response), size=2.25,
+  geom_point(aes(x=.value), size=2.25,
              position=position_dodge(width = 0.4)) +
-  scale_shape_manual(breaks = c("Invasive Cover", "Native Cover",
-                                "Composition"),
-                     name=c("Response variable"),
-                     values=c(21, 22, 24)) +
-  scale_alpha_manual(values=c(0.25, 1), guide="none") +
-  scale_fill_manual(breaks = c("Invasive Cover", "Native Cover",
-                               "Composition"),
-                    name=c("Response variable"),
-                    values=c("#EE6677", "#228833","#4477AA")) +
+  scale_shape_manual(values=c(21,16), guide = "none") +
   scale_color_manual(breaks = c("Invasive Cover", "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
@@ -736,11 +683,9 @@ ggplot(posteriors, aes(y =.variable,
                               "Pre-treatment <br> PAN",
                               "Pre-treatment <br> *C. juncea* Cover", 
                               "Pre-treatment <br> *B. tectorum* Cover",
-                              # "Post-treatment <br> Native Native Shrub Cover",
-                              # "Pre-treatment <br> Native Native Shrub Cover",
                               "Pre-treatment <br> Native Functional Richness", 
-                              "Pre-treatment <br> Invasive Functional Richness", 
                               "Pre-treatment <br> Native Species Richness", 
+                              "Pre-treatment <br> Invasive Functional Richness", 
                               "Pre-treatment <br> Invasive Species Richness")) +
   theme_bw() + facet_wrap(~Metric) + 
   theme(legend.title = element_blank(),
@@ -752,53 +697,258 @@ ggplot(posteriors, aes(y =.variable,
         legend.position = "inside",
         legend.justification.inside = c(0.025,0.025)) 
 
-
-# ggsave(plot = figure4,
-#       file = "figures/Figure4.png",
-#        width = 8.25, height = 7.5, unit = c("in"), dpi = 400)
+ggsave(plot = supfig11,
+      file = "figures/supfig11.png",
+       width = 9, height = 7.5, unit = c("in"), dpi = 400)
 
 #####
 
 
+## Mediation - Draws ####
+## Extract Draws 
+# apath
+invrich_apath_draws <- as_draws_df(invrich_apath)
+natrich_apath_draws <- as_draws_df(natrich_apath)
+
+invrich_apath_df <- median_qi(invrich_apath_draws$b_pre_invrichness, 
+                              .width=c(0.9)) %>%
+  as.data.frame() %>%
+  dplyr::select(y,ymin,ymax) %>%
+  mutate(term = "theta1", 
+         maineffect = "Invasive Species Richness",
+         group = "Invasive")
+
+natrich_apath_df <- median_qi(natrich_apath_draws$b_pre_natrichness, 
+                              .width=c(0.9)) %>%
+  as.data.frame() %>%
+  dplyr::select(y,ymin,ymax) %>%
+  mutate(term = "theta1",
+         maineffect = "Native Species Richness",
+         group = "Native")
+
+apath <- bind_rows(invrich_apath_df, natrich_apath_df)
+
+# ate
+ate_modlist <- list(invasiveresistance = ate_iresist, 
+                    invasiveresilience = ate_iresil, 
+                    invasiverecovery = ate_ireco,
+                    nativeresistance = ate_nresist, 
+                    nativeresilience = ate_nresil, 
+                    nativerecovery = ate_nreco,
+                    compositionresistance = ate_cresist, 
+                    compositionresilience = ate_cresil, 
+                    compositionrecovery = ate_creco) 
+
+atelist <- list()
+for (nm in names(ate_modlist)) {
+  
+  df <- ate_modlist[[nm]]
+  
+  draws <- as_draws_df(df) %>% 
+    as.data.frame() %>% 
+    dplyr::select(b_scalepre_invrichness, b_scalepre_natrichness)
+  
+  median_inv <- median_qi(draws$b_scalepre_invrichness, 
+                          .width=c(0.9)) %>%
+    as.data.frame() %>%
+    dplyr::select(y,ymin,ymax) %>%
+    mutate(term = "ate",
+           maineffect = "Invasive Species Richness")
+  
+  median_nat <- median_qi(draws$b_scalepre_natrichness, 
+                          .width=c(0.9)) %>%
+    as.data.frame() %>%
+    dplyr::select(y,ymin,ymax) %>%
+    mutate(term = "ate",
+           maineffect = "Native Species Richness")
+  
+  median_df <- bind_rows(median_inv, median_nat) %>% as.data.frame()
+  
+  atelist[[nm]] <- median_df
+}
+
+ate <- list_rbind(atelist, names_to = "Model")
+
+
+# bpath
+delta2_modlist <- list(
+  invasiveresistance = inv_resistmodr_fr, 
+  invasiveresilience = inv_resilience24_modr_fr, 
+  invasiverecovery = inv_recovermodr_fr,
+  nativeresistance = nat_resistmodr_fr, 
+  nativeresilience = nat_resilience24_modr_fr, 
+  nativerecovery = nat_recovermodr_fr,
+  compositionresistance = resist_modr_fr, 
+  compositionresilience = resil_modr_fr, 
+  compositionrecovery = recov_modr_fr
+)
+
+deltalist <- list()
+for(nm in names(delta2_modlist)) {
+  
+  df <- delta2_modlist[[nm]]
+  
+  draws <- as_draws_df(df) %>% 
+    as.data.frame() %>% 
+    dplyr::select(b_scalepre_invfuncrichness, b_scalepre_natfuncrichness)
+  
+  median_inv <- median_qi(draws$b_scalepre_invfuncrichness, 
+                          .width=c(0.9)) %>%
+    as.data.frame() %>%
+    dplyr::select(y,ymin,ymax) %>%
+    mutate(term = "delta2",
+           mediator = "Invasive Functional Richness",
+           group = "Invasive")
+  
+  median_nat <- median_qi(draws$b_scalepre_natfuncrichness, 
+                          .width=c(0.9)) %>%
+    as.data.frame() %>%
+    dplyr::select(y,ymin,ymax) %>%
+    mutate(term = "delta2",
+           mediator = "Native Functional Richness",
+           group = "Native")
+  
+  median_df <- bind_rows(median_inv, median_nat) %>% as.data.frame()
+  
+  deltalist[[nm]] <- median_df
+}
+
+
+bpath <- list_rbind(deltalist, names_to = "Model")
+
+
+# pde 
+pde_list <- list()
+for(nm in names(delta2_modlist)) {
+  
+  df <- delta2_modlist[[nm]]
+  
+  draws <- as_draws_df(df) %>% 
+    as.data.frame() %>% 
+    dplyr::select(b_scalepre_invrichness, b_scalepre_natrichness)
+  
+  median_inv <- median_qi(draws$b_scalepre_invrichness, 
+                          .width=c(0.9)) %>%
+    as.data.frame() %>%
+    dplyr::select(y,ymin,ymax) %>%
+    mutate(term = "pde",
+           maineffect = "Invasive Species Richness")
+  
+  median_nat <- median_qi(draws$b_scalepre_natrichness, 
+                          .width=c(0.9)) %>%
+    as.data.frame() %>%
+    dplyr::select(y,ymin,ymax) %>%
+    mutate(term = "pde",
+           maineffect = "Native Species Richness")
+  
+  median_df <- bind_rows(median_inv, median_nat) %>% as.data.frame()
+  
+  pde_list[[nm]] <- median_df
+}
+
+pde <- list_rbind(pde_list, names_to = "Model")
+
+
+
+
+## Combine 
+apath <- apath %>% rename(theta1 = y, theta1ymin = ymin, theta1ymax = ymax) %>% dplyr::select(-term)
+bpath <- bpath %>% rename(delta2 = y, delta2ymin = ymin, delta2ymax = ymax) %>% dplyr::select(-term)
+
+ite_pre <- bpath %>% left_join(apath, join_by(group)) 
+
+ite <- ite_pre %>% 
+  group_by(Model, mediator, maineffect) %>%
+  summarise(y = theta1 * delta2,
+            ymin = theta1ymin * delta2ymin,
+            ymax = theta1ymax * delta2ymax,
+            term = "ite") %>%
+  as.data.frame()
+  
+
+str(ite)
+str(ate)
+str(pde)
+
+
+mediation <- bind_rows(ite, ate, pde) %>% 
+  mutate(mediator = ifelse(is.na(mediator) & maineffect == "Invasive Species Richness", 
+                           "Invasive Functional Richness", 
+                           ifelse(is.na(mediator) & maineffect == "Native Species Richness",
+                                  "Native Functional Richness", 
+                                  mediator
+                                  )))
 
 ## Mediation Plot ####
-mediation_df <-  mediation %>%
-  pivot_longer(cols = c(ATE, TIE, PDE), names_to = "EffectType", values_to = "Magnitude") %>%
-  mutate(EffectType = case_when(
-    EffectType == "ATE" ~ "Average",
-    EffectType == "TIE" ~ "Mediated",
-    EffectType == "PDE" ~ "Direct",
-  ),
-         ModelFrame = str_extract(Model, "^[^_]+"), 
-         ModelFrame = case_when(
-           ModelFrame == "Invasive" ~ "Invasive Cover",
-           ModelFrame == "Native" ~ "Native Cover",
-           ModelFrame == "Compositional" ~ "Composition"),
-         ModelFrame = fct_relevel(ModelFrame, c("Invasive Cover", "Native Cover", "Composition")),
-         StabilityMetric = str_extract(Model, "[^_]+$"),
-         StabilityMetric = fct_relevel(StabilityMetric, c("Resistance", "Resilience", "Recovery"))) %>% 
-  relocate(ModelFrame, StabilityMetric, .after = Model)
+str(mediation)
 
-mediation_df %>%
-ggplot(aes(EffectType, Magnitude)) +
-  geom_col(aes(fill = ModelFrame), position = position_dodge()) +
-  scale_fill_manual(values = c(
-    "Invasive Cover"="#EE6677", 
-    "Native Cover" ="#228833",
-    "Composition" ="#4477AA")) +
-  labs(x = "Effect", y = "") +
-  facet_grid(Mediator~StabilityMetric) +
+mediation_df <- mediation %>%
+  mutate(term = case_when(
+    term == "ite" ~ "Indirect effect of functional richness", 
+    term == "pde" ~ "Direct effect of species richness",
+    term == "ate" ~ "Total effect of species richness"),
+    Stability = case_when(
+      str_detect(Model, "resistance") ~ "Resistance",
+      str_detect(Model, "resilience") ~ "Resilience",
+      str_detect(Model, "recovery") ~ "Recovery"),
+    Framework = case_when(
+      str_detect(Model,"invasive" ) ~ "Invasive Cover",
+      str_detect(Model,"native" ) ~ "Native Cover",
+      str_detect(Model,"composition" ) ~ "Composition"),
+    nonzero = ifelse(ymin>0 & 
+                         ymax>0, "nonzero",
+                       ifelse(ymin<0 & ymax<0,
+                              "nonzero", "contains.zero"))
+  )
+
+mediation_df$term <- factor(mediation_df$term, levels = c("Indirect effect of functional richness",
+                                             "Direct effect of species richness",
+                                             "Total effect of species richness"))
+mediation_df$Stability <- factor(mediation_df$Stability, levels = c("Resistance",
+                                                          "Resilience",
+                                                          "Recovery"))
+mediation_df$Framework <- factor(mediation_df$Framework, levels = c("Composition",
+                                                                    "Native Cover",
+                                                                    "Invasive Cover"))
+
+
+
+supfig12 <- mediation_df %>%
+ggplot(aes(x = term, color = Framework, shape = nonzero)) +
+  geom_hline(yintercept = 0, lwd=1, linetype = "dashed", color = "gray") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax),
+                position = position_dodge(width=0.3), width = 0) +
+  geom_point(aes(y = y),
+             position = position_dodge(width=0.3), size = 2) +
+  scale_shape_manual(values = c(21,16), guide = "none") +
+  scale_color_manual(breaks = c("Invasive Cover",
+                                "Native Cover",
+                                "Composition"),
+                     values = c("Invasive Cover"="#EE6677",
+                                "Native Cover" ="#228833",
+                                "Composition" ="#4477AA")) +
+  scale_x_discrete(labels = c(
+    "Indirect effect of functional richness" = "Indirect effect of <br> functional richness", 
+    "Direct effect of species richness" = "Direct effect of <br> species richness",
+    "Total effect of species richness" = "Total effect of <br> species richness")) +
+  facet_grid(mediator~Stability) +
   coord_flip() +
-  theme_bw() +
-  theme(axis.title.x = element_text(size = 14),
+  theme_bw() + ylab("Estimate") +
+  theme(legend.title = element_blank(),
+        axis.title.x = element_text(size = 14),
+        axis.title.y = element_blank(),
         axis.text.y = element_markdown(size = 14),
         axis.text.x = element_text(size = 12),
-        legend.text = element_text(size = 11),
+        legend.text = element_text(size = 14),
         strip.text = element_text(size = 14), 
-        legend.position = "inside",
-        legend.title = element_blank(),
-        legend.justification.inside = c(0.015,0.025)
-        ) 
+        legend.position = "right"
+        )
+  
+#
+
+ggsave(plot = supfig12,
+       file = "figures/supfig12.png",
+       width = 9.25, height = 7.5, unit = c("in"), dpi = 400)
 
 
 
@@ -806,5 +956,4 @@ ggplot(aes(EffectType, Magnitude)) +
 
 
 
-
-
+#####

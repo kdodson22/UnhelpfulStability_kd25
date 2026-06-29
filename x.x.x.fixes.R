@@ -1,5 +1,7 @@
 library(tidyverse)
 library(here)
+library(brms)
+library(marginaleffects)
 library(khroma)
 library(patchwork)
 library(rtry)
@@ -16,11 +18,11 @@ species_presence <- spp.rel.all %>%
             join_by(Site, Plot)) %>%
   mutate(Treatment = ifelse(Sprayed == "Yes", "Sprayed", "Control"),
          Sprayed = ifelse(Year == 2021, "No", Sprayed)) %>%
-  mutate(ARTR2 = sum(ARTR2 + OARTR), 
-         ERNA10 = sum(ERNA10 + OERNA),
-         ELEL5 = sum(ELEL5 + OELEL),
-         ACMI2 = sum(ACMI2 + OACMI),
-         PSSP6 = sum(PSSP6 + OPSSP)) %>% dplyr::select(-OARTR, -OERNA, -OPSSP,-OELEL,-OACMI) %>%
+  # mutate(ARTR2 = sum(ARTR2 + OARTR), 
+  #        ERNA10 = sum(ERNA10 + OERNA),
+  #        ELEL5 = sum(ELEL5 + OELEL),
+  #        ACMI2 = sum(ACMI2 + OACMI),
+  #        PSSP6 = sum(PSSP6 + OPSSP)) %>% dplyr::select(-OARTR, -OERNA, -OPSSP,-OELEL,-OACMI) %>%
   pivot_longer(cols = c(AMSIN:TAOF), names_to = "Species", values_to = "Cover") %>%
   mutate(Present = ifelse(Cover > 0, 1, 0)) %>%
   dplyr::select(-Cover) %>% 
@@ -132,7 +134,7 @@ turnoverspp_plot %>%
   rename(value = cumulative) %>%
   mutate(value=case_when(dynamic=='loss'~value*(-1),
                          .default=value)) %>%
-  # group_by(Treatment, invasive_q, dynamic) %>% summarise(value = mean(value), .groups = "drop") %>%
+  group_by(Treatment, invasive_q, dynamic) %>% summarise(value = mean(value), .groups = "drop") %>%
   mutate(dynamic = fct_relevel(dynamic,c('gain',"persist","loss"))) %>%
   ggplot(aes(x = invasive_q, y = value)) +
   geom_col(aes(fill=dynamic)) +
@@ -173,68 +175,124 @@ turnoverspp_plot %>%
 
 #####
 
-## Turnover model ####
+## Turnover model & Marginal Effects Plot####
 turnover_df <- turnoverspp_plot %>%
   filter(year == "yr3") %>%
   rename(value = cumulative) %>%
   mutate(value=case_when(dynamic=='loss'~value*(-1),
                          .default=value)) 
-turnmod <- brm(value ~ invasive_q * dynamic + year + Treatment + (1|Plot),
+turnmod <- brm(value ~ invasive_q * dynamic * Treatment + (1|Plot),
                data = turnover_df, 
                warmup = 500, iter = 1000, chains = 3, seed = 123,
-               control = list(adapt_delta = 0.999, max_treedepth = 12))
+               control = list(adapt_delta = 0.999, max_treedepth = 12),
+               cores=3, backend="cmdstanr")
+# plot(turnmod, ask = F)
+# pp_check(turnmod)
+# bayes_R2(turnmod)
+# summary(turnmod)
+# mcmc_plot(turnmod, variable = "^b_", regex = T) + theme_bw()
 
 
-#### Try Plant Trait Database ####
+turnover_mod_df <- datagrid(model = turnmod,
+                            Treatment = c("Control", "Sprayed"),
+                            invasive_q = c("invasive", "notinvasive"),
+                            dynamic = c("gain", "persist", "loss"))
 
-# Try Data
-try <- rtry_import("data/34607.txt")
-try <- rtry_remove_dup(try)
-tryspplist <- unique(try$AccSpeciesName)
-ourspplist <- species_presence %>% 
-  mutate(GenusSpecies = word(Scientific, 1, 2)) %>%
-  distinct(GenusSpecies) 
-ourspplist <- ourspplist$GenusSpecies
+turnover_mod_pred <- predictions(turnmod, 
+                                     newdata = turnover_mod_df,
+                                     conf_level = 0.9) %>%
+  select(estimate:conf.high, 
+         dynamic, Treatment, invasive_q) 
 
-# species overlaps
-sppintry <- species_presence %>% 
-  mutate(GenusSpecies = word(Scientific, 1, 2)) %>%
-  # distinct(GenusSpecies) %>%
-  filter(GenusSpecies %in% tryspplist) %>%
-  distinct(Species)
+turnover_pred_df <- turnover_mod_pred %>%
+  mutate(invasive_q = case_when(
+    invasive_q == "invasive" ~ "Invasive Species",
+    invasive_q == "notinvasive" ~ "Non-Invasive Species"
+  ))
+  
 
-cuttry <- try %>% 
-  filter(AccSpeciesName %in% ourspplist) %>%
-  filter(!is.na(TraitID))
+supfig13 <- turnover_pred_df %>%
+  filter(Treatment == "Sprayed") %>%
+ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high),
+                width = 0, lwd = 1, position = position_dodge(width = 0.25)) + 
+  geom_point(aes(y=estimate, shape = dynamic), 
+             size = 3, position = position_dodge(width = 0.25)) +
+  geom_hline(yintercept=0, linetype="dashed", color="gray",lwd=1) +
+  scale_color_manual(values = c(
+    "gain" = "#004488",
+    "persist" = "gray",
+    "loss" = "#BB5566"
+  )) +
+  scale_shape_manual(values = c(
+    "gain" = 17,
+    "persist" = 15,
+    "loss" = 16
+  )) +
+  theme_bw() + labs(y="Number of Species",x="") + 
+  theme(axis.text = element_text(size = 14),
+        axis.title.y = element_text(size=14),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        strip.text = element_text(size = 14),
+        legend.position = "bottom",
+        legend.position.inside = c(0.1,0.85))
 
-# rtryexplore <- 
-  rtry_explore(cuttry,
-             AccSpeciesName, DataName,
-             TraitID, TraitName,
-             sortBy = desc(Count))
+ggsave(plot = supfig13,
+       file = "figures/supfig13.png",
+       width = 5, height = 6, unit = c("in"), dpi = 400)
 
-cuttry %>%
-  group_by(TraitID, TraitName) %>% distinct(AccSpeciesName) %>% 
-  count() %>% arrange(desc(n)) %>% 
-  rename(Number.of.species.with.Data = n)
-
-
-spp.rel.all %>% 
-  pivot_longer(cols = c(AMSIN:TAOF), names_to = "Species", values_to = "RelCov") %>%
-  mutate(Try_Question = ifelse(Species %in% sppintry$Species, "Yes", "No"),
-         Plot = paste(Site, Plot, sep = "_")) %>%
-  filter(RelCov != 0) %>%
-  group_by(Plot, Year, Try_Question) %>%
-  summarise(maxCov = max(RelCov),
-            avgCov = mean(RelCov),
-            minCov = min(RelCov)) %>%
-  group_by(Year, Try_Question) %>%
-  summarise(maxCov = max(maxCov),
-            avgCov = mean(avgCov),
-            minCov = min(minCov),
-            percenttotal = avgCov * 100) 
-
-
+#####
+# #### Try Plant Trait Database ####
+# 
+# # Try Data
+# try <- rtry_import("data/34607.txt")
+# try <- rtry_remove_dup(try)
+# tryspplist <- unique(try$AccSpeciesName)
+# ourspplist <- species_presence %>% 
+#   mutate(GenusSpecies = word(Scientific, 1, 2)) %>%
+#   distinct(GenusSpecies) 
+# ourspplist <- ourspplist$GenusSpecies
+# 
+# # species overlaps
+# sppintry <- species_presence %>% 
+#   mutate(GenusSpecies = word(Scientific, 1, 2)) %>%
+#   # distinct(GenusSpecies) %>%
+#   filter(GenusSpecies %in% tryspplist) %>%
+#   distinct(Species)
+# 
+# cuttry <- try %>% 
+#   filter(AccSpeciesName %in% ourspplist) %>%
+#   filter(!is.na(TraitID))
+# 
+# # rtryexplore <- 
+#   rtry_explore(cuttry,
+#              AccSpeciesName, DataName,
+#              TraitID, TraitName,
+#              sortBy = desc(Count))
+# 
+# cuttry %>%
+#   group_by(TraitID, TraitName) %>% distinct(AccSpeciesName) %>% 
+#   count() %>% arrange(desc(n)) %>% 
+#   rename(Number.of.species.with.Data = n)
+# 
+# 
+# spp.rel.all %>% 
+#   pivot_longer(cols = c(AMSIN:TAOF), names_to = "Species", values_to = "RelCov") %>%
+#   mutate(Try_Question = ifelse(Species %in% sppintry$Species, "Yes", "No"),
+#          Plot = paste(Site, Plot, sep = "_")) %>%
+#   filter(RelCov != 0) %>%
+#   group_by(Plot, Year, Try_Question) %>%
+#   summarise(maxCov = max(RelCov),
+#             avgCov = mean(RelCov),
+#             minCov = min(RelCov)) %>%
+#   group_by(Year, Try_Question) %>%
+#   summarise(maxCov = max(maxCov),
+#             avgCov = mean(avgCov),
+#             minCov = min(minCov),
+#             percenttotal = avgCov * 100) 
+# 
+# 
 
 #####
 
