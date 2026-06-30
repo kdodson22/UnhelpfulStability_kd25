@@ -5,8 +5,7 @@
 ## Purpose: This script fits Bayesian glmms evaluating the effects of diversity, dominant species, and plant-available nitrogen on the stability of disturbed plant communities. Variable selection and directed acyclic graphs are described in the text.
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
-
+## Date: Updated 6/29/2026
 
 library(tidyverse)
 library(here)
@@ -14,9 +13,9 @@ library(brms)
 library(bayesplot)
 
 #data
-# source(here("1.0.Data.Set-up.R"))
-# source(here("1.1.RRR.Cover.R"))
-# source(here("1.2.RRR.Composition.R"))
+source(here("1.0.Data.Set-up.R"))
+source(here("1.1.RRR.Cover.R"))
+source(here("1.2.RRR.Composition.R"))
 
 ## MODELS - Invasive Cover #####
 #RESISTANCE based on invasive cover
@@ -36,12 +35,6 @@ inv_resistmodr <- brm(LRR.resistance ~
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
-# summary(inv_resistmodr)
-# mcmc_intervals(inv_resistmodr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b") 
-
 #RESILIENCE (2024)  based on invasive cover
 inv_resilience24_modr <- brm(LRR.resilience24 ~ 
                                scale(pre_invrichness) +
@@ -60,12 +53,6 @@ inv_resilience24_modr <- brm(LRR.resilience24 ~
                              warmup = 1000, iter = 2000, chains = 4, seed = 123,
                              control = list(adapt_delta = 0.999))
 
-# summary(inv_resilience24_modr)
-# mcmc_intervals(inv_resilience24_modr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
-
 #RECOVERY based on invasive cover
 inv_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
@@ -82,12 +69,6 @@ inv_recovermodr <- brm(LRR.recovery ~
                                      Sprayed=="Yes"),
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999))
-
-# summary(inv_recovermodr)
-# mcmc_intervals(inv_recovermodr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
 
 ## MODELS - Native Cover #####
 # RESISTANCE based on native cover
@@ -106,12 +87,6 @@ nat_resistmodr <- brm(LRR.resistance ~
                                     Sprayed=="Yes"), 
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
-
-# summary(nat_resistmodr)
-# mcmc_intervals(nat_resistmodr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
 
 #RESILIENCE (2024)  based on native cover
 nat_resilience24_modr <- brm(LRR.resilience24 ~ 
@@ -132,12 +107,6 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                              control = list(adapt_delta = 0.999, 
                                             max_treedepth = 12))
 
-# summary(nat_resilience24_modr)
-# mcmc_intervals(nat_resilience24_modr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
-
 #RECOVERY based on native cover
 nat_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
@@ -155,12 +124,6 @@ nat_recovermodr <- brm(LRR.recovery ~
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999, 
                                       max_treedepth = 12))
-
-# summary(nat_recovermodr)
-# mcmc_intervals(nat_recovermodr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
 
 ## MODELS - Composition #####
 #RESISTANCE based on composition
@@ -180,11 +143,6 @@ resist_modr <- brm(LRR.resistance ~
                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999))
 
-# summary(resist_modr)
-# mcmc_intervals(resist_modr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
 
 #RESILIENCE based on composition
 resil_modr <- brm(LRR.resilience ~
@@ -204,11 +162,6 @@ resil_modr <- brm(LRR.resilience ~
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
-# summary(resil_modr)
-# mcmc_intervals(resil_modr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
 
 #RECOVERY based on composition
 recov_modr <- brm(LRR.recovery ~ 
@@ -226,9 +179,3 @@ recov_modr <- brm(LRR.recovery ~
                                 Sprayed=="Yes"),
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
-
-# summary(recov_modr)
-# mcmc_intervals(recov_modr,
-#                prob = 0.5,
-#                prob_outer = 0.9,
-#                regex = "^b")
