@@ -4,13 +4,14 @@
 
 ## Purpose: This script calculates several summary variables needed to analyze trends in the resistance, resilience, and recovery of disturbed plant communities, based on plant cover
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 6/29/2026
 
 library(tidyverse)
 library(vegan)
 library(here)
 
 
+####### DATA CLEANING - INVASIVE ########
 # Format site and plot variables as factors:
 df_divcov$Site <- factor(df_divcov$Site, 
                          levels = c("1","2","3","4","5",
@@ -27,7 +28,6 @@ pretreat$Plot <- factor(pretreat$Plot,
                                    "6","7","8","9","10",
                                    "11","12","13"))
 
-####### DATA CLEANING - INVASIVE ########
 
 ### ABSOLUTE COVER for INVASIVE SPECIES ###
 #absolute cover data frame
@@ -39,7 +39,7 @@ invabsdf <- df_divcov %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
 # some plots have 0% cover for plant categories that are present-- add the equivalent of ~1/2 of a 'hit'
-invabsdf <- invabsdf %>% filter(invcover_abs_2021 != 0 & 
+invabsdf <- invabsdf %>% filter(invcover_abs_2021 != 0 &
                       invcover_abs_2022 != 0 &
                       invcover_abs_2023 != 0 &
                       invcover_abs_2024 != 0  )
@@ -145,7 +145,7 @@ invabsdf_soil <- spp.rel.inv %>% filter(Year == 2021) %>%
          "BRBR5_invrel" = BRBR5,
          "CHJU_invrel" = CHJU, 
          "POBU_inverel" = POBU) %>%
-  left_join(invabsdf_soil, by = c("Site", "Plot", "Year"))
+  right_join(invabsdf_soil, by = c("Site", "Plot", "Year"))
 
 
 invabsdf_soil$Site <- factor(invabsdf_soil$Site, 
@@ -180,7 +180,7 @@ natabsdf <- df_divcov %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
 # some plots have 0% cover for plant categories that are present -- add the equivalent of ~1/2 of a 'hit'
-natabsdf <- natabsdf %>% filter(natcover_abs_2021 != 0 & 
+natabsdf <- natabsdf %>% filter(natcover_abs_2021 != 0 &
                                   natcover_abs_2022 != 0 &
                                   natcover_abs_2023 != 0 &
                                   natcover_abs_2024 != 0  )
@@ -264,7 +264,7 @@ natabsdf_soil <- natabsdf_soil %>%
 natabsdf_soil <- invabsdf_soil %>% select(Site, Plot, Sprayed, invcover_abs_2022) %>%
   mutate(Site = as.factor(Site),
          Plot = as.factor(Plot)) %>%
-  left_join(natabsdf_soil, by = c("Site", "Plot", "Sprayed")) %>% 
+  right_join(natabsdf_soil, by = c("Site", "Plot", "Sprayed")) %>% 
   relocate("invcover_abs_2022", .after = natcover_abs_2024)
 
 natabsdf_soil$Site <- factor(natabsdf_soil$Site, 
@@ -272,7 +272,8 @@ natabsdf_soil$Site <- factor(natabsdf_soil$Site,
                                         "6","7","8","9","10"))
 
 #remove those without native richness & add site-level mean variables for focal dominants:
-natabsdf_soil2 <- natabsdf_soil %>% filter(pre_natrichness != 0) %>%
+natabsdf_soil2 <- natabsdf_soil %>% 
+  # filter(pre_natrichness != 0) %>%
   group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                             slm.chju = mean(CHJU), 
                             slm.epbr = mean(EPBR3),

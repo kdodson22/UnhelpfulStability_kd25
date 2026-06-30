@@ -1,3 +1,12 @@
+## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
+
+## 4.6.1 Supplement C
+
+## Purpose: This script generate sums of species gains and losses for sprayed plots to approximate species turnover, and generates visualization.  
+
+## Author: K. Dodson 
+## Date: Updated 12/1/2025
+
 library(tidyverse)
 library(here)
 library(brms)
@@ -11,13 +20,14 @@ source(here("1.0.Data.Set-up.R"))
 
 #### Species Turnover ####
 
-# presence dataframe for all plots for all years
+# Create presence data frame for all plots in for all years
 species_presence <- spp.rel.all %>%
   left_join(pretreat %>% dplyr::select(Site, Plot, Sprayed) %>% 
               mutate(Site = as.integer(Site), Plot = as.integer(Plot)), 
             join_by(Site, Plot)) %>%
   mutate(Treatment = ifelse(Sprayed == "Yes", "Sprayed", "Control"),
          Sprayed = ifelse(Year == 2021, "No", Sprayed)) %>%
+  #testing for not separating our species
   # mutate(ARTR2 = sum(ARTR2 + OARTR), 
   #        ERNA10 = sum(ERNA10 + OERNA),
   #        ELEL5 = sum(ELEL5 + OELEL),
@@ -31,9 +41,10 @@ species_presence <- spp.rel.all %>%
   mutate(Plot = paste (Site, Plot, sep = "_"))
 
 
+#split dataframe into multiple based on PlotID
 species_splitplots <- split(species_presence, species_presence$Plot)
 
-
+#forloop to move across all plots and calculate turnover counts
 species_plotslist <- list()
 for(nm in names(species_splitplots)){
   
@@ -101,17 +112,19 @@ for(nm in names(species_splitplots)){
   
 }
 
-
+#rejoin
 turnoverspp_plot <- list_rbind(species_plotslist, names_to = "Plot")
 turnoverspp_plot <- turnoverspp_plot %>% left_join(species_presence %>% 
                                  dplyr::select(Plot, Treatment) %>% distinct(Plot, Treatment), 
                                join_by(Plot))
 
+#save column colors 
 my.cols <- colour("highcontrast")(3)
 my.cols[2] <- "gray90"
 names(my.cols) <- c('gain',"persist","loss")
 # "#004488" "gray90" "#BB5566"
 
+# raw data plots
 turnoverspp_plot %>%
   rename(value = cumulative) %>%
   mutate(value=case_when(dynamic=='loss'~value*(-1),
@@ -186,13 +199,8 @@ turnmod <- brm(value ~ invasive_q * dynamic * Treatment + (1|Plot),
                warmup = 500, iter = 1000, chains = 3, seed = 123,
                control = list(adapt_delta = 0.999, max_treedepth = 12),
                cores=3, backend="cmdstanr")
-# plot(turnmod, ask = F)
-# pp_check(turnmod)
-# bayes_R2(turnmod)
-# summary(turnmod)
-# mcmc_plot(turnmod, variable = "^b_", regex = T) + theme_bw()
 
-
+#extract posteriors
 turnover_mod_df <- datagrid(model = turnmod,
                             Treatment = c("Control", "Sprayed"),
                             invasive_q = c("invasive", "notinvasive"),
@@ -210,7 +218,7 @@ turnover_pred_df <- turnover_mod_pred %>%
     invasive_q == "notinvasive" ~ "Non-Invasive Species"
   ))
   
-
+#supplemental figure 13
 supfig13 <- turnover_pred_df %>%
   filter(Treatment == "Sprayed") %>%
 ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
@@ -238,68 +246,9 @@ ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
         legend.position = "bottom",
         legend.position.inside = c(0.1,0.85))
 
-ggsave(plot = supfig13,
-       file = "figures/supfig13.png",
-       width = 5, height = 6, unit = c("in"), dpi = 400)
-
-#####
-# #### Try Plant Trait Database ####
-# 
-# # Try Data
-# try <- rtry_import("data/34607.txt")
-# try <- rtry_remove_dup(try)
-# tryspplist <- unique(try$AccSpeciesName)
-# ourspplist <- species_presence %>% 
-#   mutate(GenusSpecies = word(Scientific, 1, 2)) %>%
-#   distinct(GenusSpecies) 
-# ourspplist <- ourspplist$GenusSpecies
-# 
-# # species overlaps
-# sppintry <- species_presence %>% 
-#   mutate(GenusSpecies = word(Scientific, 1, 2)) %>%
-#   # distinct(GenusSpecies) %>%
-#   filter(GenusSpecies %in% tryspplist) %>%
-#   distinct(Species)
-# 
-# cuttry <- try %>% 
-#   filter(AccSpeciesName %in% ourspplist) %>%
-#   filter(!is.na(TraitID))
-# 
-# # rtryexplore <- 
-#   rtry_explore(cuttry,
-#              AccSpeciesName, DataName,
-#              TraitID, TraitName,
-#              sortBy = desc(Count))
-# 
-# cuttry %>%
-#   group_by(TraitID, TraitName) %>% distinct(AccSpeciesName) %>% 
-#   count() %>% arrange(desc(n)) %>% 
-#   rename(Number.of.species.with.Data = n)
-# 
-# 
-# spp.rel.all %>% 
-#   pivot_longer(cols = c(AMSIN:TAOF), names_to = "Species", values_to = "RelCov") %>%
-#   mutate(Try_Question = ifelse(Species %in% sppintry$Species, "Yes", "No"),
-#          Plot = paste(Site, Plot, sep = "_")) %>%
-#   filter(RelCov != 0) %>%
-#   group_by(Plot, Year, Try_Question) %>%
-#   summarise(maxCov = max(RelCov),
-#             avgCov = mean(RelCov),
-#             minCov = min(RelCov)) %>%
-#   group_by(Year, Try_Question) %>%
-#   summarise(maxCov = max(maxCov),
-#             avgCov = mean(avgCov),
-#             minCov = min(minCov),
-#             percenttotal = avgCov * 100) 
-# 
-# 
-
-#####
-
-
-
-
-
+# ggsave(plot = supfig13,
+#        file = "figures/supfig13.png",
+#        width = 5, height = 6, unit = c("in"), dpi = 400)
 
 
 
