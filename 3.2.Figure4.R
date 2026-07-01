@@ -185,7 +185,7 @@ figure4 <- ggplot(posteriors, aes(y =.variable,
                        alpha = nonzero,
                        shape=response)) +
   geom_vline(xintercept=0, linetype="dashed", color="grey60") +
-  geom_linerange(aes(xmin = .lower, xmax = .upper), size = 0.7,
+  geom_linerange(aes(xmin = .lower, xmax = .upper), linewidth = 0.7,
                  position=position_dodge(width = 0.4)) +
   geom_point(aes(x=.value, fill = response), size=2.25,
              position=position_dodge(width = 0.4)) +

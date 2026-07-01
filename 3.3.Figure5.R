@@ -335,11 +335,12 @@ recov_postN_preds <- rbind(if_recov_postN_pred, nf_recov_postN_pred, cc_recov_po
 ## Marginal Effects Plots #####
 
 #set plotting theme 
-metheme <- theme(legend.position = "none",
-                 axis.text.x = element_markdown(size = 12),
+metheme <- theme(aspect.ratio = 1/1,
+                 legend.position = "none",
+                 axis.text.x = ggtext::element_markdown(size = 12),
                  axis.text.y = element_text(size = 12),
-                 axis.title = element_markdown(size = 14),
-                 aspect.ratio = 1/1)
+                 axis.title.x = ggtext::element_markdown(size = 14),
+                 axis.title.y = element_text(size = 14))
 
 # Pre-treatment Invasive Richness ~ Resilience
 me_5a <- ggplot(resil_invrich_preds, aes( x = pre_invrichness,
@@ -358,8 +359,7 @@ me_5a <- ggplot(resil_invrich_preds, aes( x = pre_invrichness,
                     name=c("Response variable"),
                     values=c("#EE6677", "#228833","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
-  xlab("Pre-treatment  <br>
-       Invasive  Richness") +
+  xlab("Pre-treatment<br>Invasive  Richness") +
   ylab("Resilience") +
   theme_bw() + metheme
 
@@ -380,8 +380,7 @@ me_5b <- ggplot(recov_invrich_preds, aes( x = pre_invrichness,
                     name=c("Response variable"),
                     values=c("#EE6677", "#228833","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
-  xlab("Pre-treatment  <br>
-       Invasive  Richness") +
+  xlab("Pre-treatment<br>Invasive  Richness") +
   ylab("Recovery") +
   theme_bw() + metheme
 
@@ -402,8 +401,7 @@ me_5c <- ggplot(resil_natrich_preds, aes( x = pre_natrichness,
                     name=c("Response variable"),
                     values=c("#EE6677", "#228833","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
-  xlab("Pre-treatment  <br>
-       Native  Richness") +
+  xlab("Pre-treatment<br>Native  Richness") +
   ylab("Resilience") + 
   theme_bw() + metheme
 
@@ -425,8 +423,7 @@ me_5d <- ggplot(recov_brte_preds, aes( x = BRTE,
                     name=c("Response variable"),
                     values=c("#EE6677", "#228833","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
-  xlab("Pre-treatment  <br>
-       *B. tectorum*  Cover (%)") +
+  xlab("Pre-treatment<br>*B. tectorum*  Cover (%)") +
   ylab("Recovery") +
   theme_bw() + metheme
 
@@ -447,8 +444,7 @@ me_5e <- ggplot(resist_chju_preds, aes( x = CHJU,
                     name=c("Response variable"),
                     values=c("#EE6677", "#228833","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
-  xlab("Pre-treatment  <br>
-       *C. juncea*  Cover (%)") +
+  xlab("Pre-treatment<br>*C. juncea*  Cover (%)") +
   ylab("Resistance") +
   theme_bw() + metheme
 
@@ -469,8 +465,7 @@ me_5f <- ggplot(recov_chju_preds, aes( x = CHJU,
                     name=c("Response variable"),
                     values=c("#EE6677", "#228833","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
-  xlab("Pre-treatment  <br>
-       *C. juncea*  Cover (%)") +
+  xlab("Pre-treatment<br>*C. juncea*  Cover (%)") +
   ylab("Recovery") +
   theme_bw() + metheme
 
@@ -533,5 +528,5 @@ figure5me <- plot_grid(me_5a, me_5b, me_5c,
 figure5me
 
 
-# ggsave(figure5me, file = "figures/figure5.png",
+# ggsave(figure5me, file = "figures/Figure 5.png",
 #        width = 9, height = 7.9, dpi = 450)

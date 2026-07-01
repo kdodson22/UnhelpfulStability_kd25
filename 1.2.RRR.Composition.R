@@ -6,7 +6,7 @@
 ## Author: K. Dodson 
 ## Date: Updated 12/1/2025
 
-library(remotes)
+# library(remotes)
 
 ## This analysis requires use of Ecotraj 0.1.1
 # remotes::install_version("ecotraj", version = "0.1.1")
