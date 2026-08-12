@@ -179,3 +179,13 @@ recov_modr <- brm(LRR.recovery ~
                                 Sprayed=="Yes"),
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
+
+
+## Save ####
+
+# model_folder <- "data/outputs"
+# models <- ls(pattern = "modr$")
+# for(nm in models) {
+#   saveRDS(get(nm), file = file.path(model_folder, paste0(nm, ".RDS"))
+#   )
+# }

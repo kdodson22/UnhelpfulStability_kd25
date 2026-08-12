@@ -59,8 +59,8 @@ supfig9 <- ggplot(recovresid.intercept,
 
 supfig9 
 
-# ggsave(supfig9, file = "figures/supfig9.png",
-#        width = 5, height = 7.5, unit = c("in"), dpi = 450)
+ggsave(supfig9, file = "figures/supfig9.png",
+       width = 5, height = 7.5, unit = c("in"), dpi = 450)
 
 ##
 

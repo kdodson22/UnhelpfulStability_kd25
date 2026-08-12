@@ -26,7 +26,7 @@ library(cowplot)
 ## Marginal Effects - Posterior Predictions #####
 #get extra metadata
 recov_cor_df <- cor_df_yes %>% 
-  mutate(Site = as.factor(Site)) %>%
+  mutate(Site = as.factor(Site), Plot = as.factor(Plot)) %>%
   left_join(invabsdf_soil, join_by(Site, Plot, Sprayed))
 
 ## Invasive x Native Recovery
@@ -144,7 +144,7 @@ Invasive Cover Recovery") +
   xlab("Native Cover Recovery") +
   theme_bw() +
   ylim(-3.25, 0.25) +
-  annotate("text", x = 1.47, y = -2.855,
+  annotate("text", x = 1.32, y = -2.855,
            label = paste("R\u00b2 = ", round(in_recov_r2[1,1], 2), 
                          "\n \u03b2 =", round(in_recov_coef[2,1], 2)),
            size = 6) +
@@ -293,5 +293,5 @@ figure6 <- plot_grid(in_recov_color, ic_recov_color,
           label_size = 18)
 figure6
 
-# ggsave(figure6, file = "figures/figure6.png",
-#        width = 11, height = 9.5, unit = c("in"), dpi = 450, bg="transparent")
+ggsave(figure6, file = "figures/figure6.png",
+       width = 11, height = 9.5, unit = c("in"), dpi = 450, bg="transparent")

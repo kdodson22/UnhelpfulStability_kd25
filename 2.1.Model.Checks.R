@@ -31,17 +31,17 @@ get_prior(recov_modr)
 
 ## Evaluate Model Fit #####
 # Mean absolute error:
-performance::mae(inv_resistmodr)
-performance::mae(inv_resilience24_modr)
-performance::mae(inv_recovermodr)
+round(performance::mae(inv_resistmodr), digits = 3)
+round(performance::mae(inv_resilience24_modr), digits = 3)
+round(performance::mae(inv_recovermodr), digits = 3)
 
-performance::mae(nat_resistmodr)
-performance::mae(nat_resilience24_modr)
-performance::mae(nat_recovermodr)
+round(performance::mae(nat_resistmodr), digits = 3)
+round(performance::mae(nat_resilience24_modr), digits = 3)
+round(performance::mae(nat_recovermodr), digits = 3)
 
-performance::mae(resist_modr)
-performance::mae(resil_modr)
-performance::mae(recov_modr)
+round(performance::mae(resist_modr), digits = 3)
+round(performance::mae(resil_modr), digits = 3)
+round(performance::mae(recov_modr), digits = 3)
 
 # Bayesian r2
 bayes_R2(inv_resistmodr)

@@ -226,7 +226,7 @@ supfig6
 ## SupFig 7. Posterior predictive checks. #####
 pp_theme <-  theme(legend.position = "none",
                    aspect.ratio = 1/1,
-                   axis.text = element_text(12))
+                   axis.text = element_text(size = 12))
 
 pp1 <- pp_check(inv_resistmodr) + pp_theme
 pp2 <- pp_check(inv_resilience24_modr)  + pp_theme
@@ -237,7 +237,7 @@ pp6 <- pp_check(nat_recovermodr) + pp_theme
 pp7 <- pp_check(resist_modr) + pp_theme
 pp8 <- pp_check(resil_modr) + pp_theme
 pp9 <- pp_check(recov_modr) + theme(aspect.ratio = 1/1,
-                                    axis.text = element_text(12))
+                                    axis.text = element_text(size = 12))
 
 supfig7 <- plot_grid(pp1, pp2, pp3,
           pp4, pp5, pp6,
@@ -294,6 +294,10 @@ cresist_pred <- cresist_pred %>%
 
 
 ## Plots 
+corrtheme <- theme(aspect.ratio = 1/1,
+                   axis.title = element_text(size = 14),
+                   plot.caption = element_text(size = 14)) 
+
 i_resistxresil_plot <- ggplot(iresist_pred, aes(x = ifunc_resistance)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
               alpha=0.15, colour = NA) + 
@@ -332,6 +336,6 @@ c_resistxresil_plot <- ggplot(cresist_pred, aes(x = comp_resistance)) +
 
 supfig8 <- plot_grid(i_resistxresil_plot, n_resistxresil_plot, c_resistxresil_plot,
                      labels = c("a", "b", "c"), nrow = 1, align = "hv")
-
+supfig8
 # ggsave(supfig8, file = "figures/supfig8.png",
 #        width = 8, height = 4, unit = c("in"), dpi = 450)

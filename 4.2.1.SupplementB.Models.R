@@ -42,8 +42,8 @@ inv_resistmodr_wat <- brm(LRR.resistance ~
                           control = list(adapt_delta = 0.999, max_treedepth = 12),
                           cores = 4, backend = "cmdstanr")
 
-summary(inv_resistmodr_wat)
-mcmc_plot(inv_resistmodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+# summary(inv_resistmodr_wat)
+# mcmc_plot(inv_resistmodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 #RESILIENCE 2024 
 inv_resilience24_modr_wat <- brm(LRR.resilience24 ~ 
@@ -64,8 +64,8 @@ inv_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                                  control = list(adapt_delta = 0.999),
                                  cores = 4, backend = "cmdstanr")
-summary(inv_resilience24_modr_wat)
-mcmc_plot(inv_resilience24_modr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+# summary(inv_resilience24_modr_wat)
+# mcmc_plot(inv_resilience24_modr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 
 #RECOVERY
@@ -86,8 +86,8 @@ inv_recovermodr_wat <- brm(LRR.recovery ~
                            warmup = 1000, iter = 2000, chains = 4, seed = 123,
                            control = list(adapt_delta = 0.999),
                            cores = 4, backend = "cmdstanr")
-summary(inv_recovermodr_wat)
-mcmc_plot(inv_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+# summary(inv_recovermodr_wat)
+# mcmc_plot(inv_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 
 
@@ -111,10 +111,10 @@ nat_resistmodr_wat <- brm(LRR.resistance ~
                           control = list(adapt_delta = 0.999, max_treedepth = 12),
                           cores = 4, backend = "cmdstanr")
 
-summary(nat_resistmodr_wat)
-mcmc_plot(nat_resistmodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
-
-conditional_effects(nat_resistmodr_wat)
+# summary(nat_resistmodr_wat)
+# mcmc_plot(nat_resistmodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+# 
+# conditional_effects(nat_resistmodr_wat)
 
 #RESILIENCE 2024 
 nat_resilience24_modr_wat <- brm(LRR.resilience24 ~ 
@@ -137,8 +137,8 @@ nat_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                                 max_treedepth = 12),
                                  cores = 4, backend = "cmdstanr")
 
-summary(nat_resilience24_modr_wat)
-mcmc_plot(nat_resilience24_modr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+# summary(nat_resilience24_modr_wat)
+# mcmc_plot(nat_resilience24_modr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 #RECOVERY
 nat_recovermodr_wat <- brm(LRR.recovery ~ 
@@ -159,8 +159,8 @@ nat_recovermodr_wat <- brm(LRR.recovery ~
                            control = list(adapt_delta = 0.999, 
                                           max_treedepth = 12),
                            cores = 4, backend = "cmdstanr")
-summary(nat_recovermodr_wat)
-mcmc_plot(nat_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
+# summary(nat_recovermodr_wat)
+# mcmc_plot(nat_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
 
 ## MODELS - Composition #####
 #RESISTANCE
