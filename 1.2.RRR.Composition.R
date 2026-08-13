@@ -9,7 +9,7 @@
 # library(remotes)
 
 ## This analysis requires use of Ecotraj 0.1.1
-# remotes::install_version("ecotraj", version = "0.1.1")
+ remotes::install_version("ecotraj", version = "0.1.1")
 
 library(tidyverse)
 library(vegan)
@@ -235,7 +235,7 @@ RRR_df <- RRR_df %>% relocate(c("LRR.resistance", "LRR.resilience", "LRR.recover
                                 "Y21_Y22", "Y21_Y24", "Y21_Y22_conmean", "Y21_Y24_conmean"),
                               .after = Sprayed)
 
-RRR_df2 <- RRR_df %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
+RRR_df <- RRR_df %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                                                 slm.chju = mean(CHJU), 
                                                 slm.epbr = mean(EPBR3),
                                                 slm.br = mean(Bromus),

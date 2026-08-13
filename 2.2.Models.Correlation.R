@@ -109,6 +109,8 @@ recovdiff_mod <-brm(residual ~
                       scale(N_ug.g.instant_2022Spring) +
                       scale(slmr.inv) +
                       scale(slmr.nat) +
+                      scale(slm.brte) +
+                      scale(slm.chju) +
                       scale(Heatload) +
                       scale(slm.N.22sp) +
                       (1 | Site), 

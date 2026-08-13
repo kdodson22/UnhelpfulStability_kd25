@@ -29,8 +29,7 @@ ints.inv.resist.wat <- inv_resistmodr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2021Fall,
-               b_scalewatercontent_g.g.instant_2021Fall,
-               `b_scaleN_ug.g.instant_2021Fall:scalewatercontent_g.g.instant_2021Fall`) %>%
+               b_scalewatercontent_g.g.instant_2021Fall) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Invasive Cover",
          nonzero = ifelse(.lower>0 & 
@@ -45,8 +44,7 @@ ints.nat.resist.wat <- nat_resistmodr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2021Fall,
-               b_scalewatercontent_g.g.instant_2021Fall,
-               `b_scaleN_ug.g.instant_2021Fall:scalewatercontent_g.g.instant_2021Fall`) %>%
+               b_scalewatercontent_g.g.instant_2021Fall) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Native Cover",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
@@ -59,8 +57,7 @@ ints.comp.resist.wat <- resist_modr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2021Fall,
-               b_scalewatercontent_g.g.instant_2021Fall,
-               `b_scaleN_ug.g.instant_2021Fall:scalewatercontent_g.g.instant_2021Fall`) %>%
+               b_scalewatercontent_g.g.instant_2021Fall) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Composition",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
@@ -77,8 +74,7 @@ ints.inv.resil.wat <- inv_resilience24_modr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2022Spring,
-               b_scalewatercontent_g.g.instant_2022Spring,
-               `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring`) %>%
+               b_scalewatercontent_g.g.instant_2022Spring) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Invasive Cover",
          nonzero = ifelse(.lower>0 & 
@@ -93,8 +89,7 @@ ints.nat.resil.wat <- nat_resilience24_modr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2022Spring,
-               b_scalewatercontent_g.g.instant_2022Spring,
-               `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring`) %>%
+               b_scalewatercontent_g.g.instant_2022Spring) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Native Cover",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
@@ -107,8 +102,7 @@ ints.comp.resil.wat <- resil_modr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2022Spring,
-               b_scalewatercontent_g.g.instant_2022Spring,
-               `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring`) %>%
+               b_scalewatercontent_g.g.instant_2022Spring) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Composition",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
@@ -125,8 +119,7 @@ ints.inv.reco.wat <- inv_recovermodr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2022Spring,
-               b_scalewatercontent_g.g.instant_2022Spring,
-               `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring`) %>%
+               b_scalewatercontent_g.g.instant_2022Spring) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Invasive Cover",
          nonzero = ifelse(.lower>0 & 
@@ -141,8 +134,7 @@ ints.nat.reco.wat <- nat_recovermodr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2022Spring,
-               b_scalewatercontent_g.g.instant_2022Spring,
-               `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring`) %>%
+               b_scalewatercontent_g.g.instant_2022Spring) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Native Cover",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
@@ -155,8 +147,7 @@ ints.comp.reco.wat <- recov_modr_wat %>%
                b_scaleCHJU,
                b_scaleBRTE,
                b_scaleN_ug.g.instant_2022Spring,
-               b_scalewatercontent_g.g.instant_2022Spring,
-               `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring`) %>%
+               b_scalewatercontent_g.g.instant_2022Spring) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Composition",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
@@ -184,9 +175,7 @@ posteriors.wat <-posteriors.wat %>%
                             b_scaleN_ug.g.instant_2021Fall = "Pre-treatment PAN",
                             b_scaleN_ug.g.instant_2022Spring = "Post-treatment PAN",
                             b_scalewatercontent_g.g.instant_2021Fall = "Pre-treatment WC",
-                            b_scalewatercontent_g.g.instant_2022Spring = "Post-treatment WC",
-                            `b_scaleN_ug.g.instant_2021Fall:scalewatercontent_g.g.instant_2021Fall` = "Pre-treatment PAN * WC",
-                            `b_scaleN_ug.g.instant_2022Spring:scalewatercontent_g.g.instant_2022Spring` = "Post-treatment PAN * WC"
+                            b_scalewatercontent_g.g.instant_2022Spring = "Post-treatment WC"
                             
   ))
 
@@ -200,15 +189,14 @@ posteriors.wat$Metric <- factor(posteriors.wat$Metric,
                                            "Resilience",
                                            "Recovery"))
 posteriors.wat$.variable <- factor(posteriors.wat$.variable,
-                                   levels = c("Post-treatment PAN * WC","Pre-treatment PAN * WC",
-                                              "Post-treatment WC", "Pre-treatment WC",
+                                   levels = c("Post-treatment WC", "Pre-treatment WC",
                                               "Post-treatment PAN", "Pre-treatment PAN",
                                               "Pre-treatment C. juncea Cover", "Pre-treatment B. tectorum Cover",
                                               "Pre-treatment Native Richness", "Pre-treatment Invasive Richness")) 
 
 
 #ggplot
-supfig4 <-
+supfig5 <-
 ggplot(posteriors.wat, aes(y =.variable,
                            color=response, 
                            alpha=nonzero, shape=nonzero)) +
@@ -227,8 +215,7 @@ ggplot(posteriors.wat, aes(y =.variable,
                      values=c("#EE6677", "#228833","#4477AA")) +
   ylab("") +
   xlab("Estimated effect on response") +
-  scale_y_discrete(labels = c("Post-treatment <br> PAN * WC",
-                              "Pre-treatment<br> PAN * WC",
+  scale_y_discrete(labels = c(
                               "Post-treatment <br> WC",
                               "Pre-treatment <br> WC",
                               "Post-treatment <br> PAN", 
@@ -246,15 +233,15 @@ ggplot(posteriors.wat, aes(y =.variable,
         legend.position = "bottom",
         legend.justification.inside = c(0.025,0.025) ) 
 
-supfig4
+supfig5
 
-ggsave(plot = supfig4,
-       file = "figures/supfig4.png",
+ggsave(plot = supfig5,
+       file = "figures/supfig5.png",
        width = 8, height = 7.75, unit = c("in"), dpi = 350)
 
 
 ## SupFig 5. Soil water content treatment effect. #####
-supfig5 <-
+supfig6 <-
 soildata2 %>%
   mutate(Site = as.factor(Site),
          Plot = as.factor(Plot)) %>%
@@ -291,7 +278,7 @@ Post-treatment")) +
                      legend.text = element_text(size = 16),
                      axis.title =  element_text(size = 16))
 
- # ggsave(plot = supfig5,
- #       file = "figures/supfig5.png",
+ # ggsave(plot = supfig6,
+ #       file = "figures/supfig6.png",
  #       width = 6, height = 6, unit = c("in"), dpi = 450)
 

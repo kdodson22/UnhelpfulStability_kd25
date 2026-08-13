@@ -62,7 +62,7 @@ invabsdf_soil3 <- invabsdf_soil %>%
          slm.nspre = mean(pre_NS),
          slm.nspos = mean(post_NS))
 
-natabsdf_soil3 <- natabsdf_soil %>% 
+natabsdf_soil3 <- natabsdf_soil2 %>% 
   left_join(frall_pre, join_by(Site, Plot))  %>%
   left_join(ns_pres, join_by(Site, Plot)) %>%
   left_join(ns_post, join_by(Site, Plot)) %>%

@@ -27,12 +27,7 @@ species_presence <- spp.rel.all %>%
             join_by(Site, Plot)) %>%
   mutate(Treatment = ifelse(Sprayed == "Yes", "Sprayed", "Control"),
          Sprayed = ifelse(Year == 2021, "No", Sprayed)) %>%
-  #testing for not separating our species
-  # mutate(ARTR2 = sum(ARTR2 + OARTR), 
-  #        ERNA10 = sum(ERNA10 + OERNA),
-  #        ELEL5 = sum(ELEL5 + OELEL),
-  #        ACMI2 = sum(ACMI2 + OACMI),
-  #        PSSP6 = sum(PSSP6 + OPSSP)) %>% 
+  #remove/separating our species
   dplyr::select(-OARTR, -OERNA, -OPSSP,-OELEL,-OACMI) %>%
   pivot_longer(cols = c(AMSIN:TAOF), names_to = "Species", values_to = "Cover") %>%
   mutate(Present = ifelse(Cover > 0, 1, 0)) %>%
@@ -219,8 +214,8 @@ turnover_pred_df <- turnover_mod_pred %>%
     invasive_q == "notinvasive" ~ "Non-Invasive Species"
   ))
 
-#supplemental figure 13
-supfig13 <- turnover_pred_df %>%
+#supplemental figure - unpub
+supfigNA <- turnover_pred_df %>%
   filter(Treatment == "Sprayed") %>%
   ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high),
@@ -247,8 +242,8 @@ supfig13 <- turnover_pred_df %>%
         legend.position = "bottom",
         legend.position.inside = c(0.1,0.85))
 
-# ggsave(plot = supfig13,
-#        file = "figures/supfig13.png",
+# ggsave(plot = supfigNA,
+#        file = "figures/supfigNA.png",
 #        width = 5, height = 6, unit = c("in"), dpi = 400)
 
 

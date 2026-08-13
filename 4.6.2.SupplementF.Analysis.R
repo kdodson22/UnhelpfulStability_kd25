@@ -40,6 +40,8 @@ lossesmod_inv <- brm(loss_invasive|trials(pre_invrichness) ~
                      scale(BRTE) +
                      scale(N_ug.g.instant_2022Spring) +
                      scale(Heatload) +
+                       scale(slm.brte) +
+                       scale(slm.chju) +
                      scale(slmr.nat) +
                      scale(slmr.inv) +
                      scale(slm.N.s22) +
@@ -62,6 +64,8 @@ lossesmod_native <- brm(loss_notinvasive|trials(pre_natrichness) ~
                      scale(CHJU) +
                      scale(BRTE) +
                      scale(N_ug.g.instant_2022Spring) +
+                    scale(slm.brte) +
+                      scale(slm.chju) +
                      scale(Heatload) +
                      scale(slmr.nat) +
                      scale(slmr.inv) +
@@ -84,6 +88,8 @@ my_labels <- c("Intercept", "Pre-treatment\ninvasive richness",
                "Pre-treatment\nC.juncea cover",
                "Pre-treatment\nB.tectorum cover",
                "Post-treatment PAN",
+               "Site-mean B. tectorum",
+               "Site-mean C. juncea",
                "Heat load",
                "Site-mean Invasive richness",
                "Site-mean Native richness",
@@ -110,7 +116,7 @@ coefplot <- plot_grid(turnover_plot_a, turnover_plot_b, labels=c("a", "b"))
 coefplot
 
  ggsave(plot = coefplot,
-        file = "figures/supfig_turnover_model_coefs.png",
+        file = "figures/supfig13.png",
         width = 10, height = 5, unit = c("in"), dpi = 400)
 
 

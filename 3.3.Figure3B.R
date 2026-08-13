@@ -1,8 +1,8 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.3 Figure 5.
+## 3.3 Figure 3B
 
-## Purpose: This script generates Figure 5, showing marginal effects of diversity, dominant species, and soil resources on RRR metrics.
+## Purpose: This script generates Figure 3B, showing marginal effects of diversity, dominant species, and soil resources on RRR metrics.
 
 ## Author: K. Dodson 
 ## Date: Updated 8/7/2026
@@ -344,24 +344,24 @@ me_5h <- ggplot(recov_postN_preds, aes( x = N_ug.g.instant_2022Spring,
 
 
 #get legend 
-me_legend <- get_legend(figure4 +
+me_legend <- get_legend(figure3A +
                           guides(color = guide_legend(nrow = 3)) +
                           theme(legend.position = "right",
                                 legend.title = element_blank(),
                                 legend.text = element_text(size = 12)))
 
 # Combine panels:
-figure5me <- plot_grid(me_5b, me_5c, me_legend, me_5d,    
+figure3B<- plot_grid(me_5b, me_5c, me_legend, me_5d,    
                        me_5f, me_5h,   
                        nrow = 2, axis = "tblr", align = "hv",
                        labels = c("b","c", "", "d","e","f"))
-figure5me
+figure3B
 
 
-figure4new <- plot_grid(figure4, figure5me, nrow=2, labels=c("a", ""),
+figure3A_B <- plot_grid(figure3A, figure3B, nrow=2, labels=c("a", ""),
                         rel_heights = c(0.8, 1))
 
-figure4new
+figure3A_B
 
-ggsave(figure4new, file = "figures/Figure_coefficients_margeffects_combined.png",
+ggsave(figure3A_B, file = "figures/Figure3AB_coefficients_margeffects_combined.png",
        width = 8, height = 10, dpi = 450)

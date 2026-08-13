@@ -20,8 +20,9 @@ invrich_apath <- brm(pre_invfuncrichness ~
                        scale(pre_natrichness) +
                        scale(CHJU) + 
                        scale(BRTE) +
-                       scale(pre_NS) + #cover of pre-dist native shrubs
                        scale(N_ug.g.instant_2021Fall) +
+                       scale(slm.brte) +
+                       scale(slm.chju) +
                        scale(slmr.inv) +
                        scale(slmr.nat) +
                        scale(Heatload) +
@@ -39,7 +40,8 @@ natrich_apath <- brm(pre_natfuncrichness ~
                        scale(pre_natrichness) +
                        scale(CHJU) + 
                        scale(BRTE) +
-                       scale(pre_NS) + #cover of pre-dist native shrubs
+                       scale(slm.brte) +
+                       scale(slm.chju) +
                        scale(N_ug.g.instant_2021Fall) +
                        scale(slmr.inv) +
                        scale(slmr.nat) +
@@ -69,7 +71,8 @@ inv_resistmodr_fr <- brm(LRR.resistance ~
                            scale(pre_natfuncrichness) +
                            scale(slm.ifun) +
                            scale(slm.nfun) +
-                           scale(pre_NS) +
+                           scale(slm.brte) +
+                           scale(slm.chju) +
                            scale(CHJU) + 
                            scale(BRTE) +
                            scale(N_ug.g.instant_2021Fall) +
@@ -89,7 +92,8 @@ inv_resilience24_modr_fr <- brm(LRR.resilience24 ~
                                   scale(pre_natrichness) +
                                   scale(pre_invfuncrichness) +
                                   scale(pre_natfuncrichness) +
-                                  scale(pre_NS) +
+                                  scale(slm.brte) +                        
+                                  scale(slm.chju) +
                                   scale(slm.ifun) +
                                   scale(slm.nfun) +
                                   scale(CHJU) +
@@ -117,7 +121,7 @@ inv_recovermodr_fr <- brm(LRR.recovery ~
                             scale(slm.nfun) +    
                             scale(CHJU) +
                             scale(BRTE) +
-                            scale(pre_NS) +
+                                                    scale(slm.brte) +                        scale(slm.chju) +
                             scale(N_ug.g.instant_2022Spring) +
                             scale(slmr.inv) +
                             scale(slmr.nat) +
@@ -137,7 +141,7 @@ nat_resistmodr_fr <- brm(LRR.resistance ~
                            scale(pre_natrichness) +
                            scale(pre_invfuncrichness) +
                            scale(pre_natfuncrichness) +
-                           scale(pre_NS) +
+                                                   scale(slm.brte) +                        scale(slm.chju) +
                            scale(slm.ifun) +
                            scale(slm.nfun) +
                            scale(CHJU) + 
@@ -161,7 +165,7 @@ nat_resilience24_modr_fr <- brm(LRR.resilience24 ~
                                   scale(pre_natfuncrichness) +
                                   scale(slm.ifun) +
                                   scale(slm.nfun) +
-                                  scale(pre_NS) +
+                                                          scale(slm.brte) +                        scale(slm.chju) +
                                   scale(CHJU) +
                                   scale(BRTE) +
                                   scale(N_ug.g.instant_2022Spring) +
@@ -184,7 +188,8 @@ nat_recovermodr_fr <- brm(LRR.recovery ~
                             scale(pre_natfuncrichness) +
                             scale(slm.ifun) +
                             scale(slm.nfun) +
-                            scale(pre_NS) +
+                                                    scale(slm.brte) +                        
+                            scale(slm.chju) +
                             scale(CHJU) +
                             scale(BRTE) +
                             scale(N_ug.g.instant_2022Spring) +
@@ -207,7 +212,8 @@ resist_modr_fr <- brm(LRR.resistance ~
                         scale(pre_natfuncrichness) +
                         scale(slm.ifun) +
                         scale(slm.nfun) +
-                        scale(pre_NS) +
+                                                scale(slm.brte) +                        
+                        scale(slm.chju) +
                         scale(BRTE) +
                         scale(CHJU) +
                         scale(N_ug.g.instant_2021Fall) +
@@ -229,7 +235,8 @@ resil_modr_fr <- brm(LRR.resilience ~
                        scale(pre_natfuncrichness) +
                        scale(slm.ifun) +
                        scale(slm.nfun) +
-                       scale(pre_NS) +
+                                               scale(slm.brte) +                        
+                       scale(slm.chju) +
                        scale(BRTE) +
                        scale(CHJU) +
                        scale(N_ug.g.instant_2022Spring) +
@@ -252,7 +259,8 @@ recov_modr_fr <- brm(LRR.recovery ~
                        scale(pre_natfuncrichness) +
                        scale(slm.ifun) +
                        scale(slm.nfun) +
-                       scale(pre_NS) +
+                                               scale(slm.brte) +                        
+                       scale(slm.chju) +
                        scale(CHJU) +
                        scale(BRTE) +
                        scale(N_ug.g.instant_2022Spring) +

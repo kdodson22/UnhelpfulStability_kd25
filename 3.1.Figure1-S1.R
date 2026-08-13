@@ -1,8 +1,8 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.1 Figures 1-2
+## 3.1 Figures 1 + Supplementary Fig 1
 
-## Purpose: This script generates Figures 1 and 2, showing study location and descriptive statistics for variables used in this study
+## Purpose: This script generates Figures 1 & S.1, showing study location and descriptive statistics for variables used in this study
 
 ## Author: K. Dodson 
 ## Date: Updated 12/1/2025
@@ -194,7 +194,7 @@ nitrogen_pplot <-
 figure1bc <- plot_grid(dominance_pplot, nitrogen_pplot,
                        ncol=1, align = "hv")
 
- # ggsave(figure1bc, file = "figures/figure1bc.png",
+ # ggsave(figure1bc, file = "figures/figureSupplementary1.png",
  #        width = 3.75, height = 7, units = c("in"), dpi = 400)
 
 
@@ -280,5 +280,5 @@ p3 <- RRR_df %>%
 figure2ac <- plot_grid(p1, p2, p3, 
           nrow = 1, align = "hv")
 
- # ggsave(figure2ac, file = "figures/figure2ac.png",
- #        width = 9.87, height = 4, units = c("in"), dpi = 300)
+ ggsave(figure2ac, file = "figures/figure1.png",
+        width = 9.87, height = 4, units = c("in"), dpi = 300)

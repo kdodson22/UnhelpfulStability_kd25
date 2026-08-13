@@ -39,7 +39,7 @@ invabsdf <- df_divcov %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
 #some plots have 0% cover for plant categories that are present in richness search -- add offset of equivalent of ~1/2 of a 'hit'
-invabsdf[,3:6] <- invabsdf[,3:6] + 0.1
+invabsdf[,3:6] <- invabsdf[,3:6] + 0.01
 
 # Add additional soil variables to dataframe:
 soildata$Site <- factor(soildata$Site, 
@@ -150,7 +150,7 @@ invabsdf_soil$Site <- factor(invabsdf_soil$Site,
 
 
 ## Calculate site-level means (mundlak device) for these variables:
-invabsdf_soil2 <- invabsdf_soil %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
+invabsdf_soil <- invabsdf_soil %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                                                               slm.chju = mean(CHJU), 
                                                               slm.epbr = mean(EPBR3),
                                                               slm.br = mean(Bromus),

@@ -19,7 +19,95 @@ library(ggdist)
 #data
 # source(here("2.2 Correlation models.R"))
 
-## SupFig9. Estimated effect on response of site-level mean control variables and heat load #####
+
+## SupFig 9.  Relationship between stability metrics within invasive plant cover stability framework. #####
+
+
+## you need to run 4.4.1. Supplement D Models for this to work.
+## Invasive cover
+iresist_df <- datagrid(model = i_resistxresil_model,
+                       ifunc_resistance = seq_range(cor_df_yes$ifunc_resistance, 
+                                                    100))
+iresist_pred <- predictions(i_resistxresil_model, 
+                            newdata = iresist_df,
+                            conf_level = 0.9)
+iresist_pred <- iresist_pred %>%
+  select(estimate:conf.high, 
+         ifunc_resistance)
+
+## Native cover
+nresist_df <- datagrid(model = n_resistxresil_model,
+                       nfunc_resistance = seq_range(cor_df_yes$nfunc_resistance, 
+                                                    100))
+nresist_pred <- predictions(n_resistxresil_model, 
+                            newdata = nresist_df,
+                            conf_level = 0.9)
+nresist_pred <- nresist_pred %>%
+  select(estimate:conf.high, 
+         nfunc_resistance)
+
+
+## Composition
+cresist_df <- datagrid(model = c_resistxresil_model,
+                       comp_resistance = seq_range(cor_df_yes$comp_resistance, 
+                                                   100))
+cresist_pred <- predictions(c_resistxresil_model, 
+                            newdata = cresist_df,
+                            conf_level = 0.9)
+cresist_pred <- cresist_pred %>%
+  select(estimate:conf.high, 
+         comp_resistance)
+
+
+## Plots 
+corrtheme <- theme(aspect.ratio = 1/1,
+                   axis.title = element_text(size = 14),
+                   plot.caption = element_text(size = 14)) 
+
+i_resistxresil_plot <- ggplot(iresist_pred, aes(x = ifunc_resistance)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
+              alpha=0.15, colour = NA) + 
+  geom_line(aes(y=estimate), linewidth=1) +
+  geom_point(data = cor_df_yes, aes(ifunc_resistance, ifunc_resilience)) +
+  xlab("Resistance") +
+  ylab("Resilience") +
+  theme_bw() +
+  labs(caption = paste("R\u00b2 = ", round(i_resistxresil_r2[1,1], 2),
+                       "\n \u03b2 =", round(i_resistxresil_coef[2,1], 2))) +
+  corrtheme
+
+n_resistxresil_plot <- ggplot(nresist_pred, aes(x = nfunc_resistance)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
+              alpha=0.15, colour = NA) + 
+  geom_line(aes(y=estimate), linewidth=1) +
+  geom_point(data = cor_df_yes, aes(nfunc_resistance, nfunc_resilience)) +
+  xlab("Resistance") +
+  ylab("Resilience") +
+  theme_bw() +
+  labs(caption = paste("R\u00b2 = ", round(n_resistxresil_r2[1,1], 2),
+                       "\n \u03b2 =", round(n_resistxresil_coef[2,1], 2))) +
+  corrtheme
+
+c_resistxresil_plot <- ggplot(cresist_pred, aes(x = comp_resistance)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
+              alpha=0.15, colour = NA) + 
+  geom_line(aes(y=estimate), linewidth=1) +
+  geom_point(data = cor_df_yes, aes(comp_resistance, comp_resilience)) +
+  xlab("Resistance") +
+  ylab("Resilience") +
+  theme_bw() +
+  labs(caption = paste("R\u00b2 = ", round(c_resistxresil_r2[1,1], 2),
+                       "\n \u03b2 =", round(c_resistxresil_coef[2,1], 2))) +
+  corrtheme
+
+supfig9 <- plot_grid(i_resistxresil_plot, n_resistxresil_plot, c_resistxresil_plot,
+                     labels = c("a", "b", "c"), nrow = 1, align = "hv")
+supfig9
+ ggsave(supfig9, file = "figures/supfig9.png",
+        width = 8, height = 4, unit = c("in"), dpi = 450)
+
+
+## SupFig10. Estimated effect on response of site-level mean control variables and heat load #####
 ## posterior draws 
 recovresid.intercept <- as.data.frame(recovdiff_mod) %>%
   dplyr::select(Intercept,
@@ -42,7 +130,7 @@ recovresid.intercept$parameter <- factor(recovresid.intercept$parameter,
                                              "Site-Mean Native Richness",
                                              "Site-Mean Invasive Richness",
                                              "Intercept"))
-supfig9 <- ggplot(recovresid.intercept,
+supfig10 <- ggplot(recovresid.intercept,
        aes(x=estimate, y=parameter)) +
   geom_vline(xintercept=0, color="grey60", linetype=2)+
   stat_pointinterval(.width = c(0.50, 0.90), position=position_dodge(width=0.6)) + 
@@ -57,15 +145,15 @@ supfig9 <- ggplot(recovresid.intercept,
   theme(axis.title.x = element_text(size = 14),
         axis.text.y = element_text(size = 12)) 
 
-supfig9 
+supfig10
 
-ggsave(supfig9, file = "figures/supfig9.png",
+ggsave(supfig10, file = "figures/supfig10.png",
        width = 5, height = 7.5, unit = c("in"), dpi = 450)
 
 ##
 
 
-## SupFig 10. Correlations across frameworks for resistance and resilience. #####
+## SupFig 11. Correlations across frameworks for resistance and resilience. #####
 ## Invasive x Composition
 # RESISTANCE 
 icresist_df <- datagrid(model = ic_resist_model,
@@ -161,13 +249,13 @@ inresil_plot <- ggplot(inresil_pred, aes(x = nfunc_resilience)) +
                        "\n \u03b2 =", round(in_resil_coef[2,1], 2))) +
   corrtheme
 
-supfig10 <- plot_grid(icresist_plot, icresil_plot, 
+supfig11 <- plot_grid(icresist_plot, icresil_plot, 
           inresist_plot, inresil_plot, 
           labels = c("a", "b", 
                      "c", "d"),
           nrow = 2)
 
-supfig10
+supfig11
 
-# ggsave(supfig10, file = "figures/supfig10.png",
-#        width = 8, height = 7.5, unit = c("in"), dpi = 450)
+ggsave(supfig11, file = "figures/supfig11.png",
+        width = 8, height = 7.5, unit = c("in"), dpi = 450)

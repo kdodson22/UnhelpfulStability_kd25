@@ -25,6 +25,8 @@ inv_resistmodr <- brm(LRR.resistance ~
                         scale(CHJU) + 
                         scale(BRTE) +
                         scale(N_ug.g.instant_2021Fall) +
+                        scale(slm.brte) + # If updating models, added BRTE and CHJU in
+                        scale(slm.chju) +
                         scale(slmr.inv) +
                         scale(slmr.nat) +
                         scale(Heatload) +
@@ -42,6 +44,8 @@ inv_resilience24_modr <- brm(LRR.resilience24 ~
                                scale(CHJU) +
                                scale(BRTE) +
                                scale(N_ug.g.instant_2022Spring) +
+                               scale(slm.brte) +
+                               scale(slm.chju) +
                                scale(LRR.resistance) +
                                scale(slmr.inv) +
                                scale(slmr.nat) +
@@ -60,6 +64,8 @@ inv_recovermodr <- brm(LRR.recovery ~
                          scale(CHJU) +
                          scale(BRTE) +
                          scale(N_ug.g.instant_2022Spring) +
+                         scale(slm.brte) +
+                         scale(slm.chju) +
                          scale(slmr.inv) +
                          scale(slmr.nat) +
                          scale(Heatload) +
@@ -78,6 +84,8 @@ nat_resistmodr <- brm(LRR.resistance ~
                         scale(CHJU) + 
                         scale(BRTE) +
                         scale(N_ug.g.instant_2021Fall) +
+                        scale(slm.brte) +
+                        scale(slm.chju) +
                         scale(slmr.inv) +
                         scale(slmr.nat) +
                         scale(Heatload) +
@@ -95,6 +103,8 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                                scale(CHJU) +
                                scale(BRTE) +
                                scale(N_ug.g.instant_2022Spring) +
+                               scale(slm.brte) +
+                               scale(slm.chju) +
                                scale(LRR.resistance) +
                                scale(slmr.inv) +
                                scale(slmr.nat) +
@@ -114,6 +124,8 @@ nat_recovermodr <- brm(LRR.recovery ~
                          scale(CHJU) +
                          scale(BRTE) +
                          scale(N_ug.g.instant_2022Spring) +
+                         scale(slm.brte) +
+                         scale(slm.chju) +
                          scale(slmr.inv) +
                          scale(slmr.nat) +
                          scale(Heatload) +
@@ -133,6 +145,8 @@ resist_modr <- brm(LRR.resistance ~
                      scale(BRTE) +
                      scale(CHJU) +
                      scale(N_ug.g.instant_2021Fall) +
+                     scale(slm.brte) +
+                     scale(slm.chju) +
                      scale(Heatload) +
                      scale(slmr.nat) +
                      scale(slmr.inv) +
@@ -151,6 +165,8 @@ resil_modr <- brm(LRR.resilience ~
                     scale(BRTE) +
                     scale(CHJU) +
                     scale(N_ug.g.instant_2022Spring) +
+                    scale(slm.brte) +
+                    scale(slm.chju) +
                     scale(LRR.resistance) +
                     scale(Heatload) +
                     scale(slmr.nat) +
@@ -171,6 +187,8 @@ recov_modr <- brm(LRR.recovery ~
                     scale(BRTE) +
                     scale(N_ug.g.instant_2022Spring) +
                     scale(Heatload) +
+                    scale(slm.brte) +
+                    scale(slm.chju) +
                     scale(slmr.nat) +
                     scale(slmr.inv) +
                     scale(slm.N.s22) +

@@ -21,7 +21,7 @@ source(here("1.1.RRR.Cover.R"))
 source(here("1.2.RRR.Composition.R"))
 
 
-### MODEL TESTING/COMPARISON FOR INCLUSION OF PRE- AND POST-TREATMENT WATER CONTENT ###
+### MODEL SENSITIVITY/COMPARISON FOR INCLUSION OF PRE- AND POST-TREATMENT WATER CONTENT ###
 ## MODELS - Invasive Cover #####
 #RESISTANCE
 inv_resistmodr_wat <- brm(LRR.resistance ~ 
@@ -29,9 +29,12 @@ inv_resistmodr_wat <- brm(LRR.resistance ~
                             scale(pre_natrichness) +
                             scale(CHJU) + 
                             scale(BRTE) +
-                            scale(N_ug.g.instant_2021Fall) * scale(watercontent_g.g.instant_2021Fall) +  
+                            scale(N_ug.g.instant_2021Fall) +
+                            scale(watercontent_g.g.instant_2021Fall) +  
                             scale(slmr.inv) +
                             scale(slmr.nat) +
+                            scale(slm.brte) +
+                            scale(slm.chju) +
                             scale(Heatload) +
                             scale(slm.N.21fall) +
                             scale(slm.wc.f21) +
@@ -51,10 +54,13 @@ inv_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                    scale(pre_natrichness) +
                                    scale(CHJU) +
                                    scale(BRTE) +
-                                   scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
+                                   scale(N_ug.g.instant_2022Spring) +
+                                   scale(watercontent_g.g.instant_2022Spring) +
                                    scale(LRR.resistance) +
                                    scale(slmr.inv) +
                                    scale(slmr.nat) +
+                                   scale(slm.brte) +
+                                   scale(slm.chju) +
                                    scale(Heatload) +
                                    scale(slm.N.22sp) +
                                    scale(slm.wc.s22) +
@@ -74,10 +80,13 @@ inv_recovermodr_wat <- brm(LRR.recovery ~
                              scale(pre_natrichness) +
                              scale(CHJU) +
                              scale(BRTE) +
-                             scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
+                             scale(N_ug.g.instant_2022Spring) + 
+                             scale(watercontent_g.g.instant_2022Spring) +
                              scale(slmr.inv) +
                              scale(slmr.nat) +
                              scale(Heatload) +
+                             scale(slm.brte) +
+                             scale(slm.chju) +
                              scale(slm.N.22sp) +
                              scale(slm.wc.s22) +
                              (1 | Site), 
@@ -98,9 +107,12 @@ nat_resistmodr_wat <- brm(LRR.resistance ~
                             scale(pre_natrichness) +
                             scale(CHJU) + 
                             scale(BRTE) +
-                            scale(N_ug.g.instant_2021Fall) * scale(watercontent_g.g.instant_2021Fall) +  
+                            scale(N_ug.g.instant_2021Fall) +
+                            scale(watercontent_g.g.instant_2021Fall) +  
                             scale(slmr.inv) +
                             scale(slmr.nat) +
+                            scale(slm.brte) +
+                            scale(slm.chju) +
                             scale(Heatload) +
                             scale(slm.N.21fall) +
                             scale(slm.wc.f21) +
@@ -122,10 +134,12 @@ nat_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                    scale(pre_natrichness) +
                                    scale(CHJU) +
                                    scale(BRTE) +
-                                   scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
+                                   scale(N_ug.g.instant_2022Spring) + scale(watercontent_g.g.instant_2022Spring) +
                                    scale(LRR.resistance) +
                                    scale(slmr.inv) +
                                    scale(slmr.nat) +
+                                   scale(slm.brte) +
+                                   scale(slm.chju) +
                                    scale(Heatload) +
                                    scale(slm.N.22sp) +
                                    scale(slm.wc.s22) +
@@ -146,9 +160,12 @@ nat_recovermodr_wat <- brm(LRR.recovery ~
                              scale(pre_natrichness) +
                              scale(CHJU) +
                              scale(BRTE) +
-                             scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
+                             scale(N_ug.g.instant_2022Spring) +
+                             scale(watercontent_g.g.instant_2022Spring) +
                              scale(slmr.inv) +
                              scale(slmr.nat) +
+                             scale(slm.brte) +
+                             scale(slm.chju) +
                              scale(Heatload) +
                              scale(slm.N.22sp) +
                              scale(slm.wc.s22) +
@@ -169,8 +186,11 @@ resist_modr_wat <- brm(LRR.resistance ~
                          scale(pre_natrichness) +
                          scale(BRTE) +
                          scale(CHJU) +
-                         scale(N_ug.g.instant_2021Fall) * scale(watercontent_g.g.instant_2021Fall) + 
+                         scale(N_ug.g.instant_2021Fall) +
+                         scale(watercontent_g.g.instant_2021Fall) + 
                          scale(Heatload) +
+                         scale(slm.brte) +
+                         scale(slm.chju) +
                          scale(slmr.nat) +
                          scale(slmr.inv) +
                          scale(slm.N.f21) +
@@ -189,9 +209,12 @@ resil_modr_wat <- brm(LRR.resilience ~
                         scale(pre_natrichness) +
                         scale(BRTE) +
                         scale(CHJU) +
-                        scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
+                        scale(N_ug.g.instant_2022Spring) +
+                        scale(watercontent_g.g.instant_2022Spring) +
                         scale(LRR.resistance) +
                         scale(Heatload) +
+                        scale(slm.brte) +
+                        scale(slm.chju) +
                         scale(slmr.nat) +
                         scale(slmr.inv) +
                         scale(slmc.all) +
@@ -211,8 +234,11 @@ recov_modr_wat <- brm(LRR.recovery ~
                         scale(pre_natrichness) +
                         scale(CHJU) +
                         scale(BRTE) +
-                        scale(N_ug.g.instant_2022Spring) * scale(watercontent_g.g.instant_2022Spring) +
+                        scale(N_ug.g.instant_2022Spring) +
+                        scale(watercontent_g.g.instant_2022Spring) +
                         scale(Heatload) +
+                        scale(slm.brte) +
+                        scale(slm.chju) +
                         scale(slmr.nat) +
                         scale(slmr.inv) +
                         scale(slm.N.s22) +

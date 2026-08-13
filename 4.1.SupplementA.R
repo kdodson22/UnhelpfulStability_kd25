@@ -109,9 +109,9 @@ treatment",
         legend.position = "inside",
         legend.position.inside = c(0.8, 0.88))
 
-supfig1
+supfig2
 
- # ggsave(supfig1, file = "figures/supfig1.png",
+ # ggsave(supfig2, file = "figures/supfig2.png",
  #       width = 5.5, height = 5, unit = c("in"), dpi = 450)
 
 
@@ -189,7 +189,7 @@ supfig3 <-
         legend.position.inside = c(0.9, 0.88),
         legend.title = element_blank())
 
-supfig3
+supfig4
 
-# ggsave(supfig3, file = "figures/supfig3.png",
+# ggsave(supfig4, file = "figures/supfig4.png",
 #        width = 11, height = 7.5, unit = c("in"), dpi = 450)
