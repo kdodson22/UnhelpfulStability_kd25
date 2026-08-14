@@ -1,11 +1,11 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.2 Figure 4
+## 3.2 Figure 3A
 
-## Purpose: This script generates Figure 4, showing posterior parameter estimates for each model
+## Purpose: This script generates Figure 3A, showing posterior parameter estimates for each model
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 8/7/2026
 
 library(tidyverse)
 library(marginaleffects)
@@ -180,20 +180,20 @@ posteriors$.variable <- factor(posteriors$.variable,
                                           "Pre-treatment Native Richness", "Pre-treatment Invasive Richness"))
 
 ## Plot #####
-figure4 <- ggplot(posteriors, aes(y =.variable,
-                       color=response,
-                       alpha = nonzero,
-                       shape=response)) +
+figure3A <- ggplot(posteriors, aes(y =.variable,
+                                  color=response,
+                                  alpha = nonzero,
+                                  shape=response)) +
   geom_vline(xintercept=0, linetype="dashed", color="grey60") +
   geom_linerange(aes(xmin = .lower, xmax = .upper), linewidth = 0.7,
-                 position=position_dodge(width = 0.4)) +
+                 position=position_dodge(width = 0.5)) +
   geom_point(aes(x=.value, fill = response), size=2.25,
-             position=position_dodge(width = 0.4)) +
+             position=position_dodge(width = 0.5)) +
   scale_shape_manual(breaks = c("Invasive Cover", "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
                      values=c(21, 22, 24)) +
-  scale_alpha_manual(values=c(0.25, 1), guide="none") +
+  scale_alpha_manual(values=c(0.5, 1), guide="none") +
   scale_fill_manual(breaks = c("Invasive Cover", "Native Cover",
                                "Composition"),
                     name=c("Response variable"),
@@ -204,23 +204,25 @@ figure4 <- ggplot(posteriors, aes(y =.variable,
                      values=c("#EE6677", "#228833","#4477AA")) +
   ylab("") +
   xlab("Estimated effect on response") +
-  scale_y_discrete(labels = c("Post-treatment <br> PAN", 
-                              "Pre-treatment <br> PAN",
+  scale_y_discrete(labels = c("Post-treatment<br>PAN   ", 
+                              "Pre-treatment<br>PAN  ",
                               "Pre-treatment <br> *C. juncea* Cover", 
                               "Pre-treatment <br> *B. tectorum* Cover",
                               "Pre-treatment <br> Native Richness", 
                               "Pre-treatment <br> Invasive Richness")) +
-  theme_bw() + facet_wrap(~Metric) + 
+  theme_bw() + facet_wrap(~Metric, scales="free_x") + 
   theme(legend.title = element_blank(),
         axis.title.x = element_text(size = 14),
         axis.text.y = element_markdown(size = 14),
         axis.text.x = element_text(size = 12),
         legend.text = element_text(size = 14),
         strip.text = element_text(size = 14), 
-        legend.position = "inside",
+        legend.position = "none",
         legend.justification.inside = c(0.025,0.025)) 
 
+figure3A
 
- # ggsave(plot = figure4,
- #       file = "figures/Figure4.png",
- #        width = 8.25, height = 7.5, unit = c("in"), dpi = 400)
+ggsave(plot = figure3A,
+       file = "figures/Figure3A.png",
+       width = 7, height = 4.5, unit = c("in"), dpi = 400)
+

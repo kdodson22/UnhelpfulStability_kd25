@@ -89,7 +89,7 @@ in_recov_df <- cor_df_yes %>% filter(!is.na(nfunc_recovery)) %>% cbind(as.data.f
 ic_recov_resids <- residuals(ic_recov_model, summary = T)
 
 ic_resids_df <- cor_df_yes %>% 
-  mutate(Site = as.factor(Site)) %>%
+  mutate(Site = as.factor(Site), Plot = as.factor(Plot)) %>%
   cbind(as.data.frame(ic_recov_resids)) %>%
   left_join(invabsdf_soil, join_by(Site, Plot, Sprayed)) %>%
   rename(residual = Estimate)
@@ -109,6 +109,8 @@ recovdiff_mod <-brm(residual ~
                       scale(N_ug.g.instant_2022Spring) +
                       scale(slmr.inv) +
                       scale(slmr.nat) +
+                      scale(slm.brte) +
+                      scale(slm.chju) +
                       scale(Heatload) +
                       scale(slm.N.22sp) +
                       (1 | Site), 

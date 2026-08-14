@@ -1,11 +1,11 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 4.6.1 Supplement C
+## 4.6.1 Supplement F Data Prep
 
 ## Purpose: This script generate sums of species gains and losses for sprayed plots to approximate species turnover, and generates visualization.  
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 8/7/2026
 
 library(tidyverse)
 library(here)
@@ -27,12 +27,8 @@ species_presence <- spp.rel.all %>%
             join_by(Site, Plot)) %>%
   mutate(Treatment = ifelse(Sprayed == "Yes", "Sprayed", "Control"),
          Sprayed = ifelse(Year == 2021, "No", Sprayed)) %>%
-  #testing for not separating our species
-  # mutate(ARTR2 = sum(ARTR2 + OARTR), 
-  #        ERNA10 = sum(ERNA10 + OERNA),
-  #        ELEL5 = sum(ELEL5 + OELEL),
-  #        ACMI2 = sum(ACMI2 + OACMI),
-  #        PSSP6 = sum(PSSP6 + OPSSP)) %>% dplyr::select(-OARTR, -OERNA, -OPSSP,-OELEL,-OACMI) %>%
+  #remove/separating our species
+  dplyr::select(-OARTR, -OERNA, -OPSSP,-OELEL,-OACMI) %>%
   pivot_longer(cols = c(AMSIN:TAOF), names_to = "Species", values_to = "Cover") %>%
   mutate(Present = ifelse(Cover > 0, 1, 0)) %>%
   dplyr::select(-Cover) %>% 
@@ -57,10 +53,10 @@ for(nm in names(species_splitplots)){
   yr2.inv <- df %>% filter(Year == 2023 & Invasive == "Y")
   yr3.inv <- df %>% filter(Year == 2024 & Invasive == "Y")
   #native
-  yr0.nat <- df %>% filter(Year == 2021 & Invasive == "N")
-  yr1.nat <- df %>% filter(Year == 2022 & Invasive == "N")
-  yr2.nat <- df %>% filter(Year == 2023 & Invasive == "N")
-  yr3.nat <- df %>% filter(Year == 2024 & Invasive == "N")
+  yr0.nat <- df %>% filter(Year == 2021 & Native_Exotic_Planted == "Native")
+  yr1.nat <- df %>% filter(Year == 2022 & Native_Exotic_Planted == "Native")
+  yr2.nat <- df %>% filter(Year == 2023 & Native_Exotic_Planted == "Native")
+  yr3.nat <- df %>% filter(Year == 2024 & Native_Exotic_Planted == "Native")
   
   #pull vectors of unique species for each year
   yr0.invspp <- unique(yr0.inv$Species)
@@ -115,8 +111,8 @@ for(nm in names(species_splitplots)){
 #rejoin
 turnoverspp_plot <- list_rbind(species_plotslist, names_to = "Plot")
 turnoverspp_plot <- turnoverspp_plot %>% left_join(species_presence %>% 
-                                 dplyr::select(Plot, Treatment) %>% distinct(Plot, Treatment), 
-                               join_by(Plot))
+                                                     dplyr::select(Plot, Treatment) %>% distinct(Plot, Treatment), 
+                                                   join_by(Plot))
 
 #save column colors 
 my.cols <- colour("highcontrast")(3)
@@ -169,9 +165,9 @@ turnoverspp_plot %>%
   mutate(inv.dyn = paste(invasive_q, dynamic, sep = "-")) %>%
   mutate(inv.dyn = fct_relevel(inv.dyn,
                                c("invasive-gain", "notinvasive-gain",
-                               "invasive-persist", "notinvasive-persist",
-                               "invasive-loss", "notinvasive-loss"))
-         ) %>%
+                                 "invasive-persist", "notinvasive-persist",
+                                 "invasive-loss", "notinvasive-loss"))
+  ) %>%
   ggplot(aes(x = Treatment, y = value)) +
   geom_boxplot(aes(fill = inv.dyn, alpha = inv.dyn)) +
   scale_fill_manual(values = c("invasive-gain" = "#004488",
@@ -207,8 +203,8 @@ turnover_mod_df <- datagrid(model = turnmod,
                             dynamic = c("gain", "persist", "loss"))
 
 turnover_mod_pred <- predictions(turnmod, 
-                                     newdata = turnover_mod_df,
-                                     conf_level = 0.9) %>%
+                                 newdata = turnover_mod_df,
+                                 conf_level = 0.9) %>%
   select(estimate:conf.high, 
          dynamic, Treatment, invasive_q) 
 
@@ -217,11 +213,11 @@ turnover_pred_df <- turnover_mod_pred %>%
     invasive_q == "invasive" ~ "Invasive Species",
     invasive_q == "notinvasive" ~ "Non-Invasive Species"
   ))
-  
-#supplemental figure 13
-supfig13 <- turnover_pred_df %>%
+
+#supplemental figure - unpub
+supfigNA <- turnover_pred_df %>%
   filter(Treatment == "Sprayed") %>%
-ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
+  ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high),
                 width = 0, lwd = 1, position = position_dodge(width = 0.25)) + 
   geom_point(aes(y=estimate, shape = dynamic), 
@@ -246,8 +242,8 @@ ggplot(aes(x = invasive_q, color = dynamic, group = Treatment)) +
         legend.position = "bottom",
         legend.position.inside = c(0.1,0.85))
 
-# ggsave(plot = supfig13,
-#        file = "figures/supfig13.png",
+# ggsave(plot = supfigNA,
+#        file = "figures/supfigNA.png",
 #        width = 5, height = 6, unit = c("in"), dpi = 400)
 
 

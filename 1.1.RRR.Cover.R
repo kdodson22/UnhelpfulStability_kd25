@@ -4,7 +4,7 @@
 
 ## Purpose: This script calculates several summary variables needed to analyze trends in the resistance, resilience, and recovery of disturbed plant communities, based on plant cover
 ## Author: K. Dodson 
-## Date: Updated 6/29/2026
+## Date: Updated 8/7/2026
 
 library(tidyverse)
 library(vegan)
@@ -38,12 +38,8 @@ invabsdf <- df_divcov %>%
               names_prefix = "invcover_abs_") %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
-# some plots have 0% cover for plant categories that are present-- add the equivalent of ~1/2 of a 'hit'
-invabsdf <- invabsdf %>% filter(invcover_abs_2021 != 0 &
-                      invcover_abs_2022 != 0 &
-                      invcover_abs_2023 != 0 &
-                      invcover_abs_2024 != 0  )
-# invabsdf[,3:6] <- replace(invabsdf[,3:6], invabsdf[,3:6] < 0.019, 0.010)
+#some plots have 0% cover for plant categories that are present in richness search -- add offset of equivalent of ~1/2 of a 'hit'
+invabsdf[,3:6] <- invabsdf[,3:6] + 0.01
 
 # Add additional soil variables to dataframe:
 soildata$Site <- factor(soildata$Site, 
@@ -60,9 +56,9 @@ invabsdf_soil <- invabsdf  %>%
   mutate(Fall21_mineralN = N_ug.g.incubated_2021Fall - N_ug.g.instant_2021Fall,
          Spr22_mineralN = N_ug.g.incubated_2022Spring - N_ug.g.instant_2022Spring, 
          DeltaN_21_22 = (N_ug.g.instant_2021Fall - N_ug.g.instant_2022Spring)/
-                                                    N_ug.g.instant_2021Fall,
+           N_ug.g.instant_2021Fall,
          DeltaNH4_21_22 = (NH4.instant_2021Fall - NH4.instant_2022Spring)/
-                                                    NH4.instant_2021Fall,
+           NH4.instant_2021Fall,
          DeltaNO3_21_22 = (NO3.instant_2021Fall - NO3.instant_2022Spring)) 
 
 
@@ -154,7 +150,7 @@ invabsdf_soil$Site <- factor(invabsdf_soil$Site,
 
 
 ## Calculate site-level means (mundlak device) for these variables:
-invabsdf_soil2 <- invabsdf_soil %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
+invabsdf_soil <- invabsdf_soil %>% group_by(Site) %>% mutate(slm.brte = mean(BRTE),
                                                               slm.chju = mean(CHJU), 
                                                               slm.epbr = mean(EPBR3),
                                                               slm.br = mean(Bromus),
@@ -179,12 +175,11 @@ natabsdf <- df_divcov %>%
               names_prefix = "natcover_abs_") %>%
   left_join(pretreat, by = c("Site", "Plot"))
 
-# some plots have 0% cover for plant categories that are present -- add the equivalent of ~1/2 of a 'hit'
+# unlike in the invasive data, native absences are possible:
 natabsdf <- natabsdf %>% filter(natcover_abs_2021 != 0 &
                                   natcover_abs_2022 != 0 &
                                   natcover_abs_2023 != 0 &
                                   natcover_abs_2024 != 0  )
-# natabsdf[,3:6] <- replace(natabsdf[,3:6], natabsdf[,3:6] < 0.019, 0.010)
 
 #add more soil variables:
 natabsdf_soil <- natabsdf  %>% 

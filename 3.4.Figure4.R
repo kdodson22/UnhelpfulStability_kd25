@@ -1,8 +1,8 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.4 Figure 6.
+## 3.4 Figure 4
 
-## Purpose: This script generates Figure 6, showing marginal effects of diversity, dominant species, and soil resources in the deviance analysis, as well as correlations between RRR metrics.
+## Purpose: This script generates Figure 4, showing marginal effects of diversity, dominant species, and soil resources in the deviance analysis, as well as correlations between RRR metrics.
 
 ## Author: K. Dodson 
 ## Date: Updated 12/1/2025
@@ -26,7 +26,7 @@ library(cowplot)
 ## Marginal Effects - Posterior Predictions #####
 #get extra metadata
 recov_cor_df <- cor_df_yes %>% 
-  mutate(Site = as.factor(Site)) %>%
+  mutate(Site = as.factor(Site), Plot = as.factor(Plot)) %>%
   left_join(invabsdf_soil, join_by(Site, Plot, Sprayed))
 
 ## Invasive x Native Recovery
@@ -144,7 +144,7 @@ Invasive Cover Recovery") +
   xlab("Native Cover Recovery") +
   theme_bw() +
   ylim(-3.25, 0.25) +
-  annotate("text", x = 1.47, y = -2.855,
+  annotate("text", x = 1.32, y = -2.855,
            label = paste("R\u00b2 = ", round(in_recov_r2[1,1], 2), 
                          "\n \u03b2 =", round(in_recov_coef[2,1], 2)),
            size = 6) +
@@ -162,7 +162,7 @@ Invasive Cover Recovery") +
 
 ic_recov_color <-
   ggplot(icrecov_pred, aes(x = comp_recovery)) +
-  annotate("label", x = -1.1, y = -0.8, 
+  annotate("text", x = -1.1, y = -0.8, 
            label = "More 
 invasive 
 recovery
@@ -201,7 +201,7 @@ Invasive Cover Recovery") +
 
 rich_resid_p <-
   ggplot(recov_rich_c, aes(x = Richness, group = RichType)) +
-  annotate("label", x = 3.4, y = 0.5, 
+  annotate("text", x = 3.4, y = 0.5, 
            label = "More 
 invasive 
 recovery
@@ -245,7 +245,7 @@ invasive recovery ~ compositional recovery") +
 #plot dominance marginal effects together 
 dom_resid_p <-
   ggplot(recov_dom_c, aes(x = Cover, group = Species)) +
-  annotate("label", x = .34, y = .5,
+  annotate("text", x = .34, y = .5,
            label = "More 
 invasive 
 recovery
@@ -287,11 +287,12 @@ invasive recovery ~ compositional recovery") +
   )
 
 #grid with both plots
-figure6 <- plot_grid(in_recov_color, ic_recov_color,
+figure4 <- plot_grid(in_recov_color, ic_recov_color,
           rich_resid_p, dom_resid_p, 
           nrow = 2, align = "hv", labels = c("a", "b", "c", "d"),
           label_size = 18)
-figure6
+figure4
 
-# ggsave(figure6, file = "figures/figure6.png",
-#        width = 11, height = 9.5, unit = c("in"), dpi = 450, bg="transparent")
+ggsave(figure4, file = "figures/figure4.png",
+       width = 11, height = 9.5, unit = c("in"), dpi = 450, bg="transparent")
+
