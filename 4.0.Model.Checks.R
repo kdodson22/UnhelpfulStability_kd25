@@ -1,11 +1,11 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 2.1 Model checks
+## 4.0 Model checks
 
 ## Purpose: This script completes model diagnostics for the model fits in 2.0, including probability of direction for posterior parameter estimates, model fit statistics, and description of priors.
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 8/7/2026
 
 library(tidyverse)
 library(here)
@@ -83,7 +83,7 @@ posteriors$percentchange <- (exp(posteriors$.value) - 1) * 100
 
 
 
-# ## previous pd calculations: 
+# ## previous pd calculations: ####
 # #invasive cover resilience and recovery x invasive richness
 # estimate_prediction(inv_resilience24_modr, by = "pre_invrichness") #marginal effect
 # estimate_prediction(inv_recovermodr, by = "pre_invrichness")

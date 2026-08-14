@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 4.6.1 Supplement F Data Prep
+## 4.5.4 Supplement E Data Prep
 
 ## Purpose: This script generate sums of species gains and losses for sprayed plots to approximate species turnover, and generates visualization.  
 
@@ -16,7 +16,7 @@ library(patchwork)
 library(rtry)
 
 #data
-source(here("1.0.Data.Set-up.R"))
+# source(here("1.0.Data.Set-up.R"))
 
 #### Species Turnover ####
 

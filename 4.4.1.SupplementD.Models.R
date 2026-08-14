@@ -16,7 +16,7 @@ library(brms)
 # source(here("1.0.Data.Set-up.R"))
 # source(here("1.1.RRR.Cover.R"))
 # source(here("1.2.RRR.Composition.R"))
-# source(here("2.2.Models.Correlation.R"))
+# source(here("2.1.Models.Correlation.R"))
 
 ## MODELS: Resistance x Resilience
 #invasive cover  

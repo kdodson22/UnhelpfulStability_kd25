@@ -2,7 +2,7 @@
 
 ## 4.4.2. Supplement D Figures:
 
-## Purpose:  This script generates Supplementary Figure 9: Estimated effect on response of site-level mean control variables and heat load; and Supplementary Figure 10: Correlations across frameworks for resistance and resilience. #####
+## Purpose:  This script generates Supplementary Figures 9-11 #####
 
 ## Author: K. Dodson 
 ## Date: Updated 12/1/2025
@@ -18,12 +18,10 @@ library(ggdist)
 
 #data
 # source(here("2.2 Correlation models.R"))
+# source(here("4.4.1.SupplementD.Models.R"))
 
 
 ## SupFig 9.  Relationship between stability metrics within invasive plant cover stability framework. #####
-
-
-## you need to run 4.4.1. Supplement D Models for this to work.
 ## Invasive cover
 iresist_df <- datagrid(model = i_resistxresil_model,
                        ifunc_resistance = seq_range(cor_df_yes$ifunc_resistance, 
@@ -103,8 +101,8 @@ c_resistxresil_plot <- ggplot(cresist_pred, aes(x = comp_resistance)) +
 supfig9 <- plot_grid(i_resistxresil_plot, n_resistxresil_plot, c_resistxresil_plot,
                      labels = c("a", "b", "c"), nrow = 1, align = "hv")
 supfig9
- ggsave(supfig9, file = "figures/supfig9.png",
-        width = 8, height = 4, unit = c("in"), dpi = 450)
+# ggsave(supfig9, file = "figures/supfig9.png",
+#        width = 8, height = 4, unit = c("in"), dpi = 450)
 
 
 ## SupFig10. Estimated effect on response of site-level mean control variables and heat load #####
@@ -147,8 +145,8 @@ supfig10 <- ggplot(recovresid.intercept,
 
 supfig10
 
-ggsave(supfig10, file = "figures/supfig10.png",
-       width = 5, height = 7.5, unit = c("in"), dpi = 450)
+# ggsave(supfig10, file = "figures/supfig10.png",
+#        width = 5, height = 7.5, unit = c("in"), dpi = 450)
 
 ##
 
@@ -257,5 +255,5 @@ supfig11 <- plot_grid(icresist_plot, icresil_plot,
 
 supfig11
 
-ggsave(supfig11, file = "figures/supfig11.png",
-        width = 8, height = 7.5, unit = c("in"), dpi = 450)
+# ggsave(supfig11, file = "figures/supfig11.png",
+#         width = 8, height = 7.5, unit = c("in"), dpi = 450)

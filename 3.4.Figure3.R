@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.4 Figure 4
+## 3.3 Figure 4
 
 ## Purpose: This script generates Figure 4, showing marginal effects of diversity, dominant species, and soil resources in the deviance analysis, as well as correlations between RRR metrics.
 
@@ -21,7 +21,7 @@ library(tidybayes)
 library(cowplot)
 
 #data
-# source(here("2.2.Models.Correlation.R"))
+# source(here("2.1.Models.Correlation.R"))
 
 ## Marginal Effects - Posterior Predictions #####
 #get extra metadata

@@ -6,7 +6,7 @@
 
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 8/7/2026
 
 
 
@@ -16,9 +16,9 @@ library(brms)
 library(cmdstanr)
 
 #data
-source(here("1.0.Data.Set-up.R"))
-source(here("1.1.RRR.Cover.R"))
-source(here("1.2.RRR.Composition.R"))
+# source(here("1.0.Data.Set-up.R"))
+# source(here("1.1.RRR.Cover.R"))
+# source(here("1.2.RRR.Composition.R"))
 
 
 ### MODEL SENSITIVITY/COMPARISON FOR INCLUSION OF PRE- AND POST-TREATMENT WATER CONTENT ###

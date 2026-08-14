@@ -2,10 +2,10 @@
 
 ## 4.5.2 Supplement E Mediated effects figures:
 
-## Purpose:  This script generates the coefficient plots for parsing species vs functional richness effects on RRR metrics.
+## Purpose:  This script generates the coefficient plots for parsing species vs functional richness effects on RRR metrics, and supplementary figure 13.
 
 ## Author: K. Dodson + A. Simler-W
-## Date: Updated 6/30/2026
+## Date: Updated 8/7/26
 
 ## Mediated effects plots -- illustrate total (X->Y), indirect (M->Y), and direct effects (X->Y, conditional on M) ####
 
@@ -21,7 +21,6 @@ library(ggplot2)
 # apath - The apaths are on a different link function scale than the main model, unfortunately.
 
 ## Need a work around to create "effect" on identity scale:
-
 
 ## 1. Calculate a-path effects ########
 
@@ -125,7 +124,7 @@ effects <- purrr::map_dfr(seq_len(nrow(model_info)), function(i) {
     mutate(Response = row$Response)})
 
 
-##\ Set factors 
+## Set factors 
 
 effects <- effects %>%
   mutate(Model = factor(Model,
@@ -148,7 +147,7 @@ sig_flags <- effects %>% group_by(Model, Variable, Effect, Response) %>%
 
 ## 7. Plot ####
 
-supfig12 <- effects %>%
+supfig13 <- effects %>%
   left_join( sig_flags, by = c("Model", "Variable", "Effect", "Response")) %>%
   ggplot(aes( y = Variable, x = value, color = Effect, alpha = excludes_zero)) +
   geom_vline(
@@ -178,9 +177,9 @@ supfig12 <- effects %>%
   ) +
   guides(alpha = "none")
 
-supfig12
+supfig13
 
-ggsave(plot = supfig12,
-       file = "figures/supfig12.png",
+ggsave(plot = supfig13,
+       file = "figures/supfig13.png",
        width = 12, height = 7.5, unit = c("in"), dpi = 400)
 

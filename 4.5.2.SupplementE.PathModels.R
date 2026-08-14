@@ -4,7 +4,7 @@
 
 ## Purpose:  This script fits the a-path, b-path, and total effect models:
 
-## Author: K. Dodson + ASW
+## Author: K. Dodson + A. Simler-W
 ## Date: Updated 8/7/2026
 
 
@@ -58,9 +58,6 @@ natrich_apath <- brm(pre_natfuncrichness ~
 ## Total Treatment Effect  MODELS (X->Y total) #######
 
 ## THESE HAVE ALREADY BEEN FIT IN MAIN TEXT, using 2.0.Models.RRR.R
-
-
-
 
 ## Indirect effect models/B path models M->Y #####
 #RESISTANCE based on invasive cover
@@ -121,7 +118,8 @@ inv_recovermodr_fr <- brm(LRR.recovery ~
                             scale(slm.nfun) +    
                             scale(CHJU) +
                             scale(BRTE) +
-                                                    scale(slm.brte) +                        scale(slm.chju) +
+                            scale(slm.brte) +
+                            scale(slm.chju) +
                             scale(N_ug.g.instant_2022Spring) +
                             scale(slmr.inv) +
                             scale(slmr.nat) +
@@ -141,7 +139,8 @@ nat_resistmodr_fr <- brm(LRR.resistance ~
                            scale(pre_natrichness) +
                            scale(pre_invfuncrichness) +
                            scale(pre_natfuncrichness) +
-                                                   scale(slm.brte) +                        scale(slm.chju) +
+                           scale(slm.brte) +
+                           scale(slm.chju) +
                            scale(slm.ifun) +
                            scale(slm.nfun) +
                            scale(CHJU) + 
@@ -165,7 +164,8 @@ nat_resilience24_modr_fr <- brm(LRR.resilience24 ~
                                   scale(pre_natfuncrichness) +
                                   scale(slm.ifun) +
                                   scale(slm.nfun) +
-                                                          scale(slm.brte) +                        scale(slm.chju) +
+                                  scale(slm.brte) + 
+                                  scale(slm.chju) +
                                   scale(CHJU) +
                                   scale(BRTE) +
                                   scale(N_ug.g.instant_2022Spring) +
@@ -188,7 +188,7 @@ nat_recovermodr_fr <- brm(LRR.recovery ~
                             scale(pre_natfuncrichness) +
                             scale(slm.ifun) +
                             scale(slm.nfun) +
-                                                    scale(slm.brte) +                        
+                            scale(slm.brte) +                        
                             scale(slm.chju) +
                             scale(CHJU) +
                             scale(BRTE) +
@@ -212,7 +212,7 @@ resist_modr_fr <- brm(LRR.resistance ~
                         scale(pre_natfuncrichness) +
                         scale(slm.ifun) +
                         scale(slm.nfun) +
-                                                scale(slm.brte) +                        
+                        scale(slm.brte) +                        
                         scale(slm.chju) +
                         scale(BRTE) +
                         scale(CHJU) +
@@ -235,7 +235,7 @@ resil_modr_fr <- brm(LRR.resilience ~
                        scale(pre_natfuncrichness) +
                        scale(slm.ifun) +
                        scale(slm.nfun) +
-                                               scale(slm.brte) +                        
+                       scale(slm.brte) +                        
                        scale(slm.chju) +
                        scale(BRTE) +
                        scale(CHJU) +
@@ -259,7 +259,7 @@ recov_modr_fr <- brm(LRR.recovery ~
                        scale(pre_natfuncrichness) +
                        scale(slm.ifun) +
                        scale(slm.nfun) +
-                                               scale(slm.brte) +                        
+                       scale(slm.brte) +                        
                        scale(slm.chju) +
                        scale(CHJU) +
                        scale(BRTE) +

@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.3 Figure 3B
+## 3.2 Figure 3B
 
 ## Purpose: This script generates Figure 3B, showing marginal effects of diversity, dominant species, and soil resources on RRR metrics.
 

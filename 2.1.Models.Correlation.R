@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 2.2 Models for correlation between RRR metrics
+## 2.1 Models for correlation between RRR metrics
 
 ## Purpose: This script fits Bayesian glmms for the deviance analysis, evaluating how diversity, dominant species, and plant-available nitrogen relate to the correlation structure/residuals between RRR metrics.
 

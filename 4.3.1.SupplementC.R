@@ -1,11 +1,11 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 4.3. Supplement C
+## 4.3.1 Supplement C
 
 ## Purpose:  This script completes posterior predictive checks for Bayesian glmms and plots the effect sizes for statistical control variables (not for causal interpretation) from models examining drivers of RRR:
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 8/7/2026
 
 library(tidyverse)
 library(here)
@@ -18,7 +18,7 @@ library(ggdist)
 #data
 # source(here("2.0.Models.RRR.R"))
 
-## SupFig 6. Posterior parameter estimtates for site-level mean control variables and heat load #####
+## SupFig 7. Posterior parameter estimtates for site-level mean control variables and heat load #####
 ## posterior draws 
 #invasive
 invresist.intercept <- as.data.frame(inv_resistmodr) %>%
@@ -258,9 +258,9 @@ supfig7 <- ggplot(intercepts.df,
 
 supfig7
 
- ggsave(plot = supfig7,
-        file = "figures/supfig7.png",
-        width = 8, height = 8, unit = c("in"), dpi = 450)
+ # ggsave(plot = supfig7,
+ #        file = "figures/supfig7.png",
+ #        width = 8, height = 8, unit = c("in"), dpi = 450)
 
 
 ## SupFig 8. Posterior predictive checks. #####
@@ -290,7 +290,7 @@ supfig8 <- plot_grid(pp1, pp2, pp3,
           hjust=-2)
 supfig8
 
- ggsave(plot = supfig8,
-        file = "figures/supfig8.png",
-        width = 8, height = 6.5, unit = c("in"), dpi = 450)
+ # ggsave(plot = supfig8,
+ #        file = "figures/supfig8.png",
+ #        width = 8, height = 6.5, unit = c("in"), dpi = 450)
 

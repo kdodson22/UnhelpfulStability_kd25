@@ -1,6 +1,6 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 3.2 Figure 3A
+## 3.1 Figure 3A
 
 ## Purpose: This script generates Figure 3A, showing posterior parameter estimates for each model
 
