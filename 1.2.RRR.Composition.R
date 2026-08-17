@@ -17,9 +17,24 @@ library(here)
 library(ecotraj)
 
 #data
-# source(here("1.0.Data.Set-up.R"))
+source(here("1.0.Data.Set-up.R"))
 
 ## DATA PREP #####
+df_divcov$Site <- factor(df_divcov$Site, 
+                         levels = c("1","2","3","4","5",
+                                    "6","7","8","9","10"))
+df_divcov$Plot <- factor(df_divcov$Plot, 
+                         levels = c("1","2","3","4","5",
+                                    "6","7","8","9","10",
+                                    "11","12","13"))
+pretreat$Site <- factor(pretreat$Site, 
+                        levels = c("1","2","3","4","5",
+                                   "6","7","8","9","10"))
+pretreat$Plot <- factor(pretreat$Plot, 
+                        levels = c("1","2","3","4","5",
+                                   "6","7","8","9","10",
+                                   "11","12","13"))
+
 #create 'metadata' df with site, plot, date, and treatment info
 meta1 <- spp.comp %>% 
   dplyr::select(Site, Plot, Year) %>%
@@ -173,7 +188,7 @@ RRR_df <- df_divcov %>% filter(Year == 2021) %>%
          LRR.recovery = log((1-Y21_Y24) / (1-Y21_Y24_conmean)))
 
 # Add soil data
-RRR_df <- RRR_df %>% left_join(soildata, by = c("Site", "Plot")) 
+RRR_df <- RRR_df %>% left_join(soildata %>% mutate(Site = as.factor(Site), Plot = as.factor(Plot)), by = c("Site", "Plot")) 
 
 #Calculate site-level means (mundlak variables):
 RRR_df <- RRR_df %>% 

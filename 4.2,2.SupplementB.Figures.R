@@ -235,9 +235,9 @@ ggplot(posteriors.wat, aes(y =.variable,
 
 supfig5
 
-# ggsave(plot = supfig5,
-#        file = "figures/supfig5.png",
-#        width = 8, height = 7.75, unit = c("in"), dpi = 350)
+ggsave(plot = supfig5,
+       file = "figures/supfig5.png",
+       width = 8, height = 7.75, unit = c("in"), dpi = 350)
 
 
 ## SupFig 6. Soil water content treatment effect. #####
@@ -278,7 +278,7 @@ Post-treatment")) +
                      legend.text = element_text(size = 16),
                      axis.title =  element_text(size = 16))
 
- # ggsave(plot = supfig6,
- #       file = "figures/supfig6.png",
- #       width = 6, height = 6, unit = c("in"), dpi = 450)
+ ggsave(plot = supfig6,
+       file = "figures/supfig6.png",
+       width = 6, height = 6, unit = c("in"), dpi = 450)
 

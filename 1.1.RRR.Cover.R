@@ -10,6 +10,8 @@ library(tidyverse)
 library(vegan)
 library(here)
 
+#data
+source(here("1.0.Data.Set-up.R"))
 
 ####### DATA CLEANING - INVASIVE ########
 # Format site and plot variables as factors:

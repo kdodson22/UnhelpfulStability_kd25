@@ -121,7 +121,7 @@ coefplot <- plot_grid(turnover_plot_a, turnover_plot_b, labels=c("a", "b"))
 coefplot
 
  ggsave(plot = coefplot,
-        file = "figures/supfig13.png",
+        file = "figures/supfig14.png",
         width = 10, height = 5, unit = c("in"), dpi = 400)
 
 

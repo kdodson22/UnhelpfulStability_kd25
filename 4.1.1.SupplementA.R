@@ -193,8 +193,8 @@ nitrogen_pplot <-
 figure1bc <- plot_grid(dominance_pplot, nitrogen_pplot,
                        ncol=1, align = "hv")
 
-# ggsave(figure1bc, file = "figures/figureSupplementary1.png",
-#        width = 3.75, height = 7, units = c("in"), dpi = 400)
+ggsave(figure1bc, file = "figures/figureSupplementary1.png",
+       width = 3.75, height = 7, units = c("in"), dpi = 400)
 
 ## SupFig 2. B. tectorum and C. juncea relative cover pre- and post-treatment.  #####
 brte_cov <- spp.comp.rel %>%
@@ -266,8 +266,8 @@ treatment",
 
 supfig2
 
- # ggsave(supfig2, file = "figures/supfig2.png",
- #       width = 5.5, height = 5, unit = c("in"), dpi = 450)
+ ggsave(supfig2, file = "figures/supfig2.png",
+       width = 5.5, height = 5, unit = c("in"), dpi = 450)
 
 
 ## SupFig 4. Ranked species rareness based on relative abundance. #####
@@ -346,8 +346,8 @@ supfig4 <-
 
 supfig4
 
-# ggsave(supfig4, file = "figures/supfig4.png",
-#        width = 11, height = 7.5, unit = c("in"), dpi = 450)
+ggsave(supfig4, file = "figures/supfig4.png",
+       width = 11, height = 7.5, unit = c("in"), dpi = 450)
 
 ## Calculate precipitation data from PRISM for sites: #####
 #get year and month from 'ID'

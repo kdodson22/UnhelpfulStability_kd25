@@ -258,9 +258,9 @@ supfig7 <- ggplot(intercepts.df,
 
 supfig7
 
- # ggsave(plot = supfig7,
- #        file = "figures/supfig7.png",
- #        width = 8, height = 8, unit = c("in"), dpi = 450)
+ ggsave(plot = supfig7,
+        file = "figures/supfig7.png",
+        width = 8, height = 8, unit = c("in"), dpi = 450)
 
 
 ## SupFig 8. Posterior predictive checks. #####
@@ -290,7 +290,7 @@ supfig8 <- plot_grid(pp1, pp2, pp3,
           hjust=-2)
 supfig8
 
- # ggsave(plot = supfig8,
- #        file = "figures/supfig8.png",
- #        width = 8, height = 6.5, unit = c("in"), dpi = 450)
+ ggsave(plot = supfig8,
+        file = "figures/supfig8.png",
+        width = 8, height = 6.5, unit = c("in"), dpi = 450)
 

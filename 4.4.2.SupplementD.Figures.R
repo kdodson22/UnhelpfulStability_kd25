@@ -101,20 +101,25 @@ c_resistxresil_plot <- ggplot(cresist_pred, aes(x = comp_resistance)) +
 supfig9 <- plot_grid(i_resistxresil_plot, n_resistxresil_plot, c_resistxresil_plot,
                      labels = c("a", "b", "c"), nrow = 1, align = "hv")
 supfig9
-# ggsave(supfig9, file = "figures/supfig9.png",
-#        width = 8, height = 4, unit = c("in"), dpi = 450)
+ggsave(supfig9, file = "figures/supfig9.png",
+       width = 8, height = 4, unit = c("in"), dpi = 450)
 
 
 ## SupFig10. Estimated effect on response of site-level mean control variables and heat load #####
 ## posterior draws 
 recovresid.intercept <- as.data.frame(recovdiff_mod) %>%
-  dplyr::select(Intercept,
-                b_scaleslmr.inv,
-                b_scaleslmr.nat,
-                b_scaleHeatload,
-                b_scaleslm.N.22sp) %>%
-  rename("Site-Mean Invasive Richness" = b_scaleslmr.inv,
+  dplyr::select(b_Intercept,
+                b_scalepre_invrichness:b_scaleslm.N.22sp) %>%
+  rename("Intercept" = b_Intercept,
+         "Pre-treatment Invasive Richness" = b_scalepre_invrichness,
+         "Pre-treatment Native Richness" = b_scalepre_natrichness,
+         "Pre-treatment C. juncea Cover" = b_scaleCHJU,
+         "Pre-treatment B. tectorum Cover" = b_scaleBRTE,
+         "Post-treatment PAN" = b_scaleN_ug.g.instant_2022Spring,
+         "Site-Mean Invasive Richness" = b_scaleslmr.inv,
          "Site-Mean Native Richness" = b_scaleslmr.nat,
+         "Site-Mean C. juncea Cover" = b_scaleslm.chju,
+         "Site-Mean B. tectorum Cover" = b_scaleslm.brte,
          "Heat load" = b_scaleHeatload,
          "Site-Mean Post-treatment PAN" = b_scaleslm.N.22sp) %>%
   pivot_longer(cols = `Intercept`:`Site-Mean Post-treatment PAN`, 
@@ -122,31 +127,60 @@ recovresid.intercept <- as.data.frame(recovdiff_mod) %>%
                values_to = "estimate") %>%
   mutate(Response = "Residual")
 
+
+# "Intercept"
+# "Pre-treatment Invasive Richness" ,
+# "Pre-treatment Native Richness",
+# "Pre-treatment C. juncea Cover",
+# "Pre-treatment B. tectorum Cover" ,
+# "Post-treatment PAN" ,
+# "Site-Mean Invasive Richness" ,
+# "Site-Mean Native Richness", 
+# "Site-Mean C. juncea Cover",
+# "Site-Mean B. tectorum Cover",
+# "Heat load",
+# "Site-Mean Post-treatment PAN",
+
 recovresid.intercept$parameter <- factor(recovresid.intercept$parameter,
-                                  levels = c("Site-Mean Post-treatment PAN",
-                                             "Heat load",
+                                  levels = c("Heat load",
+                                             "Site-Mean Post-treatment PAN",
+                                             "Site-Mean B. tectorum Cover",
+                                             "Site-Mean C. juncea Cover", 
                                              "Site-Mean Native Richness",
                                              "Site-Mean Invasive Richness",
+                                             "Post-treatment PAN" ,
+                                             "Pre-treatment B. tectorum Cover" ,
+                                             "Pre-treatment C. juncea Cover",
+                                             "Pre-treatment Native Richness",
+                                             "Pre-treatment Invasive Richness" ,
                                              "Intercept"))
 supfig10 <- ggplot(recovresid.intercept,
        aes(x=estimate, y=parameter)) +
   geom_vline(xintercept=0, color="grey60", linetype=2)+
   stat_pointinterval(.width = c(0.50, 0.90), position=position_dodge(width=0.6)) + 
   ylab("") + xlab("Estimated effect on Response") + 
-  scale_y_discrete(labels = c("Site-Mean \n Post-treatment PAN",
-                              "Site-Mean \n Pre-treatment PAN",
-                              "Heat load",
-                              "Site-Mean \n Native Richness",
-                              "Site-Mean \n Invasive Richness",
-                              "Intercept")) +
+  scale_y_discrete(labels = c(
+    "Heat load",
+    "Site-Mean<br>Post-treatment PAN",
+    "Site-Mean<br>B. tectorum Cover",
+    "Site-Mean<br>C. juncea Cover", 
+    "Site-Mean<br>Native Richness",
+    "Site-Mean<br>Invasive Richness",
+    "Post-treatment PAN" ,
+    "Pre-treatment<br>B. tectorum Cover" ,
+    "Pre-treatment<br>C. juncea Cover",
+    "Pre-treatment<br>Native Richness",
+    "Pre-treatment<br>Invasive Richness" ,
+    "Intercept"
+  )) +
   theme_bw() + 
   theme(axis.title.x = element_text(size = 14),
-        axis.text.y = element_text(size = 12)) 
+        axis.text.y = element_markdown(size = 12)) 
 
 supfig10
 
-# ggsave(supfig10, file = "figures/supfig10.png",
-#        width = 5, height = 7.5, unit = c("in"), dpi = 450)
+ggsave(supfig10, file = "figures/supfig10.png",
+       width = 5, height = 7.5, unit = c("in"), dpi = 450)
 
 ##
 
@@ -255,5 +289,5 @@ supfig11 <- plot_grid(icresist_plot, icresil_plot,
 
 supfig11
 
-# ggsave(supfig11, file = "figures/supfig11.png",
-#         width = 8, height = 7.5, unit = c("in"), dpi = 450)
+ggsave(supfig11, file = "figures/supfig11.png",
+        width = 8, height = 7.5, unit = c("in"), dpi = 450)

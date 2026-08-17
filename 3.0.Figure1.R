@@ -100,5 +100,5 @@ p3 <- RRR_df %>%
 figure1ce <- plot_grid(p1, p2, p3, 
                        nrow = 1, align = "hv")
 
-# ggsave(figure1ce, file = "figures/figure1ce.png",
-#        width = 9.87, height = 4, units = c("in"), dpi = 300)
+ggsave(figure1ce, file = "figures/figure1ce.png",
+       width = 9.87, height = 4, units = c("in"), dpi = 300)
