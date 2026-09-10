@@ -4,8 +4,8 @@
 
 ## Purpose:  This script fits the a-path, b-path, and total effect models:
 
-## Author: K. Dodson + A. Simler-W
-## Date: Updated 8/7/2026
+## Author: K. Dodson + ASW
+## Date: Updated 8/28/2026
 
 
 ### Mediation analysis:
@@ -15,7 +15,7 @@
 ## A PATH MODELS (X->M) ####
 
 #inv fun richness ~ inv spp richness
-invrich_apath <- brm(pre_invfuncrichness ~ 
+invrich_apath <- brm(pre_invfuncrichness | trials(5)~ 
                        scale(pre_invrichness) +
                        scale(pre_natrichness) +
                        scale(CHJU) + 
@@ -27,7 +27,7 @@ invrich_apath <- brm(pre_invfuncrichness ~
                        scale(slmr.nat) +
                        scale(Heatload) +
                        (1 | Site),
-                     #family = "lognormal",
+                     family = "binomial",
                      data = subset(invabsdf_soil3,
                                    Sprayed=="Yes"), 
                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
@@ -35,7 +35,7 @@ invrich_apath <- brm(pre_invfuncrichness ~
                      cores = 3, backend = "cmdstanr")
 
 #nat fun richness ~ nat spp richness
-natrich_apath <- brm(pre_natfuncrichness ~ 
+natrich_apath <- brm(pre_natfuncrichness | trials(4)~ 
                        scale(pre_invrichness) +
                        scale(pre_natrichness) +
                        scale(CHJU) + 
@@ -47,7 +47,7 @@ natrich_apath <- brm(pre_natfuncrichness ~
                        scale(slmr.nat) +
                        scale(Heatload) +
                        (1 | Site),
-                     #family = "zero_inflated_poisson",
+                     family = "binomial",
                      data = subset(invabsdf_soil3,
                                    Sprayed=="Yes"), 
                      warmup = 1000, iter = 2000, chains = 4, seed = 123,
@@ -58,6 +58,9 @@ natrich_apath <- brm(pre_natfuncrichness ~
 ## Total Treatment Effect  MODELS (X->Y total) #######
 
 ## THESE HAVE ALREADY BEEN FIT IN MAIN TEXT, using 2.0.Models.RRR.R
+
+
+
 
 ## Indirect effect models/B path models M->Y #####
 #RESISTANCE based on invasive cover
@@ -139,8 +142,7 @@ nat_resistmodr_fr <- brm(LRR.resistance ~
                            scale(pre_natrichness) +
                            scale(pre_invfuncrichness) +
                            scale(pre_natfuncrichness) +
-                           scale(slm.brte) +
-                           scale(slm.chju) +
+                           scale(slm.brte) +                        scale(slm.chju) +
                            scale(slm.ifun) +
                            scale(slm.nfun) +
                            scale(CHJU) + 
@@ -164,7 +166,7 @@ nat_resilience24_modr_fr <- brm(LRR.resilience24 ~
                                   scale(pre_natfuncrichness) +
                                   scale(slm.ifun) +
                                   scale(slm.nfun) +
-                                  scale(slm.brte) + 
+                                  scale(slm.brte) +                        
                                   scale(slm.chju) +
                                   scale(CHJU) +
                                   scale(BRTE) +
