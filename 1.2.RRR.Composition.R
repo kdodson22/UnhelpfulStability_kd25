@@ -9,7 +9,7 @@
 # library(remotes)
 
 ## This analysis requires use of Ecotraj 0.1.1
- remotes::install_version("ecotraj", version = "0.1.1")
+ # remotes::install_version("ecotraj", version = "0.1.1")
 
 library(tidyverse)
 library(vegan)
@@ -36,7 +36,14 @@ pretreat$Plot <- factor(pretreat$Plot,
                                    "11","12","13"))
 
 #create 'metadata' df with site, plot, date, and treatment info
-meta1 <- spp.comp %>% 
+spp.comp.rel$Obs.ID <- row.names(spp.comp.rel)
+meta1 <- spp.comp.rel %>% 
+  dplyr::select(-OARTR, -OPSSP, -OERNA, -OELEL, -OACMI) %>% 
+  separate(Obs.ID, into = c("Site", "Plot", "Year")) %>% 
+  relocate(c("Site", "Plot", "Year"), .before = "AMSIN") %>%
+  mutate(Year = as.numeric(Year),
+         Site = as.numeric(Site),
+         Plot = as.numeric(Plot)) %>% 
   dplyr::select(Site, Plot, Year) %>%
   mutate(ObsID = paste(Site, Plot, Year, sep = "-")) 
 
@@ -60,7 +67,6 @@ plots1 <- meta %>%
   filter(Year == 2021 | Year == 2022)
 
 #filter to 2021 and 2022 years from spp.comp.rel
-spp.comp.rel$Obs.ID <- row.names(spp.comp.rel)
 scr.1 <- spp.comp.rel %>% 
   separate(Obs.ID, into = c("Site", "Plot", "Year")) %>% 
   relocate(c("Site", "Plot", "Year"), .before = "AMSIN") %>%
@@ -112,6 +118,7 @@ plots2 <- meta %>%
 
 #filter to 2021 and 2024 from spp.comp.rel
 scr.2 <- spp.comp.rel %>%
+  dplyr::select(-OARTR, -OPSSP, -OERNA, -OELEL, -OACMI) %>%
   separate(Obs.ID, into = c("Site", "Plot", "Year")) %>%
   relocate(c("Site", "Plot", "Year"), .before = "AMSIN") %>%
   mutate(Year = as.numeric(Year),
@@ -166,20 +173,20 @@ controlmeanlengths <- tr_lengths_df2 %>%
   filter(Sprayed == "No") %>%
   group_by(Site) %>%
   summarise("Y21_Y24_conmean" = mean(Y21_Y24)) %>%
-  left_join(controlmeanlengths)
+  left_join(controlmeanlengths, join_by(Site))
 
 # Create dataframe with all lengths 
 RRR_df <- tr_lengths_df1 %>%
   select(-Trajectory) %>%
   rename("Y21_Y22" = S1) %>% 
-  left_join(tr_lengths_df2) %>%
+  left_join(tr_lengths_df2, join_by(Site, Plot, Sprayed)) %>%
   select(-Trajectory) %>%
   rename("Y21_Y24" = S1) %>% 
-  left_join(controlmeanlengths)
+  left_join(controlmeanlengths, join_by(Site))
 
 #join with pretreatment & calculate log response ratios based on composition:
 RRR_df <- df_divcov %>% filter(Year == 2021) %>% 
-  left_join(RRR_df) %>% 
+  left_join(RRR_df, join_by(Site, Plot, Sprayed)) %>% 
   mutate(LRR.resistance = log((1-Y21_Y22) / (1-Y21_Y22_conmean)),
          
          LRR.resilience = log((1-Y21_Y24) / (1-Y21_Y24_conmean)) - 
@@ -188,7 +195,8 @@ RRR_df <- df_divcov %>% filter(Year == 2021) %>%
          LRR.recovery = log((1-Y21_Y24) / (1-Y21_Y24_conmean)))
 
 # Add soil data
-RRR_df <- RRR_df %>% left_join(soildata %>% mutate(Site = as.factor(Site), Plot = as.factor(Plot)), by = c("Site", "Plot")) 
+RRR_df <- RRR_df %>% 
+  left_join(soildata %>% mutate(Site = as.factor(Site), Plot = as.factor(Plot)), by = c("Site", "Plot")) 
 
 #Calculate site-level means (mundlak variables):
 RRR_df <- RRR_df %>% 

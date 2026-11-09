@@ -17,7 +17,12 @@ library(here)
 mypoints <- read.csv("data/BRWMA_plotcoords.csv")
 
 #plot-level features for all plots across all years 
-df_divcov <- read.csv("data/df_divcov.csv")
+df_divcov <- read.csv("data/df_divcov.csv") %>%
+  # there are two plots which have NO surviving plant cover other than 'our plantings' as confirmed in LPI
+  mutate(
+    invcover_abs = ifelse(is.na(invcover_abs), 0, invcover_abs),
+    natcover_abs = ifelse(is.na(natcover_abs), 0, natcover_abs)
+  )
 
 #species attribute data 
 plantattribs <- read.csv("data/plantattribs.csv") %>% column_to_rownames(var = "X") %>% 

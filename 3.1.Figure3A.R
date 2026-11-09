@@ -20,6 +20,12 @@ library(ggtext)
 
 #data
 # source(here("2.0.Models.RRR.R"))
+model_folder <- "data/outputs"
+mlist <- list.files(model_folder, pattern = "\\modr.RDS", full.names = T)
+models <- setNames(lapply(mlist, readRDS), tools::file_path_sans_ext(basename(mlist)))
+for (name in names(models)) {
+  assign(name, models[[name]], envir = .GlobalEnv)
+}
 
 ## Extract posterior parameter estimates from each model fit and combine for plotting: ####
 #Resistance 
@@ -203,7 +209,7 @@ figure3A <- ggplot(posteriors, aes(y =.variable,
                      name=c("Response variable"),
                      values=c("#EE6677", "#228833","#4477AA")) +
   ylab("") +
-  xlab("Estimated effect on response") +
+  xlab("Estimated effect on response") + xlim(-0.6,0.7) +
   scale_y_discrete(labels = c("Post-treatment<br>PAN   ", 
                               "Pre-treatment<br>PAN  ",
                               "Pre-treatment <br> *C. juncea* Cover", 
@@ -214,7 +220,7 @@ figure3A <- ggplot(posteriors, aes(y =.variable,
   theme(legend.title = element_blank(),
         axis.title.x = element_text(size = 14),
         axis.text.y = element_markdown(size = 14),
-        axis.text.x = element_text(size = 12),
+        axis.text.x = element_text(size = 10.5),
         legend.text = element_text(size = 14),
         strip.text = element_text(size = 14), 
         legend.position = "none",
@@ -224,5 +230,5 @@ figure3A
 
 ggsave(plot = figure3A,
        file = "figures/Figure3A.png",
-       width = 7, height = 4.5, unit = c("in"), dpi = 400)
+       width = 7.5, height = 4.5, unit = c("in"), dpi = 400)
 
