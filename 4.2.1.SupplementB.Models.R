@@ -2,7 +2,7 @@
 
 ## 4.2.1. Supplement B Models:
 
-## Purpose:  This script fits an alternate model specification and Supplementary Figure 4: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
+## Purpose: This script fits an alternate model specification: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
 
 
 ## Author: K. Dodson 

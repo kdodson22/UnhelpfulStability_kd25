@@ -75,7 +75,7 @@ p_direction(resil_modr)
 p_direction(resist_modr)
 
 
-# Calculate exact percent change for each coefficient usiing the medians from Figure 3
+# Calculate exact percent change for each coefficient using the medians from Figure 3
 # They are all on log response ratios, so this will calculate % change:
 
 ## YOU HAVE TO RUN FIG 3A FIRST THOUGH, since I pull that df, "posteriors":

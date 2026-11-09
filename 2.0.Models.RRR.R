@@ -5,7 +5,7 @@
 ## Purpose: This script fits Bayesian glmms evaluating the effects of diversity, dominant species, and plant-available nitrogen on the stability of disturbed plant communities. Variable selection and directed acyclic graphs are described in the text.
 
 ## Author: K. Dodson 
-## Date: Updated 6/29/2026
+## Date: Updated 11/8/2026
 
 library(tidyverse)
 library(here)
@@ -135,8 +135,8 @@ nat_recovermodr <- brm(LRR.recovery ~
                                      Sprayed=="Yes"),
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999, 
-                                      max_treedepth = 12))
-
+                                      max_treedepth = 13))
+#
 ## MODELS - Composition #####
 #RESISTANCE based on composition
 resist_modr <- brm(LRR.resistance ~ 
@@ -201,9 +201,10 @@ recov_modr <- brm(LRR.recovery ~
 
 ## Save ####
 
-# model_folder <- "data/outputs"
-# models <- ls(pattern = "modr$")
-# for(nm in models) {
-#   saveRDS(get(nm), file = file.path(model_folder, paste0(nm, ".RDS"))
-#   )
-# }
+model_folder <- "data/outputs"
+models <- ls(pattern = "modr$")
+for(nm in models) {
+  saveRDS(get(nm), file = file.path(model_folder, paste0(nm, ".RDS"))
+  )
+}
+

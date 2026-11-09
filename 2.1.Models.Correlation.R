@@ -5,7 +5,7 @@
 ## Purpose: This script fits Bayesian glmms for the deviance analysis, evaluating how diversity, dominant species, and plant-available nitrogen relate to the correlation structure/residuals between RRR metrics.
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 11/8/2026
 
 
 library(tidyverse)

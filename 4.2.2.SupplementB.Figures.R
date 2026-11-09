@@ -2,7 +2,8 @@
 
 ## 4.2.2 Supplement B Figures:
 
-## Purpose:  This script generates Supplementary Figure 4: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. #####
+## Purpose:  This script generates Supplementary Figure 4 & 5: Estimated effect of diversity, dominance, and soil nitrogen and water content on system stability. 
+#####
 
 ## Author: K. Dodson 
 ## Date: Updated 8/7/2026

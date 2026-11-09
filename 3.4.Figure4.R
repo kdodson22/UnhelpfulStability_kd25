@@ -5,7 +5,7 @@
 ## Purpose: This script generates Figure 4, showing marginal effects of diversity, dominant species, and soil resources in the deviance analysis, as well as correlations between RRR metrics.
 
 ## Author: K. Dodson 
-## Date: Updated 12/1/2025
+## Date: Updated 11/8/26
 
 
 library(tidyverse)
