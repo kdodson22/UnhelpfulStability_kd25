@@ -1,16 +1,16 @@
 ## Resistance and resilience to restoration: Plant diversity and soil resources promote the post-disturbance stability of invaded communities #####
 
-## 4.2.3 Supplement B Models:
+## 4.6.2 Supplement F Models:
 
-## Purpose: This script fits an alternate model specification: Estimated effect of diversity, dominance, and soil nitrogen on system stability when restoration-asssociated native plantings are included in measured of post-treatment native cover and composition
+## Purpose: This script fits an alternate model specification: Estimated effect of diversity, dominance, and soil nitrogen on system stability when restoration-associated native plantings are included in measured of post-treatment native cover and composition
 
 ## Author: KED
-## Updated: 11/8/2026
+## Updated: 11/11/2026
 ######
 
 ## This analysis requires use of Ecotraj 0.1.1
-library(remotes)
-remotes::install_version("ecotraj", version = "0.1.1")
+# library(remotes)
+# remotes::install_version("ecotraj", version = "0.1.1")
 
 library(tidyverse)
 library(vegan)
@@ -163,6 +163,16 @@ pretreat$Plot <- factor(pretreat$Plot,
                                    "11","12","13"))
 
 #create 'metadata' df with site, plot, date, and treatment info
+spp.rel.all2 <- spp.rel.all %>%
+  mutate(
+    ARTR2 = OARTR + ARTR2,
+    ERNA10 = OERNA + ERNA10,
+    PSSP6 = OPSSP + PSSP6,
+    ELEL5 = OELEL + ELEL5,
+    ACMI2 = OACMI + ACMI2
+  ) %>%
+  dplyr::select(-OARTR, -OERNA, -OPSSP, -OELEL, -OACMI)
+
 meta1 <- spp.rel.all %>% 
   dplyr::select(Site, Plot, Year) %>%
   mutate(ObsID = paste(Site, Plot, Year, sep = "-")) 
@@ -378,19 +388,12 @@ rm(bray1, bray2, braydf1, braydf2, braymat1, braymat2, brch21, controlmeans,
    controlmeanlengths, distmat1, distmat2, distmatrix1, distmatrix2,
    mundlaks, mypoints, natabsdf, natabsdf_soil,extranat_cover_df,
    extranatabsdf,extranatabsdf_soil, plantattribs, pretreat, prism, 
-   soildata, soildata2, spp.comp, spp.rel.all, spp.comp.rel, spp.comp2, spp.rel.inv,
+   soildata, soildata2, spp.comp, spp.rel.all, spp.rel.all2, spp.comp.rel, spp.comp2, spp.rel.inv,
    meta, meta1, plots1, plots2, scr.1, scr.2, tr_lengths_df1, tr_lengths_df2, 
    tr_lengths1, tr_lengths2, treat1)
 #
 
 
-
-
-### MODELS - Invasive Cover ####
-inv_resistmodr <- readRDS("data/outputs/inv_resistmodr.RDS")
-inv_resilience24_modr <- readRDS("data/outputs/inv_resilience24_modr.RDS")
-inv_recovermodr <- readRDS("data/outputs/inv_recovermodr.RDS")
-#
 
 ### MODELS - Native Cover #####
 # RESISTANCE based on native cover
@@ -516,4 +519,9 @@ recov_modr_extracover <- brm(LRR.recovery ~
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 #
-
+model_folder <- "data/outputs"
+models <- ls(pattern = "modr_extracover$")
+for(nm in models) {
+  saveRDS(get(nm), file = file.path(model_folder, paste0(nm, ".RDS"))
+  )
+}
