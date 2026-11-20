@@ -157,7 +157,7 @@ if_recov_chju_pred <- if_recov_chju_pred %>%
 
 #Native Cover Model
 nf_recov_chju_df <- datagrid(model = nat_recovermodr,
-                             CHJU = seq_range(natabsdf_soil$CHJU, 100))
+                             CHJU = seq_range(invabsdf_soil$CHJU, 100))
 nf_recov_chju_pred <- predictions(nat_recovermodr, 
                                   newdata = nf_recov_chju_df,
                                   conf_level = 0.5)
@@ -183,9 +183,9 @@ recov_chju_preds <- rbind(if_recov_chju_pred, nf_recov_chju_pred, cc_recov_chju_
 
 ## POST-PAN ~ Recovery #####
 #INVFUN ~ recovery
-if_recov_postN_df <- datagrid(model = inv_recovermodr,
+if_recov_postN_df <- datagrid(model = inv_recovermodr_B,
                               N_ug.g.instant_2022Spring = seq_range(invabsdf_soil$N_ug.g.instant_2022Spring, 100))
-if_recov_postN_pred <- predictions(inv_recovermodr, 
+if_recov_postN_pred <- predictions(inv_recovermodr_B, 
                                    newdata = if_recov_postN_df,
                                    conf_level = 0.5)
 if_recov_postN_pred <- if_recov_postN_pred %>%
@@ -194,9 +194,9 @@ if_recov_postN_pred <- if_recov_postN_pred %>%
   mutate(mod = "Invasive Cover")
 
 #NATFUN ~ recovery 
-nf_recov_postN_df <- datagrid(model = nat_recovermodr,
+nf_recov_postN_df <- datagrid(model = nat_recovermodr_B,
                               N_ug.g.instant_2022Spring = seq_range(natabsdf_soil$N_ug.g.instant_2022Spring, 100))
-nf_recov_postN_pred <- predictions(nat_recovermodr, 
+nf_recov_postN_pred <- predictions(nat_recovermodr_B, 
                                    newdata = nf_recov_postN_df,
                                    conf_level = 0.5)
 nf_recov_postN_pred <- nf_recov_postN_pred %>%
@@ -206,9 +206,9 @@ nf_recov_postN_pred <- nf_recov_postN_pred %>%
 
 
 #COMCOM ~ recovery 
-cc_recov_postN_df <- datagrid(model = recov_modr,
+cc_recov_postN_df <- datagrid(model = recov_modr_B,
                               N_ug.g.instant_2022Spring = seq_range(RRR_df$N_ug.g.instant_2022Spring, 100))
-cc_recov_postN_pred <- predictions(recov_modr, 
+cc_recov_postN_pred <- predictions(recov_modr_B, 
                                    newdata = cc_recov_postN_df,
                                    conf_level = 0.5)
 cc_recov_postN_pred <- cc_recov_postN_pred %>%
@@ -234,20 +234,25 @@ metheme <- theme(aspect.ratio = 1/1,
 
 # Pre-treatment Invasive Richness ~ Recovery
 me_5b <- ggplot(recov_invrich_preds, aes( x = pre_invrichness,
-                                          fill = mod, color = mod)) +
+                                          fill = mod, color = mod,
+                                          linetype=mod)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
-              alpha=0.15, colour = NA) + 
+              alpha=0.1, colour = NA) + 
   geom_line(aes(y=estimate), linewidth=1) +
   scale_color_manual(breaks = c("Invasive Cover", 
                                 "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
-                     values=c("#EE6677", "#228833","#4477AA")) +
+                     values=c("#EE6677", "#228831","#4477AA")) +
   scale_fill_manual(breaks = c("Invasive Cover", 
                                "Native Cover",
                                "Composition"),
                     name=c("Response variable"),
-                    values=c("#EE6677", "#228833","#4477AA")) +
+                    values=c("#EE6677", "#228831","#4477AA")) +
+  scale_linetype_manual(breaks = c("Invasive Cover", 
+                                   "Native Cover",
+                                   "Composition"),
+                        values=c("solid", "31", "31")) +
   geom_hline(yintercept=0, linetype="dashed") +
   xlab("Pre-treatment<br>Invasive  Richness") +
   ylab("Recovery") +
@@ -255,20 +260,26 @@ me_5b <- ggplot(recov_invrich_preds, aes( x = pre_invrichness,
 
 # Pre-treatment Native Richness ~ Recovery
 me_5c <- ggplot(recov_natrich_preds, aes( x = pre_natrichness,
-                                          fill = mod, color = mod)) +
+                                          fill = mod, color = mod,
+                                          linetype=mod)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
-              alpha=0.15, colour = NA) + 
+              alpha=0.1, colour = NA) + 
   geom_line(aes(y=estimate), linewidth=1) +
   scale_color_manual(breaks = c("Invasive Cover", 
                                 "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
-                     values=c("#EE6677", "#228833","#4477AA")) +
+                     values=c("#EE6677", "#228831","#4477AA")) +
+  
+  scale_linetype_manual(breaks = c("Invasive Cover", 
+                                   "Native Cover",
+                                   "Composition"),
+                        values=c("31", "31", "solid")) +
   scale_fill_manual(breaks = c("Invasive Cover", 
                                "Native Cover",
                                "Composition"),
                     name=c("Response variable"),
-                    values=c("#EE6677", "#228833","#4477AA")) +
+                    values=c("#EE6677", "#228831","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
   xlab("Pre-treatment<br>Native  Richness") +
   ylab("Recovery") + 
@@ -277,20 +288,26 @@ me_5c <- ggplot(recov_natrich_preds, aes( x = pre_natrichness,
 
 # B. tectorum ~ Recovery
 me_5d <- ggplot(recov_brte_preds, aes( x = BRTE,
-                                       fill = mod, color = mod)) +
+                                       fill = mod, color = mod,
+                                       linetype=mod)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
-              alpha=0.15, colour = NA) + 
+              alpha=0.1, colour = NA) + 
   geom_line(aes(y=estimate), linewidth=1) +
   scale_color_manual(breaks = c("Invasive Cover", 
                                 "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
-                     values=c("#EE6677", "#228833","#4477AA")) +
+                     values=c("#EE6677", "#228831","#4477AA")) +
+  
+  scale_linetype_manual(breaks = c("Invasive Cover", 
+                                   "Native Cover",
+                                   "Composition"),
+                        values=c("31", "31", "solid")) +
   scale_fill_manual(breaks = c("Invasive Cover", 
                                "Native Cover",
                                "Composition"),
                     name=c("Response variable"),
-                    values=c("#EE6677", "#228833","#4477AA")) +
+                    values=c("#EE6677", "#228831","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
   xlab("Pre-treatment<br>*B. tectorum*  Cover (%)") +
   ylab("Recovery") +
@@ -300,20 +317,26 @@ me_5d <- ggplot(recov_brte_preds, aes( x = BRTE,
 
 # C. juncea ~ Recovery
 me_5f <- ggplot(recov_chju_preds, aes( x = CHJU,
-                                       fill = mod, color = mod)) +
+                                       fill = mod, color = mod,
+                                       linetype=mod)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
-              alpha=0.15, colour = NA) + 
+              alpha=0.1, colour = NA) + 
   geom_line(aes(y=estimate), linewidth=1) +
   scale_color_manual(breaks = c("Invasive Cover", 
                                 "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
-                     values=c("#EE6677", "#228833","#4477AA")) +
+                     values=c("#EE6677", "#228831","#4477AA")) +
+  
+  scale_linetype_manual(breaks = c("Invasive Cover", 
+                                   "Native Cover",
+                                   "Composition"),
+                        values=c("solid", "31", "solid")) +
   scale_fill_manual(breaks = c("Invasive Cover", 
                                "Native Cover",
                                "Composition"),
                     name=c("Response variable"),
-                    values=c("#EE6677", "#228833","#4477AA")) +
+                    values=c("#EE6677", "#228831","#4477AA")) +
   geom_hline(yintercept=0, linetype="dashed") +
   xlab("Pre-treatment<br>*C. juncea*  Cover (%)") +
   ylab("Recovery") +
@@ -323,20 +346,25 @@ me_5f <- ggplot(recov_chju_preds, aes( x = CHJU,
 
 # Post-Treatment PAN ~ Recovery
 me_5h <- ggplot(recov_postN_preds, aes( x = N_ug.g.instant_2022Spring,
-                                        fill = mod, color = mod)) +
+                                        fill = mod, color = mod,
+                                        linetype=mod)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
-              alpha=0.15, colour = NA) + 
+              alpha=0.1, colour = NA) + 
   geom_line(aes(y=estimate), linewidth=1) +
   scale_color_manual(breaks = c("Invasive Cover", 
                                 "Native Cover",
                                 "Composition"),
                      name=c("Response variable"),
-                     values=c("#EE6677", "#228833","#4477AA")) +
+                     values=c("#EE6677", "#228831","#4477AA")) +
   scale_fill_manual(breaks = c("Invasive Cover", 
                                "Native Cover",
                                "Composition"),
                     name=c("Response variable"),
-                    values=c("#EE6677", "#228833","#4477AA")) +
+                    values=c("#EE6677", "#228831","#4477AA")) +
+  scale_linetype_manual(breaks = c("Invasive Cover", 
+                                   "Native Cover",
+                                   "Composition"),
+                        values=c("solid", "31", "solid")) +
   geom_hline(yintercept=0, linetype="dashed") +
   xlab("Post-treatment<br>Plant-available N (PAN)") +
   ylab("Recovery") +

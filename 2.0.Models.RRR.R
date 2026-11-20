@@ -24,26 +24,29 @@ inv_resistmodr <- brm(LRR.resistance ~
                         scale(pre_natrichness) +
                         scale(CHJU) + 
                         scale(BRTE) +
-                        scale(N_ug.g.instant_2021Fall) +
+                        #scale(N_ug.g.instant_2021Fall) +
                         scale(slm.brte) + # If updating models, added BRTE and CHJU in
                         scale(slm.chju) +
                         scale(slmr.inv) +
                         scale(slmr.nat) +
                         scale(Heatload) +
-                        scale(slm.N.21fall) +
+                        #scale(slm.N.21fall) +
                         (1 | Site), 
                       data = subset(invabsdf_soil,
                                     Sprayed=="Yes"), 
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
+mcmc_plot(inv_resistmodr)
+
 #RESILIENCE (2024)  based on invasive cover
 inv_resilience24_modr <- brm(LRR.resilience24 ~ 
-                               scale(pre_invrichness) +
+                               #scale(pre_invrichness) +
                                scale(pre_natrichness) +
                                scale(CHJU) +
                                scale(BRTE) +
-                               scale(N_ug.g.instant_2022Spring) +
+                               #scale(N_ug.g.instant_2021Fall) +
+                               #scale(N_ug.g.instant_2022Spring) +
                                scale(slm.brte) +
                                scale(slm.chju) +
                                scale(LRR.resistance) +
@@ -57,6 +60,9 @@ inv_resilience24_modr <- brm(LRR.resilience24 ~
                              warmup = 1000, iter = 2000, chains = 4, seed = 123,
                              control = list(adapt_delta = 0.999))
 
+
+mcmc_plot(inv_resilience24_modr)
+
 #RECOVERY based on invasive cover
 inv_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
@@ -64,6 +70,7 @@ inv_recovermodr <- brm(LRR.recovery ~
                          scale(CHJU) +
                          scale(BRTE) +
                          scale(N_ug.g.instant_2022Spring) +
+                         #scale(N_ug.g.instant_2021Fall) +
                          scale(slm.brte) +
                          scale(slm.chju) +
                          scale(slmr.inv) +
@@ -75,6 +82,8 @@ inv_recovermodr <- brm(LRR.recovery ~
                                      Sprayed=="Yes"),
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999))
+
+mcmc_plot(inv_recovermodr)
 
 ## MODELS - Native Cover #####
 # RESISTANCE based on native cover
@@ -96,6 +105,8 @@ nat_resistmodr <- brm(LRR.resistance ~
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, max_treedepth = 12))
 
+mcmc_plot(nat_resistmodr)
+
 #RESILIENCE (2024)  based on native cover
 nat_resilience24_modr <- brm(LRR.resilience24 ~ 
                                scale(pre_invrichness) +
@@ -103,6 +114,7 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                                scale(CHJU) +
                                scale(BRTE) +
                                scale(N_ug.g.instant_2022Spring) +
+                               #scale(N_ug.g.instant_2021Fall) +
                                scale(slm.brte) +
                                scale(slm.chju) +
                                scale(LRR.resistance) +
@@ -117,6 +129,8 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                              control = list(adapt_delta = 0.999, 
                                             max_treedepth = 12))
 
+mcmc_plot(nat_resilience24_modr)
+
 #RECOVERY based on native cover
 nat_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
@@ -124,6 +138,7 @@ nat_recovermodr <- brm(LRR.recovery ~
                          scale(CHJU) +
                          scale(BRTE) +
                          scale(N_ug.g.instant_2022Spring) +
+                         scale(N_ug.g.instant_2021Fall) +
                          scale(slm.brte) +
                          scale(slm.chju) +
                          scale(slmr.inv) +
@@ -136,6 +151,9 @@ nat_recovermodr <- brm(LRR.recovery ~
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999, 
                                       max_treedepth = 13))
+
+mcmc_plot(nat_recovermodr)
+
 #
 ## MODELS - Composition #####
 #RESISTANCE based on composition
@@ -144,19 +162,20 @@ resist_modr <- brm(LRR.resistance ~
                      scale(pre_natrichness) +
                      scale(BRTE) +
                      scale(CHJU) +
-                     scale(N_ug.g.instant_2021Fall) +
+                     #scale(N_ug.g.instant_2021Fall) +
                      scale(slm.brte) +
                      scale(slm.chju) +
                      scale(Heatload) +
                      scale(slmr.nat) +
                      scale(slmr.inv) +
-                     scale(slm.N.f21) +
+                     #scale(slm.N.f21) +
                      (1 | Site),
                    data = subset(RRR_df,
                                  Sprayed=="Yes"),
                    warmup = 1000, iter = 2000, chains = 4, seed = 123,
                    control = list(adapt_delta = 0.999))
 
+mcmc_plot(resist_modr)
 
 #RESILIENCE based on composition
 resil_modr <- brm(LRR.resilience ~
@@ -165,6 +184,7 @@ resil_modr <- brm(LRR.resilience ~
                     scale(BRTE) +
                     scale(CHJU) +
                     scale(N_ug.g.instant_2022Spring) +
+                    scale(N_ug.g.instant_2021Fall) +
                     scale(slm.brte) +
                     scale(slm.chju) +
                     scale(LRR.resistance) +
@@ -178,6 +198,7 @@ resil_modr <- brm(LRR.resilience ~
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
+mcmc_plot(resil_modr)
 
 #RECOVERY based on composition
 recov_modr <- brm(LRR.recovery ~ 
@@ -186,6 +207,7 @@ recov_modr <- brm(LRR.recovery ~
                     scale(CHJU) +
                     scale(BRTE) +
                     scale(N_ug.g.instant_2022Spring) +
+                    scale(N_ug.g.instant_2021Fall) +
                     scale(Heatload) +
                     scale(slm.brte) +
                     scale(slm.chju) +
@@ -198,6 +220,7 @@ recov_modr <- brm(LRR.recovery ~
                   warmup = 1000, iter = 2000, chains = 4, seed = 123,
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
+mcmc_plot(recov_modr)
 
 ## Save ####
 
@@ -208,3 +231,36 @@ for(nm in models) {
   )
 }
 
+
+
+corr.div <- brm(BRTE ~ 
+                    scale(pre_natrichness) +
+                    scale(pre_invrichness) +
+                    scale(N_ug.g.instant_2021Fall) +
+                    scale(Heatload) +
+                    scale(slmr.inv) +
+                    (1 | Site), 
+                  data = subset(RRR_df,
+                                Sprayed=="Yes"),
+                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
+                  control = list(adapt_delta = 0.999, max_treedepth = 12))
+
+
+mcmc_plot(corr.div)
+
+corr.div.CHJU <- brm(CHJU ~ 
+                  scale(pre_natrichness) +
+                  scale(pre_invrichness) +
+                  scale(N_ug.g.instant_2021Fall) +
+                  scale(Heatload) +
+                  scale(slmr.inv) +
+                  scale(slmr.nat) +
+                  (1 | Site), 
+                data = subset(RRR_df,
+                              Sprayed=="Yes"),
+                warmup = 1000, iter = 2000, chains = 4, seed = 123,
+                control = list(adapt_delta = 0.999, max_treedepth = 12))
+
+performance(corr.div.CHJU)
+
+mcmc_plot(corr.div.CHJU)

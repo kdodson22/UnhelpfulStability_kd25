@@ -20,11 +20,20 @@ library(ggtext)
 
 #data
 # source(here("2.0.Models.RRR.R"))
+
+# Reload the adjustment set A models:
 model_folder <- "data/outputs"
 mlist <- list.files(model_folder, pattern = "\\modr.RDS", full.names = T)
 models <- setNames(lapply(mlist, readRDS), tools::file_path_sans_ext(basename(mlist)))
 for (name in names(models)) {
   assign(name, models[[name]], envir = .GlobalEnv)
+}
+
+# Adjustment set B models are labeled with B extension:
+mlist <- list.files(model_folder, pattern = "\\modr_B.RDS", full.names = T)
+models_B <- setNames(lapply(mlist, readRDS), tools::file_path_sans_ext(basename(mlist)))
+for (name in names(models_B)) {
+  assign(name, models_B[[name]], envir = .GlobalEnv)
 }
 
 ## Extract posterior parameter estimates from each model fit and combine for plotting: ####
@@ -34,9 +43,11 @@ ints.inv.resist <- inv_resistmodr %>%
                b_scalepre_natrichness,
                b_scaleCHJU,
                b_scaleBRTE,
-               b_scaleN_ug.g.instant_2021Fall) %>%
+               #b_scaleN_ug.g.instant_2021Fall
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Invasive Cover",
+         adjustment = "Plant Composition Hypotheses",
          nonzero = ifelse(.lower>0 & 
                             .upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
@@ -47,9 +58,11 @@ ints.nat.resist <- nat_resistmodr %>%
                b_scalepre_natrichness,
                b_scaleCHJU,
                b_scaleBRTE,
-               b_scaleN_ug.g.instant_2021Fall) %>%
+               #b_scaleN_ug.g.instant_2021Fall
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Native Cover",
+         adjustment = "Plant Composition Hypotheses",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
                                  "nonzero", "contains.zero")))
@@ -59,9 +72,11 @@ ints.comp.resist <- resist_modr %>%
                b_scalepre_natrichness,
                b_scaleCHJU,
                b_scaleBRTE,
-               b_scaleN_ug.g.instant_2021Fall) %>%
+               #b_scaleN_ug.g.instant_2021Fall
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Composition",
+         adjustment = "Plant Composition Hypotheses",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
                                  "nonzero", "contains.zero")))
@@ -74,10 +89,22 @@ ints.inv.resil <- inv_resilience24_modr %>%
   gather_draws(b_scalepre_invrichness,
                b_scalepre_natrichness,
                b_scaleCHJU,
-               b_scaleBRTE,
-               b_scaleN_ug.g.instant_2022Spring) %>%
+               b_scaleBRTE
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Invasive Cover",
+         adjustment = "Plant Composition Hypotheses",
+         nonzero = ifelse(.lower>0 & 
+                            .upper>0, "nonzero",
+                          ifelse(.lower<0 & .upper<0,
+                                 "nonzero", "contains.zero")))
+
+ints.inv.resil.B <- inv_resilience24_modr_B %>%
+  gather_draws(b_scaleN_ug.g.instant_2022Spring
+  ) %>%
+  median_qi(.width=c(0.9)) %>%
+  mutate(response = "Invasive Cover",
+         adjustment = "Resource\nHypothesis",
          nonzero = ifelse(.lower>0 & 
                             .upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
@@ -88,10 +115,21 @@ ints.nat.resil <- nat_resilience24_modr %>%
   gather_draws(b_scalepre_invrichness,
                b_scalepre_natrichness,
                b_scaleCHJU,
-               b_scaleBRTE,
-               b_scaleN_ug.g.instant_2022Spring) %>%
+               b_scaleBRTE
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Native Cover",
+         adjustment = "Plant Composition Hypotheses",
+         nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
+                          ifelse(.lower<0 & .upper<0,
+                                 "nonzero", "contains.zero")))
+
+ints.nat.resil.B <- nat_resilience24_modr_B %>%
+  gather_draws(b_scaleN_ug.g.instant_2022Spring
+  ) %>%
+  median_qi(.width=c(0.9)) %>%
+  mutate(response = "Native Cover",
+         adjustment = "Resource\nHypothesis",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
                                  "nonzero", "contains.zero")))
@@ -100,26 +138,50 @@ ints.comp.resil <- resil_modr %>%
   gather_draws(b_scalepre_invrichness,
                b_scalepre_natrichness,
                b_scaleCHJU,
-               b_scaleBRTE,
-               b_scaleN_ug.g.instant_2022Spring) %>%
+               b_scaleBRTE
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Composition",
+         adjustment="Plant Composition Hypotheses",
+         nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
+                          ifelse(.lower<0 & .upper<0,
+                                 "nonzero", "contains.zero")))
+
+ints.comp.resil.B <- resil_modr_B %>%
+  gather_draws(b_scaleN_ug.g.instant_2022Spring
+  ) %>%
+  median_qi(.width=c(0.9)) %>%
+  mutate(response = "Composition",
+         adjustment="Resource\nHypothesis",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
                                  "nonzero", "contains.zero")))
 
 
-resil.posteriors <- rbind(ints.inv.resil, ints.nat.resil, ints.comp.resil)
+resil.posteriors <- rbind(ints.inv.resil, ints.nat.resil, ints.comp.resil,
+                          ints.inv.resil.B, ints.nat.resil.B, ints.comp.resil.B)
 
 #Recovery
 ints.inv.reco <- inv_recovermodr %>%
   gather_draws(b_scalepre_invrichness,
                b_scalepre_natrichness,
                b_scaleCHJU,
-               b_scaleBRTE,
-               b_scaleN_ug.g.instant_2022Spring) %>%
+               b_scaleBRTE
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Invasive Cover",
+         adjustment="Plant Composition Hypotheses",
+         nonzero = ifelse(.lower>0 & 
+                            .upper>0, "nonzero",
+                          ifelse(.lower<0 & .upper<0,
+                                 "nonzero", "contains.zero")))
+
+ints.inv.reco.B <- inv_recovermodr_B %>%
+  gather_draws(b_scaleN_ug.g.instant_2022Spring
+  ) %>%
+  median_qi(.width=c(0.9)) %>%
+  mutate(response = "Invasive Cover",
+         adjustment="Resource\nHypothesis",
          nonzero = ifelse(.lower>0 & 
                             .upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
@@ -131,9 +193,21 @@ ints.nat.reco <- nat_recovermodr %>%
                b_scalepre_natrichness,
                b_scaleCHJU,
                b_scaleBRTE,
-               b_scaleN_ug.g.instant_2022Spring) %>%
+               #b_scaleN_ug.g.instant_2022Spring
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Native Cover",
+         adjustment="Plant Composition Hypotheses",
+         nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
+                          ifelse(.lower<0 & .upper<0,
+                                 "nonzero", "contains.zero")))
+
+ints.nat.reco.B <- nat_recovermodr_B %>%
+  gather_draws(b_scaleN_ug.g.instant_2022Spring
+  ) %>%
+  median_qi(.width=c(0.9)) %>%
+  mutate(response = "Native Cover",
+         adjustment="Resource\nHypothesis",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
                                  "nonzero", "contains.zero")))
@@ -143,14 +217,28 @@ ints.comp.reco <- recov_modr %>%
                b_scalepre_natrichness,
                b_scaleCHJU,
                b_scaleBRTE,
-               b_scaleN_ug.g.instant_2022Spring) %>%
+               #b_scaleN_ug.g.instant_2022Spring
+               ) %>%
   median_qi(.width=c(0.9)) %>%
   mutate(response = "Composition",
+         adjustment="Plant Composition Hypotheses",
          nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
                           ifelse(.lower<0 & .upper<0,
                                  "nonzero", "contains.zero")))
 
-reco.posteriors <- rbind(ints.inv.reco, ints.nat.reco, ints.comp.reco)
+ints.comp.reco.B <- recov_modr_B %>%
+  gather_draws(b_scaleN_ug.g.instant_2022Spring
+  ) %>%
+  median_qi(.width=c(0.9)) %>%
+  mutate(response = "Composition",
+         adjustment="Resource\nHypothesis",
+         nonzero = ifelse(.lower>0 &.upper>0, "nonzero",
+                          ifelse(.lower<0 & .upper<0,
+                                 "nonzero", "contains.zero")))
+
+
+reco.posteriors <- rbind(ints.inv.reco, ints.nat.reco, ints.comp.reco,
+                         ints.inv.reco.B, ints.nat.reco.B, ints.comp.reco.B)
 
 
 ## Organization and Renaming #####
@@ -162,13 +250,12 @@ reco.posteriors$Metric <- "Recovery"
 posteriors <- rbind(resist.posteriors, resil.posteriors, reco.posteriors)
 #rename variables
 posteriors <- posteriors %>%
-  mutate(.variable = recode(.variable, 
-                            b_scalepre_invrichness = "Pre-treatment Invasive Richness",
-                            b_scalepre_natrichness = "Pre-treatment Native Richness",
-                            b_scaleCHJU = "Pre-treatment C. juncea Cover",
-                            b_scaleBRTE = "Pre-treatment B. tectorum Cover",
-                            b_scaleN_ug.g.instant_2021Fall = "Pre-treatment PAN",
-                            b_scaleN_ug.g.instant_2022Spring = "Post-treatment PAN"
+  mutate( .variable = recode(.variable, 
+                            b_scalepre_invrichness = "Pre-treatment<br>Invasive Richness",
+                            b_scalepre_natrichness = "Pre-treatment<br>Native Richness",
+                            b_scaleCHJU = "Pre-treatment<br>*C. juncea* Cover",
+                            b_scaleBRTE = "Pre-treatment<br>*B. tectorum* Cover",
+                            b_scaleN_ug.g.instant_2022Spring = "Post-treatment<br>PAN"
   ))
 
 #make response a factor to fix order
@@ -181,9 +268,11 @@ posteriors$Metric <- factor(posteriors$Metric,
                                        "Resilience",
                                        "Recovery"))
 posteriors$.variable <- factor(posteriors$.variable,
-                               levels = c("Post-treatment PAN", "Pre-treatment PAN",
-                                          "Pre-treatment C. juncea Cover", "Pre-treatment B. tectorum Cover",
-                                          "Pre-treatment Native Richness", "Pre-treatment Invasive Richness"))
+                               levels = c("Post-treatment<br>PAN", 
+                                          "Pre-treatment<br>*C. juncea* Cover", 
+                                          "Pre-treatment<br>*B. tectorum* Cover",
+                                          "Pre-treatment<br>Native Richness", 
+                                          "Pre-treatment<br>Invasive Richness"))
 
 ## Plot #####
 figure3A <- ggplot(posteriors, aes(y =.variable,
@@ -209,20 +298,16 @@ figure3A <- ggplot(posteriors, aes(y =.variable,
                      name=c("Response variable"),
                      values=c("#EE6677", "#228833","#4477AA")) +
   ylab("") +
-  xlab("Estimated effect on response") + xlim(-0.6,0.7) +
-  scale_y_discrete(labels = c("Post-treatment<br>PAN   ", 
-                              "Pre-treatment<br>PAN  ",
-                              "Pre-treatment <br> *C. juncea* Cover", 
-                              "Pre-treatment <br> *B. tectorum* Cover",
-                              "Pre-treatment <br> Native Richness", 
-                              "Pre-treatment <br> Invasive Richness")) +
-  theme_bw() + facet_wrap(~Metric, scales="free_x") + 
+  xlab("Estimated effect on response") + #xlim(-0.6,0.68) +
+  theme_bw() + facet_grid(adjustment~Metric, scales=c("free"), space="free_y") + 
   theme(legend.title = element_blank(),
         axis.title.x = element_text(size = 14),
         axis.text.y = element_markdown(size = 14),
         axis.text.x = element_text(size = 10.5),
         legend.text = element_text(size = 14),
-        strip.text = element_text(size = 14), 
+        strip.text.x = element_text(size = 14), 
+        #strip.background.y = element_blank(),
+        #strip.text.y = element_blank(),
         legend.position = "none",
         legend.justification.inside = c(0.025,0.025)) 
 
