@@ -44,9 +44,27 @@ spp.comp2 <- read.csv("data/spp.comp2.csv") %>% column_to_rownames(var = "X")
 
 #relative species composition
 spp.rel.all <- read.csv("data/spp.rel.all.csv") #all species
-spp.comp.rel <- read.csv("data/spp.comp.rel.csv") %>% column_to_rownames(var = "X")
 spp.rel.inv <- read.csv("data/spp.rel.inv.csv") #invasive species
 fun.comp.rel <- read.csv("data/fun.comp.rel.csv") %>% column_to_rownames(var = "X")
+
+spp.comp.rel <- spp.comp %>% 
+  mutate(ObsID = paste(Site, Plot, Year, sep = "-"))  %>%
+  dplyr::select(-None, -S, -WL, -DN, -M, -Litter, -R, -AM, 
+                -EL, -GR, -LC, -D, -AG, -ST, -ER,
+                -OARTR, -OPSSP, -OERNA, -OELEL, -OACMI) %>%
+  column_to_rownames(var = "ObsID") %>%
+  dplyr::select(-Site, -Plot, -Year)
+
+totalcov <- rowSums(spp.comp.rel) 
+ObsIDs <- rownames(spp.comp.rel)
+spp.comp.rel <- data.frame(t(t(as.matrix(spp.comp.rel)/totalcov)))
+spp.comp.rel <- spp.comp.rel %>% mutate(across(where(is.numeric), ~ replace_na(.x, 0)))
+# max(rowSums(spp.comp.rel))
+# min(rowSums(spp.comp.rel))
+rownames(spp.comp.rel) <- ObsIDs 
+
+rm(ObsIDs, totalcov)
+
 
 #relative cover of most abundant species
 brch21 <- spp.comp.rel %>%

@@ -38,7 +38,6 @@ pretreat$Plot <- factor(pretreat$Plot,
 #create 'metadata' df with site, plot, date, and treatment info
 spp.comp.rel$Obs.ID <- row.names(spp.comp.rel)
 meta1 <- spp.comp.rel %>% 
-  dplyr::select(-OARTR, -OPSSP, -OERNA, -OELEL, -OACMI) %>% 
   separate(Obs.ID, into = c("Site", "Plot", "Year")) %>% 
   relocate(c("Site", "Plot", "Year"), .before = "AMSIN") %>%
   mutate(Year = as.numeric(Year),
@@ -118,7 +117,6 @@ plots2 <- meta %>%
 
 #filter to 2021 and 2024 from spp.comp.rel
 scr.2 <- spp.comp.rel %>%
-  dplyr::select(-OARTR, -OPSSP, -OERNA, -OELEL, -OACMI) %>%
   separate(Obs.ID, into = c("Site", "Plot", "Year")) %>%
   relocate(c("Site", "Plot", "Year"), .before = "AMSIN") %>%
   mutate(Year = as.numeric(Year),
@@ -127,7 +125,7 @@ scr.2 <- spp.comp.rel %>%
   filter(Year == 2021 | Year == 2024)
 
 #bray-curtis dissimilarity
-bray2 <- vegdist(scr.2[,-c(1:4)], method = "bray")
+bray2 <- vegdist(scr.2[,-c(1:3)], method = "bray")
 
 #as matrix
 braymat2 <- as.matrix(bray2)

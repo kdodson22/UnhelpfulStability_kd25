@@ -143,7 +143,7 @@ in_recov_color <-
 Invasive Cover Recovery") +
   xlab("Native Cover Recovery") +
   theme_bw() +
-  ylim(-3.25, 0.25) +
+  ylim(-3.25, 0.5) +
   annotate("text", x = 1.32, y = -2.855,
            label = paste("R\u00b2 = ", round(in_recov_r2[1,1], 2), 
                          "\n \u03b2 =", round(in_recov_coef[2,1], 2)),
@@ -182,7 +182,7 @@ Invasive Cover Recovery") +
   xlab("Compositional Recovery") +
   labs(color = "Residuals") +
   theme_bw() +
-  ylim(-3.25, 0.25) +
+  ylim(-3.25, 0.5) +
   annotate("text", x = 0.25, y = -2.855,
            label = paste("R\u00b2 = ", round(ic_recov_r2[1,1], 2), 
                          "\n \u03b2 =", round(ic_recov_coef[2,1], 2)),

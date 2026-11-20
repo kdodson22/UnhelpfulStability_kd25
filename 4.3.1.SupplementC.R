@@ -268,15 +268,15 @@ pp_theme <-  theme(legend.position = "none",
                    aspect.ratio = 1/1,
                    axis.text = element_text(size = 12))
 
-pp1 <- pp_check(inv_resistmodr) + pp_theme
-pp2 <- pp_check(inv_resilience24_modr)  + pp_theme
-pp3 <- pp_check(inv_recovermodr)  + pp_theme
-pp4 <- pp_check(nat_resistmodr) + pp_theme
-pp5 <- pp_check(nat_resilience24_modr) + pp_theme
-pp6 <- pp_check(nat_recovermodr) + pp_theme
-pp7 <- pp_check(resist_modr) + pp_theme
-pp8 <- pp_check(resil_modr) + pp_theme
-pp9 <- pp_check(recov_modr) + theme(aspect.ratio = 1/1,
+pp1 <- pp_check(inv_resistmodr) + theme_light() + pp_theme
+pp2 <- pp_check(inv_resilience24_modr)  + theme_light() + pp_theme
+pp3 <- pp_check(inv_recovermodr)  + theme_light() + pp_theme
+pp4 <- pp_check(nat_resistmodr) + theme_light() + pp_theme
+pp5 <- pp_check(nat_resilience24_modr) + theme_light() + pp_theme
+pp6 <- pp_check(nat_recovermodr) + theme_light() + pp_theme
+pp7 <- pp_check(resist_modr) + theme_light() + pp_theme
+pp8 <- pp_check(resil_modr) + theme_light() + pp_theme
+pp9 <- pp_check(recov_modr) + theme_light() + theme(aspect.ratio = 1/1,
                                     axis.text = element_text(size = 12))
 
 supfig8 <- plot_grid(pp1, pp2, pp3,

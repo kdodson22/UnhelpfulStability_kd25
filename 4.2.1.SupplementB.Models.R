@@ -34,7 +34,7 @@ inv_resistmodr_wat <- brm(LRR.resistance ~
                           data = subset(invabsdf_soil,
                                         Sprayed=="Yes"), 
                           warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                          control = list(adapt_delta = 0.999, max_treedepth = 12),
+                          control = list(adapt_delta = 0.999, max_treedepth = 15),
                           cores = 4, backend = "cmdstanr")
 
 # summary(inv_resistmodr_wat)
@@ -112,7 +112,7 @@ nat_resistmodr_wat <- brm(LRR.resistance ~
                           data = subset(natabsdf_soil2,
                                         Sprayed=="Yes"), 
                           warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                          control = list(adapt_delta = 0.999, max_treedepth = 12),
+                          control = list(adapt_delta = 0.999, max_treedepth = 15),
                           cores = 4, backend = "cmdstanr")
 
 # summary(nat_resistmodr_wat)
@@ -140,7 +140,7 @@ nat_resilience24_modr_wat <- brm(LRR.resilience24 ~
                                                Sprayed=="Yes"),
                                  warmup = 1000, iter = 2000, chains = 4, seed = 123,
                                  control = list(adapt_delta = 0.999, 
-                                                max_treedepth = 12),
+                                                max_treedepth = 15),
                                  cores = 4, backend = "cmdstanr")
 
 # summary(nat_resilience24_modr_wat)
@@ -166,7 +166,7 @@ nat_recovermodr_wat <- brm(LRR.recovery ~
                                          Sprayed=="Yes"),
                            warmup = 1000, iter = 2000, chains = 4, seed = 123,
                            control = list(adapt_delta = 0.999, 
-                                          max_treedepth = 12),
+                                          max_treedepth = 15),
                            cores = 4, backend = "cmdstanr")
 # summary(nat_recovermodr_wat)
 # mcmc_plot(nat_recovermodr_wat) + geom_vline(xintercept=0,lwd=1,color="gray",linetype="dashed") + theme_bw() 
@@ -192,7 +192,7 @@ resist_modr_wat <- brm(LRR.resistance ~
                                      Sprayed=="Yes"),
                        warmup = 1000, iter = 2000, chains = 4, seed = 123,
                        control = list(adapt_delta = 0.999,
-                                      max_treedepth = 12),
+                                      max_treedepth = 15),
                        cores = 4, backend = "cmdstanr")
 
 #RESILIENCE
@@ -217,7 +217,7 @@ resil_modr_wat <- brm(LRR.resilience ~
                                     Sprayed=="Yes"),
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
                       control = list(adapt_delta = 0.999, 
-                                     max_treedepth = 12),
+                                     max_treedepth = 15),
                       cores = 4, backend = "cmdstanr")
 
 # RECOVERY
@@ -239,6 +239,13 @@ recov_modr_wat <- brm(LRR.recovery ~
                       data = subset(RRR_df,
                                     Sprayed=="Yes"),
                       warmup = 1000, iter = 2000, chains = 4, seed = 123,
-                      control = list(adapt_delta = 0.999, max_treedepth = 12),
+                      control = list(adapt_delta = 0.999, max_treedepth = 15),
                       cores = 4, backend = "cmdstanr")
 
+
+model_folder <- "data/outputs"
+models <- ls(pattern = "modr_wat$")
+for(nm in models) {
+  saveRDS(get(nm), file = file.path(model_folder, paste0(nm, ".RDS"))
+  )
+}
