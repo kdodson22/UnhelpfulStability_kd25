@@ -6,10 +6,8 @@
 ## Pre-treatment soil nitrogen, water content, and other dominant species #####
 
 
-## Author: K. Dodson 
-## Date: Updated 8/7/2026
-## Author: K. Dodson 
-## Date: Updated 11/8/2026
+## Author: ASW 
+## Date: Created 11/2026
 
 library(tidyverse)
 library(here)

@@ -5,7 +5,7 @@
 ## Purpose: This script generates Figure 3A, showing posterior parameter estimates for each model
 
 ## Author: K. Dodson 
-## Date: Updated 8/7/2026
+## Date: Updated 11/20/2026 by ASW
 
 library(tidyverse)
 library(marginaleffects)
@@ -306,8 +306,8 @@ figure3A <- ggplot(posteriors, aes(y =.variable,
         axis.text.x = element_text(size = 10.5),
         legend.text = element_text(size = 14),
         strip.text.x = element_text(size = 14), 
-        #strip.background.y = element_blank(),
-        #strip.text.y = element_blank(),
+        strip.background.y = element_blank(),
+        strip.text.y = element_blank(),
         legend.position = "none",
         legend.justification.inside = c(0.025,0.025)) 
 
