@@ -22,13 +22,14 @@ source(here("1.2.RRR.Composition.R"))
 inv_resistmodr <- brm(LRR.resistance ~ 
                         scale(pre_invrichness) +
                         scale(pre_natrichness) +
-                        scale(CHJU) + 
+                        scale(CHJU)+ 
+                        scale(I(CHJU^2))+
                         scale(BRTE) +
-                        scale(slm.brte) + 
                         scale(slm.chju) +
-                        scale(slmr.inv) +
+                        scale(I(slm.chju^2)) +
                         scale(slmr.nat) +
                         scale(Heatload) +
+                        scale(I(Heatload^2)) +
                         (1 | Site), 
                       data = subset(invabsdf_soil,
                                     Sprayed=="Yes"), 
@@ -46,34 +47,39 @@ invabsdf_soil$bump <- ifelse(invabsdf_soil$LRR.resistance< -4, 1, 0)
 inv_resilience24_modr <- brm(LRR.resilience24 ~ 
                                scale(pre_invrichness) +
                                scale(pre_natrichness) +
-                               scale(CHJU) +
+                               scale(CHJU)+ 
+                               scale(I(CHJU^2))+
                                scale(BRTE) +
-                               scale(slm.brte) +
                                scale(slm.chju) +
-                               scale(slmr.inv) +
+                               scale(I(slm.chju^2)) +
+                               scale(I(slmr.inv^2)) +
                                scale(slmr.nat) +
                                scale(Heatload) +
+                               scale(I(Heatload^2)) +
                                scale(LRR.resistance) +
                                (1 | Site), 
                              data = subset(invabsdf_soil,
                                            Sprayed=="Yes"),
-                             warmup = 1000, iter = 2000, chains = 4, seed = 123,
+                             warmup = 1000, iter = 2000, chains = 4, seed = 14567,
                              control = list(adapt_delta = 0.999))
 
-
+summary(inv_resilience24_modr, prob=0.9)
 mcmc_plot(inv_resilience24_modr)
+p_direction(inv_resilience24_modr)
 
 #RECOVERY based on invasive cover
 inv_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
                          scale(pre_natrichness) +
-                         scale(CHJU) +
+                         scale(CHJU)+ 
+                         scale(I(CHJU^2))+
                          scale(BRTE) +
-                         scale(slm.brte) +
                          scale(slm.chju) +
+                         scale(I(slm.chju^2)) +
                          scale(slmr.inv) +
                          scale(slmr.nat) +
                          scale(Heatload) +
+                         scale(I(Heatload^2)) +
                          (1 | Site), 
                        data = subset(invabsdf_soil,
                                      Sprayed=="Yes"),
@@ -81,7 +87,8 @@ inv_recovermodr <- brm(LRR.recovery ~
                        control = list(adapt_delta = 0.999))
 
 mcmc_plot(inv_recovermodr, pars="b_")
-
+p_direction(inv_recovermodr)
+plot_predictions(inv_recovermodr, condition="CHJU")
 
 ## MODELS - Native Cover #####
 # RESISTANCE based on native cover
@@ -107,7 +114,7 @@ mcmc_plot(nat_resistmodr)
 nat_resilience24_modr <- brm(LRR.resilience24 ~ 
                                scale(pre_invrichness) +
                                scale(pre_natrichness) +
-                               scale(CHJU) +
+                               scale(CHJU) + 
                                scale(BRTE) +
                                scale(slm.brte) +
                                scale(slm.chju) +
@@ -115,8 +122,6 @@ nat_resilience24_modr <- brm(LRR.resilience24 ~
                                scale(slmr.nat) +
                                scale(Heatload) +
                                scale(LRR.resistance) +
-                               #scale(N_ug.g.instant_2021Fall) +
-                               #scale(WHC) +
                                (1 | Site), 
                              data = subset(natabsdf_soil2,
                                            Sprayed=="Yes"),
@@ -130,7 +135,7 @@ mcmc_plot(nat_resilience24_modr)
 nat_recovermodr <- brm(LRR.recovery ~ 
                          scale(pre_invrichness) +
                          scale(pre_natrichness) +
-                         scale(CHJU) +
+                         scale(CHJU) + 
                          scale(BRTE) +
                          scale(slm.brte) +
                          scale(slm.chju) +
@@ -153,12 +158,12 @@ resist_modr <- brm(LRR.resistance ~
                      scale(pre_invrichness) +
                      scale(pre_natrichness) +
                      scale(CHJU) + 
-                     scale(BRTE) +
-                     scale(slm.brte) + 
-                     scale(slm.chju) +
-                     scale(slmr.inv) +
-                     scale(slmr.nat) +
-                     scale(Heatload) +
+                      scale(BRTE) +
+                      scale(slm.brte) + 
+                      scale(slm.chju) +
+                      scale(slmr.inv) +
+                      scale(slmr.nat) +
+                      scale(Heatload) +
                      (1 | Site),
                    data = subset(RRR_df,
                                  Sprayed=="Yes"),
@@ -174,16 +179,16 @@ pp_check(resist_modr) + xlim(-8, 5)
 resil_modr <- brm(LRR.resilience ~
                     scale(pre_invrichness) +
                     scale(pre_natrichness) +
-                    scale(CHJU) +
+                    scale(CHJU)+ 
+                    scale(I(CHJU^2))+
                     scale(BRTE) +
-                    scale(slm.brte) +
                     scale(slm.chju) +
+                    scale(I(slm.chju^2)) +
                     scale(slmr.inv) +
                     scale(slmr.nat) +
                     scale(Heatload) +
+                    scale(I(Heatload^2)) +
                     scale(LRR.resistance) +
-                    #scale(N_ug.g.instant_2021Fall) +
-                    #scale(WHC) +
                     (1 | Site),
                   data = subset(RRR_df,
                                 Sprayed=="Yes"),
@@ -196,13 +201,15 @@ mcmc_plot(resil_modr)
 recov_modr <- brm(LRR.recovery ~ 
                     scale(pre_invrichness) +
                     scale(pre_natrichness) +
-                    scale(CHJU) +
+                    scale(CHJU)+ 
+                    scale(I(CHJU^2))+
                     scale(BRTE) +
-                    scale(slm.brte) +
                     scale(slm.chju) +
+                    scale(I(slm.chju^2)) +
                     scale(slmr.inv) +
                     scale(slmr.nat) +
                     scale(Heatload) +
+                    scale(I(Heatload^2)) +
                     (1 | Site), 
                   data = subset(RRR_df,
                                 Sprayed=="Yes"),
@@ -210,9 +217,9 @@ recov_modr <- brm(LRR.recovery ~
                   control = list(adapt_delta = 0.999, max_treedepth = 12))
 
 mcmc_plot(recov_modr)
+plot_predictions(recov_modr, condition="CHJU")
 
 ## Save ####
-
 model_folder <- "data/outputs"
 models <- ls(pattern = "modr$")
 for(nm in models) {
